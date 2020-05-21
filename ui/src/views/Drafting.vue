@@ -5,7 +5,7 @@
         <div class="hand">
             <div class="card" style="width: 20rem;"
                  v-for="(card, index) in hand"
-                 :key="card"
+                 :key="card.name"
                  @click.stop="chooseCard(card, index)">
                 <!-- div contents-->
                 <p>{{ card.name }}</p>
@@ -16,7 +16,7 @@
         <div class="tableau">
             <div class="card" style="width: 20rem;"
                  v-for="(card, index) in tableau"
-                 :key="card"
+                 :key="card.name"
                  v-bind:class="styleIfChosen(card)"
                  @click.stop="returnCard(card, index)">
                 <p>{{ card.name }}</p>

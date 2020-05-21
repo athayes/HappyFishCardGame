@@ -1,6 +1,7 @@
 <template>
     <div class="waiting">
         <h1>Waiting for Rebecca to pick a card...</h1>
+
     </div>
 </template>
 
@@ -15,5 +16,4 @@
         justify-content: center;
         align-items: center;
     }
-
 </style>

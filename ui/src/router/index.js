@@ -1,6 +1,7 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 import Home from "../views/Home.vue";
+import WaitingForPlayer from "../views/WaitingForPlayer";
 
 Vue.use(VueRouter);
 
@@ -9,6 +10,11 @@ const routes = [
     path: "/Home",
     name: "Home",
     component: Home
+  },
+  {
+    path: "/WaitingForPlayer",
+    name: "Waiting For Player",
+    component: WaitingForPlayer
   },
   {
     path: "/",

@@ -2,7 +2,10 @@
   <div id="app">
     <div id="nav">
       <router-link to="/">Drafting</router-link> |
-      <router-link to="/home">Home</router-link>
+      <router-link to="/WaitingForPlayer">Waiting for Player</router-link> |
+      <router-link to="/home">Vue.Js Docs</router-link> |
+
+      <p>This top bit will be removed in final product, here just for testing</p>
     </div>
     <router-view />
   </div>

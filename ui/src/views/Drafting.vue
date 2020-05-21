@@ -1,30 +1,36 @@
 <template>
     <div class="drafting">
+
+        <h1>Pick a card!</h1>
         <div class="hand">
-            <div class="card"
+            <div class="card" style="width: 20rem;"
                  v-for="(card, index) in hand"
                  :key="card"
                  @click.stop="chooseCard(card, index)">
                 <!-- div contents-->
-                {{ card.name }}
+                <p>{{ card.name }}</p>
             </div>
         </div>
 
+        <h1>Your cards:</h1>
         <div class="tableau">
-            <div class="card"
+            <div class="card" style="width: 20rem;"
                  v-for="(card, index) in tableau"
                  :key="card"
                  v-bind:class="styleIfChosen(card)"
                  @click.stop="returnCard(card, index)">
-                {{ card.name }}
+                <p>{{ card.name }}</p>
             </div>
         </div>
 
+        <br />
+
         <div class="buttons">
-            <button @click.stop="okay()">
+            <button class="btn-large continue-button" @click.stop="okay()">
                 Continue
             </button>
         </div>
+
     </div>
 </template>
 
@@ -70,7 +76,7 @@
 
             // Go to the next page
             okay: function () {
-                alert("Continue was pressed");
+                alert("Continue was pressed. In the real app this would either open a pretty modal, or go to the next page");
             }
         }
     };
@@ -80,7 +86,6 @@
     .hand {
         display: flex;
         flex-wrap: nowrap;
-        background-color: DodgerBlue;
         align-items: center;
         justify-content: center;
     }
@@ -88,13 +93,11 @@
     .tableau {
         display: flex;
         flex-wrap: nowrap;
-        background-color: #66ff00;
         align-items: center;
         justify-content: center;
     }
 
     .card {
-        background-color: #f1f1f1;
         width: 150px;
         margin: 10px;
         text-align: center;
@@ -104,5 +107,9 @@
 
     .picked {
         background-color: red;
+    }
+
+    .continue-button {
+        margin: 90px;
     }
 </style>

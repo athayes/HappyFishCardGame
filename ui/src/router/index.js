@@ -2,6 +2,8 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 import Home from "../views/Home.vue";
 import WaitingForPlayer from "../views/WaitingForPlayer";
+import FunDemo from "../views/ChangeScreenDemo";
+import ChangeScreenDemo from "../views/ChangeScreenDemo";
 
 Vue.use(VueRouter);
 
@@ -15,6 +17,11 @@ const routes = [
     path: "/WaitingForPlayer",
     name: "Waiting For Player",
     component: WaitingForPlayer
+  },
+  {
+    path: "/ChangeScreenDemo",
+    name: "Change Screen Demo",
+    component: ChangeScreenDemo
   },
   {
     path: "/",

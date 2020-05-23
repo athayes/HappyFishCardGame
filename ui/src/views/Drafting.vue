@@ -45,8 +45,12 @@ export default {
   // Data for the page. If this data changes, the page will update automatically
   data() {
     return {
-      hand: [new Card("card1"), new Card("card2")],
-      tableau: [new Card("card3"), new Card("card4"), new Card("card5")],
+      hand: [new Card("card1", false), new Card("card2", false)],
+      tableau: [
+        new Card("card3", true),
+        new Card("card4", true),
+        new Card("card5", true)
+      ],
       cardChosen: false
     };
   },
@@ -65,7 +69,7 @@ export default {
 
     // If you return the card
     returnCard: function(card, index) {
-      if (this.cardChosen) {
+      if (this.cardChosen && !card.played) {
         this.tableau.splice(index, 1);
         card.picked = false;
         this.hand.push(card);

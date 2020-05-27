@@ -116,7 +116,7 @@ export default {
 }
 
 .picked {
-  background-color: red;
+  background-color: #d3d3d3;
 }
 
 .continue-button {

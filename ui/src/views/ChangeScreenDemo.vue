@@ -17,13 +17,13 @@
       <p>Timer: {{ timer }}</p>
     </div>
     <div v-if="getView === gameStateEnum.state1">
-      <h3>This is the first screen</h3>
+      <h3>This is the third screen</h3>
     </div>
     <div v-if="getView === gameStateEnum.state2">
       <h3>This is the second screen</h3>
     </div>
     <div v-if="getView === gameStateEnum.state3">
-      <h3>This is the third screen</h3>
+      <h3>This is the first screen</h3>
     </div>
   </div>
 </template>

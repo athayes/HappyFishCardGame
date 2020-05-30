@@ -29,7 +29,12 @@
 </template>
 
 <script>
-import { GameStateEnum } from "../models/GameStateEnum";
+const GameStateEnum = {
+  state1: 1,
+  state2: 2,
+  state3: 3
+};
+
 export default {
   data() {
     return {

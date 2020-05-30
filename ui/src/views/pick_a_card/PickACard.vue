@@ -1,13 +1,14 @@
 <template>
   <div>
-    <div class="menu-buttons">
-      <span class="badge secondary">My Tableau</span>
-      <span class="badge secondary">Game Overview</span>
-      <span class="badge secondary">Cheat Sheet</span>
-      <span class="badge secondary">Scores</span>
-    </div>
-
     <div v-if="currentView === VIEWS.pickACard">
+      <div class="menu-buttons">
+        <span
+          class="badge secondary"
+          @click.stop="currentView = VIEWS.viewTableau"
+          >My Tableau</span
+        >
+      </div>
+
       <h3>Pick a card!</h3>
       <div class="hand">
         <div
@@ -23,6 +24,14 @@
     </div>
 
     <div v-if="currentView === VIEWS.confirmCard">
+      <div class="menu-buttons">
+        <span
+          class="badge secondary"
+          @click.stop="currentView = VIEWS.viewTableau"
+          >My Tableau</span
+        >
+      </div>
+
       <h3>You want this card?</h3>
       <div class="hand">
         <div class="card" @click.stop="confirmCard(card, index)">
@@ -38,6 +47,27 @@
         </div>
       </div>
     </div>
+
+    <div v-if="currentView === VIEWS.viewTableau">
+      <div class="menu-buttons">
+        <span class="badge primary" @click.stop="currentView = VIEWS.pickACard"
+          >Back</span
+        >
+      </div>
+
+      <h3>Your tableau</h3>
+      <div class="hand">
+        <div
+          class="card"
+          v-for="(card, index) in tableau"
+          :key="card.name"
+          @click.stop="chooseCard(card, index)"
+        >
+          <!-- div contents-->
+          <p>{{ card.name }}</p>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -45,7 +75,8 @@
 import Card from "../../models/Card";
 export const VIEWS = {
   pickACard: 1,
-  confirmCard: 2
+  confirmCard: 2,
+  viewTableau: 3
 };
 
 export default {
@@ -54,7 +85,9 @@ export default {
       VIEWS: VIEWS,
       currentView: VIEWS.pickACard,
       pickedCard: {},
-      hand: [new Card("card1", false), new Card("card2", false)]
+      hand: [new Card("card1", false), new Card("card2", false)],
+      tableau: [new Card("card3", false), new Card("card4", false)]
+
     };
   },
 

@@ -38,6 +38,8 @@
           <!-- div contents-->
           <p>{{ pickedCard.name }}</p>
         </div>
+        <p class="description">This is the description of the card. If it has lots of rules it'd be nice to see them :)</p>
+
         <div>
           <button class="btn-block">Yeah!</button>
           <br />
@@ -87,7 +89,6 @@ export default {
       pickedCard: {},
       hand: [new Card("card1", false), new Card("card2", false)],
       tableau: [new Card("card3", false), new Card("card4", false)]
-
     };
   },
 
@@ -111,6 +112,11 @@ export default {
   flex-wrap: nowrap;
   align-items: flex-start;
   justify-content: center;
+}
+
+.description {
+  width: 20%;
+  margin: 20px;
 }
 
 .card {

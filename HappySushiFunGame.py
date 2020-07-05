@@ -46,17 +46,19 @@ class Card:
     def __str__(self):
         return self.__class__.__name__
     
-    @classmethod
+    @staticmethod
     def score(clazz, tableaus, scores):
         # Tableaus must be sorted
         
-        j = 0
-        
         for i in range(len(tableaus)):
-            while isinstace(tableau[j], clazz):
-                scores[i] += card.face_value
+            j = 0
+            while j < len(tableaus[i]) and isinstance(tableaus[i][j], clazz):
+                scores[i] += tableaus[i][j].face_value
                 j += 1
-            tableau = tableau[j:-1]
+            if j == len(tableaus[i]):
+                tableaus[i] = []
+            else:
+                tableaus[i] = tableaus[i][j:]
 
 
 
@@ -64,14 +66,26 @@ class Card:
 class Egg(Card):
     face_value = 1
     sort_value = 1
+    
+    @staticmethod
+    def score(tableaus, scores):
+        Card().score(Egg, tableaus, scores)
 
 class Salmon(Card):
     face_value = 2
     sort_value = 2
+    
+    @staticmethod
+    def score(tableaus, scores):
+        Card().score(Salmon, tableaus, scores)
 
 class Squid(Card):
     face_value = 3
     sort_value = 3
+
+    @staticmethod
+    def score(tableaus, scores):
+        Card().score(Squid, tableaus, scores)
         
 class Miso(Card):
     face_value = 3
@@ -104,20 +118,22 @@ class Wasabi(Card):
     def __init__(self):
         # score this first so linked nigiri is def not deleted
         super().__init__()
-        self.nigiri = none
-        
-    @classmethod
-    def score(clazz, tableaus, scores):
+        self.nigiri = None
+    
+    @staticmethod
+    def score(tableaus, scores):
         # Tableaus must be sorted
         
-        j = 0
-        
         for i in range(len(tableaus)):
-            while isinstace(tableau[j], Wasabi):
+            j = 0
+            while j < len(tableaus[i]) and isinstance(tableaus[i][j], Wasabi):
                 # The third will be added in the nigiri scoring method
-                scores[i] += card.nigiri.face_value * 2
+                scores[i] += tableaus[i][j].nigiri.face_value * 2
                 j += 1
-            tableau = tableau[j:-1]
+            if j == len(tableaus[i]):
+                tableaus[i] = []
+            else:
+                tableaus[i] = tableaus[i][j:]
 
 class Tofu(Card):
     face_value = 2

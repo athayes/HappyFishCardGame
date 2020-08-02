@@ -2,11 +2,12 @@
   <div>
     <div v-if="currentView === VIEWS.pickACard">
       <div class="menu-buttons">
-        <span
-          class="badge secondary"
+        <button
+          class="btn-secondary"
           @click.stop="currentView = VIEWS.viewTableau"
-          >My Tableau</span
         >
+          My Tableau
+        </button>
       </div>
 
       <h3>Pick a card!</h3>
@@ -18,6 +19,7 @@
           @click.stop="chooseCard(card, index)"
         >
           <!-- div contents-->
+          <img src="@/assets/egg.png" />
           <p>{{ card.name }}</p>
         </div>
       </div>
@@ -25,20 +27,24 @@
 
     <div v-if="currentView === VIEWS.confirmCard">
       <div class="menu-buttons">
-        <span
-          class="badge secondary"
+        <button
+          class="btn-secondary"
           @click.stop="currentView = VIEWS.viewTableau"
-          >My Tableau</span
         >
+          My Tableau
+        </button>
       </div>
 
       <h3>You want this card?</h3>
       <div class="hand">
         <div class="card" @click.stop="confirmCard(card, index)">
-          <!-- div contents-->
+          <img src="@/assets/egg.png" />
           <p>{{ pickedCard.name }}</p>
         </div>
-        <p class="description">This is the description of the card. If it has lots of rules it'd be nice to see them :)</p>
+        <p class="description">
+          This is the description of the card. If it has lots of rules it'd be
+          nice to see them :)
+        </p>
 
         <div>
           <button class="btn-block">Yeah!</button>
@@ -52,9 +58,12 @@
 
     <div v-if="currentView === VIEWS.viewTableau">
       <div class="menu-buttons">
-        <span class="badge primary" @click.stop="currentView = VIEWS.pickACard"
-          >Back</span
+        <button
+          class="btn-secondary"
+          @click.stop="currentView = VIEWS.pickACard"
         >
+          Back
+        </button>
       </div>
 
       <h3>Your tableau</h3>
@@ -66,6 +75,7 @@
           @click.stop="chooseCard(card, index)"
         >
           <!-- div contents-->
+          <img src="@/assets/egg.png" />
           <p>{{ card.name }}</p>
         </div>
       </div>
@@ -128,8 +138,9 @@ export default {
 }
 
 .menu-buttons {
+  position: absolute;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: left;
 }
 </style>

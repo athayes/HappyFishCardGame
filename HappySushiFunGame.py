@@ -22,11 +22,20 @@ class Hand:
 
     def play(self, card):
         self.cards.remove(card)
-        self.tableau.append(card)
+        self.tableau.add(card)
 
 class Tableau:
     def __init__(self, cards):
         self.cards = cards
+        
+    def __len__(self):
+        return len(self.cards)
+        
+    def __getitem__(self, key):
+        return self.cards[key]
+        
+    def add(self, card):
+        self.cards.append(card)
 
 
 class Card:
@@ -53,14 +62,75 @@ class Card:
         for i in range(len(tableaus)):
             j = 0
             while j < len(tableaus[i]) and isinstance(tableaus[i][j], clazz):
-                scores[i] += tableaus[i][j].face_value
+                scores[i] += clazz.face_value
                 j += 1
             if j == len(tableaus[i]):
                 tableaus[i] = []
             else:
                 tableaus[i] = tableaus[i][j:]
+                
+class Army_Card(Card):
+    reward = 0
+    punishment = 0
+    
+    @staticmethod
+    def score(clazz, tableaus, scores):
+        # Tableaus must be sorted
+        
+        card_cnts = [0 for i in range(num_players)]
+        for i in range(len(tableaus)):
+            j = 0
+            while j < len(tableaus[i]) and isinstance(tableaus[i][j], clazz):
+                card_cnts[i] += 1
+                j += 1
+            if j == len(tableaus[i]):
+                tableaus[i] = []
+            else:
+                tableaus[i] = tableaus[i][j:]
+        
+        # Find who should get negative points   
+        min_score = min(card_cnt)
+        min_indices = [index for index, element in enumerate(cards_cnts)
+                      if min_score == element]
+        neg_score = clazz.punishment//len(min_indices)
+        for i in min_indices:
+            scores[i] += neg_score
+        
+        # Find who should get positive points
+        max_score = max(maki_cnt)
+        max_indices = [index for index, element in enumerate(card_cnts) 
+                      if max_score == element]
+        pos_score = clazz.reward//len(max_indices)
+        for i in min_indices:
+            scores[i] += pos_score
 
-
+class Threshhold_Card(Card):
+    reward = 0
+    punishment = 0
+    min_count = 0
+    max_count = 0
+    
+    @staticmethod
+    def score(clazz, tableaus, scores):
+        # Tableaus must be sorted
+        
+        card_cnts = [0 for i in range(num_players)]
+        for i in range(len(tableaus)):
+            j = 0
+            while j < len(tableaus[i]) and isinstance(tableaus[i][j], clazz):
+                card_cnts[i] += 1
+                j += 1
+            if j == len(tableaus[i]):
+                tableaus[i] = []
+            else:
+                tableaus[i] = tableaus[i][j:]
+                
+        if min_count > 0:
+            for i in range(len(scores)):
+                scores[i] += card_cnts[i]//min_count
+        else:
+            pass
+        
 
 # Face value score cards
 class Egg(Card):
@@ -86,14 +156,28 @@ class Squid(Card):
     @staticmethod
     def score(tableaus, scores):
         Card().score(Squid, tableaus, scores)
-        
-class Miso(Card):
-    face_value = 3
-    sort_value = 4
 
-# No score cards       
+
+class Miso(Card):
+    sort_value = 4
+    face_value = 3
+    
+    def play():
+        pass
+
+    @staticmethod
+    def score(tableaus, scores):
+        Card().score(Miso, tableaus, scores)
+
+
+# No score cards
 class Menu(Card):
     sort_value = 5
+    face_value = 0
+    
+    @staticmethod
+    def score(tableaus, scores):
+        Card().score(Menu, tableaus, scores)
 
 class Takeout(Card):
     sort_value = 6
@@ -106,9 +190,19 @@ class Soy(Card):
 
 class Spoon(Card):
     sort_value = 9
+    face_value = 0
+    
+    @staticmethod
+    def score(tableaus, scores):
+        Card().score(Spoon, tableaus, scores)
 
 class Chopsticks(Card):
+    face_value = 0
     sort_value = 10
+    
+    @staticmethod
+    def score(tableaus, scores):
+        Card().score(Chopsticks, tableaus, scores)
 
 class Tea(Card):
     sort_value = -1
@@ -135,40 +229,75 @@ class Wasabi(Card):
             else:
                 tableaus[i] = tableaus[i][j:]
 
-class Tofu(Card):
-    face_value = 2
+class Tofu(Threshold_Card):
     sort_value = 11
+    max_count = 2
+    score_vals = {1:2, 2:6}
+
+    @staticmethod
+    def score(tableaus, scores):
+        Threshold_Card().score(Tofu, tableaus, scores)
+
 
 class Dumpling(Card):
     sort_value = 12
+    score_vals = {1:1, 2:3, 3:6, 4:10, 5:15}
 
-class Tempura(Card):
+
+class Tempura(Threshold_Card):
     sort_value = 13
+    reward = 5
+    min_count = 2
 
-class Sashimi(Card):
+    @staticmethod
+    def score(tableaus, scores):
+        Threshold_Card().score(Tempura, tableaus, scores)
+
+
+class Sashimi(Threshold_Card):
     sort_value = 14
+    punishment = 0
+    reward = 10
+    min_count = 3
         
-    def score(self):
-        pass
+    @staticmethod
+    def score(tableaus, scores):
+        Threshold_Card().score(Sashimi, tableaus, scores)
+        
 
-class Eel(Card):
-    face_value = -3
+class Eel(Threshold_Card):
     sort_value = 15
+    reward = 7
+    punishment = -3
+    min_count = 2
+    
+    @staticmethod
+    def score(tableaus, scores):
+        Threshold_Card().score(Eel, tableaus, scores)
 
-class Ice_Cream(Card):
+
+class Ice_Cream(Threshold_Card):
     sort_value = 100
     dessert = True
-        
+    reward = 12
+    punishment = 0
+
+    @staticmethod
+    def score(tableaus, scores):
+        Threshold_Card().score(Ice_Cream, tableaus, scores)
+
+
 class Fruit(Card):
     sort_value = 100
     dessert = True
+    score_vals = {0:-2, 1:0, 2:1, 3:3, 4:6, 5:10}
 
     def __init__(self, type):
         super().__init__()
         self.type = type
 
 # Other player-dependent cards
-class Maki(Card):
+class Maki(Army_Card):
     sort_value = 16
     reward = 3
     punishment = -3
@@ -176,11 +305,20 @@ class Maki(Card):
     def __init__(self, power):
         super().__init__()
         self.power = power
+        
+    @staticmethod
+    def score(tableaus, scores):
+        Army_Card().score(Maki, tableaus, scores)
 
-class Temaki(Card):
+class Temaki(Army_Card):
     sort_value = 17
     reward = 4
     punishment = -4
+    
+    @staticmethod
+    def score(tableaus, scores):
+        Army_Card().score(Temaki, tableaus, scores)
+
         
 class Uramaki(Card):
     sort_value = 20
@@ -194,7 +332,7 @@ class Edamame(Card):
 
 
 class Onigiri(Card):
-    face_value = 1
+    score_vals = {1:1, 2:4, 3:9, 4:16}
     sort_value = 19
 
     def __init__(self, type):
@@ -206,6 +344,10 @@ class Pudding(Card):
     dessert = True
     reward = 6
     punihsment = -6
+    
+    @staticmethod
+    def score(tableaus, scores):
+        Army_Card().score(Pudding, tableaus, scores)
 
 class Game:
     SPECIALS = [Miso, Wasabi, Menu, Takeout, Special, Soy, Spoon, Chopsticks, Tea, Edamame]
@@ -238,3 +380,14 @@ class Game:
             tableau.sort()
         for card_type in cards_in_use:
             card_type.score(card_type, tableaus, scores)
+            
+    def score_dessert(self):
+        pass
+        
+################ Testing code #####################
+if __name__ == "__main__":
+  chopstick = Chopsticks()
+  scores = [0]
+  tableaus = [Tableau([chopstick])]
+  Chopsticks.score(tableaus, scores)
+  print(scores)

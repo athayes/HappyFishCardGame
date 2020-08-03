@@ -10,7 +10,7 @@
         </button>
       </div>
 
-      <h3>Pick a card!</h3>
+      <h3 class="title">Pick a card!</h3>
       <div class="hand">
         <div
           class="card"
@@ -19,7 +19,7 @@
           @click.stop="chooseCard(card, index)"
         >
           <!-- div contents-->
-          <img v-bind:src="card.image" />
+          <img v-bind:src="card.image" class="card-image" />
           <p>{{ card.name }}</p>
         </div>
       </div>
@@ -35,7 +35,7 @@
         </button>
       </div>
 
-      <h3>You want this card?</h3>
+      <h3 class="title">You want this card?</h3>
       <div class="hand">
         <div class="card" @click.stop="confirmCard(card, index)">
           <img v-bind:src="pickedCard.image" />
@@ -66,7 +66,7 @@
         </button>
       </div>
 
-      <h3>Your tableau</h3>
+      <h3 class="title">Your tableau</h3>
       <div class="hand">
         <div class="card" v-for="card in tableau" :key="card.name">
           <!-- div contents-->
@@ -96,7 +96,8 @@ export default {
         new Card("Egg", "/assets/egg.png", false),
         new Card("Chopsticks", "/assets/chopsticks.png", false),
         new Card("Ice Cream", "assets/ice-cream.png", false),
-        new Card("Sashimi", "assets/sashimi.png", false)
+        new Card("Sashimi", "assets/sashimi.png", false),
+        new Card("Maki", "/assets/maki.png", false),
       ],
       tableau: [
         new Card("Maki", "/assets/maki.png", false),
@@ -121,21 +122,12 @@ export default {
 </script>
 
 <style>
-.hand {
-  display: flex;
-  flex-wrap: nowrap;
-  align-items: flex-start;
-  justify-content: center;
-}
-
 .description {
   width: 20%;
-  margin: 20px;
+  margin: 5px;
 }
 
 .card {
-  height: 40%;
-  width: 20%;
   margin: 10px;
   text-align: center;
   font-size: 30px;
@@ -146,5 +138,26 @@ export default {
   display: flex;
   align-items: center;
   justify-content: left;
+}
+.title {
+  margin: 20px;
+}
+
+/*https://codeburst.io/how-to-create-horizontal-scrolling-containers-d8069651e9c6*/
+.hand {
+  display: flex;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+}
+
+.hand .card {
+  flex-grow: 0;
+  flex-shrink: 0;
+  width: 200px;
+  height: 250px;
+}
+
+.card-image {
+  border: 1px solid black !important;
 }
 </style>

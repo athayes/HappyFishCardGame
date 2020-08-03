@@ -19,7 +19,7 @@
           @click.stop="chooseCard(card, index)"
         >
           <!-- div contents-->
-          <img src="@/assets/egg.png" />
+          <img v-bind:src="card.image" />
           <p>{{ card.name }}</p>
         </div>
       </div>
@@ -38,7 +38,7 @@
       <h3>You want this card?</h3>
       <div class="hand">
         <div class="card" @click.stop="confirmCard(card, index)">
-          <img src="@/assets/egg.png" />
+          <img v-bind:src="pickedCard.image" />
           <p>{{ pickedCard.name }}</p>
         </div>
         <p class="description">
@@ -68,14 +68,9 @@
 
       <h3>Your tableau</h3>
       <div class="hand">
-        <div
-          class="card"
-          v-for="(card, index) in tableau"
-          :key="card.name"
-          @click.stop="chooseCard(card, index)"
-        >
+        <div class="card" v-for="card in tableau" :key="card.name">
           <!-- div contents-->
-          <img src="@/assets/egg.png" />
+          <img v-bind:src="card.image" />
           <p>{{ card.name }}</p>
         </div>
       </div>
@@ -97,8 +92,17 @@ export default {
       VIEWS: VIEWS,
       currentView: VIEWS.pickACard,
       pickedCard: {},
-      hand: [new Card("card1", false), new Card("card2", false)],
-      tableau: [new Card("card3", false), new Card("card4", false)]
+      hand: [
+        new Card("Egg", "/assets/egg.png", false),
+        new Card("Chopsticks", "/assets/chopsticks.png", false),
+        new Card("Ice Cream", "assets/ice-cream.png", false),
+        new Card("Sashimi", "assets/sashimi.png", false)
+      ],
+      tableau: [
+        new Card("Maki", "/assets/maki.png", false),
+        new Card("Temaki", "/assets/temaki.png", false),
+        new Card("Wasabi", "assets/wasabi.png", false)
+      ]
     };
   },
 

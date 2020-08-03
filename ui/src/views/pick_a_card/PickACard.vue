@@ -148,6 +148,9 @@ export default {
   display: flex;
   flex-wrap: nowrap;
   overflow-x: auto;
+  padding-bottom: 10px;
+  padding-top: 10px;
+  -webkit-overflow-scrolling: touch;
 }
 
 .hand .card {
@@ -160,4 +163,8 @@ export default {
 .card-image {
   border: 1px solid black !important;
 }
+
+  body {
+    overflow-y: hidden;;
+  }
 </style>

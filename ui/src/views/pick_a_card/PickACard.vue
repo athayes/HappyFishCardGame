@@ -2,11 +2,12 @@
   <div>
     <div v-if="currentView === VIEWS.pickACard">
       <div class="menu-buttons">
-        <span
-          class="badge secondary"
+        <button
+          class="btn-secondary"
           @click.stop="currentView = VIEWS.viewTableau"
-          >My Tableau</span
         >
+          My Tableau
+        </button>
       </div>
 
       <h3>Pick a card!</h3>
@@ -18,6 +19,7 @@
           @click.stop="chooseCard(card, index)"
         >
           <!-- div contents-->
+          <img v-bind:src="card.image" />
           <p>{{ card.name }}</p>
         </div>
       </div>
@@ -25,20 +27,24 @@
 
     <div v-if="currentView === VIEWS.confirmCard">
       <div class="menu-buttons">
-        <span
-          class="badge secondary"
+        <button
+          class="btn-secondary"
           @click.stop="currentView = VIEWS.viewTableau"
-          >My Tableau</span
         >
+          My Tableau
+        </button>
       </div>
 
       <h3>You want this card?</h3>
       <div class="hand">
         <div class="card" @click.stop="confirmCard(card, index)">
-          <!-- div contents-->
+          <img v-bind:src="pickedCard.image" />
           <p>{{ pickedCard.name }}</p>
         </div>
-        <p class="description">This is the description of the card. If it has lots of rules it'd be nice to see them :)</p>
+        <p class="description">
+          This is the description of the card. If it has lots of rules it'd be
+          nice to see them :)
+        </p>
 
         <div>
           <button class="btn-block">Yeah!</button>
@@ -52,20 +58,19 @@
 
     <div v-if="currentView === VIEWS.viewTableau">
       <div class="menu-buttons">
-        <span class="badge primary" @click.stop="currentView = VIEWS.pickACard"
-          >Back</span
+        <button
+          class="btn-secondary"
+          @click.stop="currentView = VIEWS.pickACard"
         >
+          Back
+        </button>
       </div>
 
       <h3>Your tableau</h3>
       <div class="hand">
-        <div
-          class="card"
-          v-for="(card, index) in tableau"
-          :key="card.name"
-          @click.stop="chooseCard(card, index)"
-        >
+        <div class="card" v-for="card in tableau" :key="card.name">
           <!-- div contents-->
+          <img v-bind:src="card.image" />
           <p>{{ card.name }}</p>
         </div>
       </div>
@@ -87,8 +92,17 @@ export default {
       VIEWS: VIEWS,
       currentView: VIEWS.pickACard,
       pickedCard: {},
-      hand: [new Card("card1", false), new Card("card2", false)],
-      tableau: [new Card("card3", false), new Card("card4", false)]
+      hand: [
+        new Card("Egg", "/assets/egg.png", false),
+        new Card("Chopsticks", "/assets/chopsticks.png", false),
+        new Card("Ice Cream", "assets/ice-cream.png", false),
+        new Card("Sashimi", "assets/sashimi.png", false)
+      ],
+      tableau: [
+        new Card("Maki", "/assets/maki.png", false),
+        new Card("Temaki", "/assets/temaki.png", false),
+        new Card("Wasabi", "assets/wasabi.png", false)
+      ]
     };
   },
 
@@ -128,8 +142,9 @@ export default {
 }
 
 .menu-buttons {
+  position: absolute;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: left;
 }
 </style>

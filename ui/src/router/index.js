@@ -22,7 +22,6 @@ const routes = [
     name: "Root",
     component: PickACard
   }
-
 ];
 
 const router = new VueRouter({

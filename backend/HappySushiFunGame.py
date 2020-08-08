@@ -43,8 +43,9 @@ class Card:
     sort_value = 0
     dessert = False
 
-    def play(self):
-        pass
+    def play(self, hand, tableau):
+        tableau += self
+        hand.remove(self)
 
     def __lt__(self, other):
         return self.sort_value < other.sort_value

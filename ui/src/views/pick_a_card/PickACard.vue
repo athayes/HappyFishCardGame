@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class = "pickACard">
     <div v-if="currentView === VIEWS.pickACard">
       <div class="menu-buttons">
         <button
@@ -121,6 +121,11 @@ export default {
 </script>
 
 <style>
+.pickACard {
+  text-align: center;
+  color: #2c3e50;
+}
+
 .hand {
   display: flex;
   flex-wrap: nowrap;

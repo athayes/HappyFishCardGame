@@ -147,4 +147,8 @@ export default {
   align-items: center;
   justify-content: left;
 }
+
+img {
+  height: 200px;
+}
 </style>

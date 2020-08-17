@@ -69,10 +69,13 @@ class Card:
                 tableaus[i] = []
             else:
                 tableaus[i] = tableaus[i][j:]
-                
+
+
 class Army_Card(Card):
     reward = 0
+    second_reward = 0
     punishment = 0
+    power = 1
     
     @staticmethod
     def score(clazz, tableaus, scores):
@@ -82,30 +85,42 @@ class Army_Card(Card):
         for i in range(len(tableaus)):
             j = 0
             while j < len(tableaus[i]) and isinstance(tableaus[i][j], clazz):
-                card_cnts[i] += 1
+                card_cnts[i] += tableaus[i][j].power
                 j += 1
             if j == len(tableaus[i]):
                 tableaus[i] = []
             else:
                 tableaus[i] = tableaus[i][j:]
         
-        # Find who should get negative points   
-        min_score = min(card_cnt)
-        min_indices = [index for index, element in enumerate(cards_cnts)
+        # Find who should get negative points (who came last)  
+        min_score = min(card_cnts)
+        min_indices = [index for index, element in enumerate(card_cnts)
                       if min_score == element]
         neg_score = clazz.punishment//len(min_indices)
         for i in min_indices:
             scores[i] += neg_score
         
-        # Find who should get positive points
+        # Find who came first
         max_score = max(maki_cnt)
         max_indices = [index for index, element in enumerate(card_cnts) 
                       if max_score == element]
         pos_score = clazz.reward//len(max_indices)
         for i in min_indices:
             scores[i] += pos_score
+        # remove occur max score to calc second place
+        list(filter((max_score).__ne__, maki_cnt))
 
-class Threshhold_Card(Card):
+        # Find who came second
+        if clazz.second_reward > 0:
+            max_score = max(maki_cnt)
+            max_indices = [index for index, element in enumerate(card_cnts) 
+                      if max_score == element]
+            pos_score = clazz.second_reward//len(max_indices)
+            for i in min_indices:
+                scores[i] += pos_score
+
+
+class Threshold_Card(Card):
     reward = 0
     punishment = 0
     min_count = 0
@@ -244,6 +259,28 @@ class Dumpling(Card):
     sort_value = 12
     score_vals = {1:1, 2:3, 3:6, 4:10, 5:15}
 
+    @staticmethod
+    def score(tableaus, scores):
+        # Tableaus must be sorted
+        
+        for i in range(len(tableaus)):
+            j = 0
+            num_dumplings = 0
+            while j < len(tableaus[i]) and isinstance(tableaus[i][j], Dumpling):
+                num_dumplings += 1
+                j += 1
+            if j == len(tableaus[i]):
+                tableaus[i] = []
+            else:
+                tableaus[i] = tableaus[i][j:]
+            
+            # Add the scores
+            for k in range(5, 0, -1):
+                val = Dumpling.score_vals[k] * (num_dumplings // k)
+                if val > 0:
+                    scores[i] += val
+                    num_dumplings -= k
+
 
 class Tempura(Threshold_Card):
     sort_value = 13
@@ -300,8 +337,8 @@ class Fruit(Card):
 # Other player-dependent cards
 class Maki(Army_Card):
     sort_value = 16
-    reward = 3
-    punishment = -3
+    reward = 6
+    second_reward = 3
 
     def __init__(self, power):
         super().__init__()
@@ -388,7 +425,12 @@ class Game:
 ################ Testing code #####################
 if __name__ == "__main__":
   chopstick = Chopsticks()
+  dum1 = Dumpling()
+  dum2 = Dumpling()
+  m1 = Maki(2)
+  m2 = Maki(3)
   scores = [0]
-  tableaus = [Tableau([chopstick])]
-  Chopsticks.score(tableaus, scores)
+  num_players = 2
+  tableaus = [Tableau([m1]), Tableau([m2])]
+  Maki.score(tableaus, scores)
   print(scores)

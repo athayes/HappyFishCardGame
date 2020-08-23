@@ -101,22 +101,21 @@ class Army_Card(Card):
             scores[i] += neg_score
         
         # Find who came first
-        max_score = max(maki_cnt)
+        max_score = max(card_cnts)
         max_indices = [index for index, element in enumerate(card_cnts) 
                       if max_score == element]
         pos_score = clazz.reward//len(max_indices)
-        for i in min_indices:
+        for i in max_indices:
             scores[i] += pos_score
-        # remove occur max score to calc second place
-        list(filter((max_score).__ne__, maki_cnt))
+            card_cnts[i] = 0
 
         # Find who came second
         if clazz.second_reward > 0:
-            max_score = max(maki_cnt)
+            max_score = max(card_cnts)
             max_indices = [index for index, element in enumerate(card_cnts) 
                       if max_score == element]
             pos_score = clazz.second_reward//len(max_indices)
-            for i in min_indices:
+            for i in max_indices:
                 scores[i] += pos_score
 
 
@@ -393,11 +392,10 @@ class Game:
     APPETIZERS = [Tofu, Dumpling, Tempura, Sashimi, Eel, Onigiri]
     DESSERT = [Pudding, Ice_Cream, Fruit]
 
-    INTERACTION_CARDS = [Maki, Temaki, Miso, Pudding]
     CARDS_TO_DEAL = {2:10, 3:10, 4:9, 5:9, 6:8, 7:8, 8:7}
    
-    def __init__(self, num_players, tableau_interaction, cards_in_use):
-        self.cards_in_use = cards_in_use
+    def __init__(self, num_players, tableau_interaction, cards_in_use=[Wasabi, Chopsticks, Maki, Dumpling, Tempura, Sashimi, Ice_Cream]):
+        self.cards_in_use = cards_in_use + Nigiri
         self.rnd = 0
         self.deck = Deck(cards_in_use, CARDS_TO_DEAL[num_players])
         self.tableaus = [Tableau() for i in range(num_players)]
@@ -429,8 +427,9 @@ if __name__ == "__main__":
   dum2 = Dumpling()
   m1 = Maki(2)
   m2 = Maki(3)
-  scores = [0]
-  num_players = 2
-  tableaus = [Tableau([m1]), Tableau([m2])]
-  Maki.score(tableaus, scores)
+  scores = [0, 0]
+  num_players = 7
+  tableaus = [Tableau([dum1]), Tableau([dum2, dum3])]
+  #Maki.score(tableaus, scores)
+  Dumpling.score(tableaus, scores)
   print(scores)

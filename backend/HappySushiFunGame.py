@@ -394,14 +394,15 @@ class Game:
 
     CARDS_TO_DEAL = {2:10, 3:10, 4:9, 5:9, 6:8, 7:8, 8:7}
    
-    def __init__(self, num_players, tableau_interaction, cards_in_use=[Wasabi, Chopsticks, Maki, Dumpling, Tempura, Sashimi, Ice_Cream]):
+    def __init__(self, players, cards_in_use=[Wasabi, Chopsticks, Maki, Dumpling, Tempura, Sashimi, Ice_Cream]):
         self.cards_in_use = cards_in_use + Nigiri
         self.rnd = 0
         self.deck = Deck(cards_in_use, CARDS_TO_DEAL[num_players])
         self.tableaus = [Tableau() for i in range(num_players)]
         self.hands = [Hand([], self.tableaus[i]) for i in range(num_players)]
         self.scores = [0 for i in range(num_players)]
-        self.num_players = num_players
+        self.num_players = len(players)
+        self.players = players
 
     def start_round(self):
         self.round += 1

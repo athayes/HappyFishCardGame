@@ -420,14 +420,30 @@ class Game:
             
     def score_dessert(self):
         pass
-        
+
+class Player():
+    def __init__(self, screen_name, game_id):
+        self.screen_name = screen_name
+        self.game_id = game_id
+
 class Feck_It:
-    def __init__(self):
-        fecking_games = {} #{gameId: game object}
-        fecking_players = {} # {playerId} --> player{id, gameId, name}
-        
-    def start():
-        pass
+    fecking_games = {} #{gameId: game object}
+    fecking_players = {} # {gameId: [players]}
+    
+    @staticmethid
+    def add_player(player, game):
+        fecking_players.put(game, new Player(player.screen_name, game.Id))
+    
+    @staticmethod
+    def add_game():
+        game_id = random.randint
+        fecking_games = {game_id: null}
+        return game_id
+    
+    @staticmethod
+    def start_game(game_id):
+        fecking_games[game_id] = new Game(len(fecking_players[game_id]))
+
 ################ Testing code #####################
 if __name__ == "__main__":
   chopstick = Chopsticks()

@@ -1,28 +1,26 @@
 from flask import Flask
 from flask import request
+import HappySushiFunGame as fish
 app = Flask(__name__)
 
-games = {}
+game = null
 
-@app.route('/play', methods=['GET', 'POST'])
-def welcome():
-    if request.method == 'POST':
-        Game g = new Game()
-        games[g.id] = g
-    return 'Welcome Page'
+@app.route('/startGame', methods=['POST'])
+def start():
+    game.start()
 
-@app.route('/games/', methods=['GET'])
+# Recreate game 1
+@app.route('/creategame', methods=['POST'])
 def games():
-    return 'Index Page'
+    play = pass #Get player from POST
+    game = new fish.Game()
+    game.addPlayer(player)
+    return game
 
-@app.route('/games/<game_id>', methods=['GET', 'DELETE'])
-def show_game():
-    return 'Game %d' % game_id
-
-@app.route('/players/', methods=['GET'])
-def players():
-    return 'Index Page'
-
-@app.route('/players/<player_id>', methods=['GET', 'DELETE'])
-def show_player():
-    return jsonify({})
+@app.route('/joingame', methods=['POST'])
+def join():
+    if game != null:
+        play = pass #Get player from POST
+        game.addPlayer(player)
+    else:
+        return 'You have to create a game first!'

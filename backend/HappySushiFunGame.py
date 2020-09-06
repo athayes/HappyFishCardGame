@@ -415,12 +415,19 @@ class Game:
     def score_round(self):
         for tableau in tableaus:
             tableau.sort()
-        for card_type in cards_in_use:
+        for card_type in cards_in_use: # ensure dessert not counted here
             card_type.score(card_type, tableaus, scores)
             
     def score_dessert(self):
         pass
         
+class Feck_It:
+    def __init__(self):
+        fecking_games = {} #{gameId: game object}
+        fecking_players = {} # {playerId} --> player{id, gameId, name}
+        
+    def start():
+        pass
 ################ Testing code #####################
 if __name__ == "__main__":
   chopstick = Chopsticks()

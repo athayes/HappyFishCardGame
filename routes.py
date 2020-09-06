@@ -3,7 +3,7 @@ from flask import request
 import HappySushiFunGame as fish
 app = Flask(__name__)
 
-game_id = null
+game_id = None
 
 @app.route('/startGame', methods=['POST'])
 def start_game():

@@ -1,29 +1,33 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-import WaitingForPlayer from "../views/waiting_for_player/WaitingForPlayer";
-import ChangeScreenDemo from "../views/change_screen/ChangeScreenDemo";
-// import PickACard from "../views/pick_a_card/PickACard";
-// import JoinRoom from "../views/join_room/JoinRoom";
-// import PickACard from "../views/pick_a_card/PickACard";
-import TestSocketIo from "../views/test_socket/TestSocketIo";
+import HomeScreen from "../views/home_screen/HomeScreen";
+import Lobby from "../views/home_screen/join_game/lobby/Lobby";
+import HostLobby from "../views/home_screen/create_game/host_lobby/HostLobby";
+import JoinGame from "../views/home_screen/join_game/JoinGame";
+import CreateGame from "../views/home_screen/create_game/CreateGame";
 
 Vue.use(VueRouter);
 
 const routes = [
   {
-    path: "/WaitingForPlayer",
-    name: "Waiting For Player",
-    component: WaitingForPlayer
-  },
-  {
-    path: "/ChangeScreenDemo",
-    name: "Change Screen Demo",
-    component: ChangeScreenDemo
-  },
-  {
     path: "/",
-    name: "Root",
-    component: TestSocketIo
+    component: HomeScreen
+  },
+  {
+    path: "/CreateGame",
+    component: CreateGame
+  },
+  {
+    path: "/HostLobby",
+    component: HostLobby
+  },
+  {
+    path: "/JoinGame",
+    component: JoinGame
+  },
+  {
+    path: "/Lobby",
+    component: Lobby
   }
 ];
 

@@ -2,9 +2,7 @@
   <div class="CreateGame">
     <h2>Create Game</h2>
     <label>Your name</label>
-    <div class="enterName">
-      <input type="text" placeholder="Name" />
-    </div>
+    <input class="CreateGameEnterName" type="text" placeholder="Name" />
     <button @click="createGame('hardcodedname')">
       Continue
     </button>
@@ -31,5 +29,11 @@ export default {
 .CreateGame {
   text-align: center;
   color: #2c3e50;
+}
+
+.CreateGameEnterName {
+  display: block;
+  margin-right: auto;
+  margin-left: auto;
 }
 </style>

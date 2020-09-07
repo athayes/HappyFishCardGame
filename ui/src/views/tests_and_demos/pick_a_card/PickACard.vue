@@ -79,7 +79,7 @@
 </template>
 
 <script>
-import Card from "../../models/Card";
+import Card from "../../../models/Card";
 export const VIEWS = {
   pickACard: 1,
   confirmCard: 2,

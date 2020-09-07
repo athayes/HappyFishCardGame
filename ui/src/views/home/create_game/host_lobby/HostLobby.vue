@@ -6,7 +6,7 @@
         <thead></thead>
         <tbody>
           <tr>
-            <td>Bob (Host)</td>
+            <td>Bob</td>
           </tr>
           <tr>
             <td>Eric</td>
@@ -32,6 +32,6 @@
 
 .hostLobbyTable {
   text-align: left;
-    font-weight: bold;
+  font-weight: bold;
 }
 </style>

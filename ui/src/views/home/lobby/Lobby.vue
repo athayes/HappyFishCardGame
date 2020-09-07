@@ -5,7 +5,7 @@
       <table class="lobbyTable">
         <tbody>
           <tr>
-            <td>Bob (Host)</td>
+            <td>Bob</td>
           </tr>
           <tr>
             <td>Eric</td>

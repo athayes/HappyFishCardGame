@@ -1,17 +1,29 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-import HomeScreen from "../views/home_screen/HomeScreen";
-import Lobby from "../views/home_screen/join_game/lobby/Lobby";
-import HostLobby from "../views/home_screen/create_game/host_lobby/HostLobby";
-import JoinGame from "../views/home_screen/join_game/JoinGame";
-import CreateGame from "../views/home_screen/create_game/CreateGame";
+import Lobby from "../views/home/lobby/Lobby";
+import HostLobby from "../views/home/create_game/host_lobby/HostLobby";
+import JoinGame from "../views/home/JoinGame";
+import CreateGame from "../views/home/create_game/CreateGame";
+import Admin from "../views/admin/Admin";
 
 Vue.use(VueRouter);
 
 const routes = [
   {
     path: "/",
-    component: HomeScreen
+    component: JoinGame
+  },
+  {
+    path: "/Rebecca",
+    component: Admin
+  },
+  {
+    path: "/Host",
+    component: Admin
+  },
+  {
+    path: "/Admin",
+    component: Admin
   },
   {
     path: "/CreateGame",

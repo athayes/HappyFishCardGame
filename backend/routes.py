@@ -1,7 +1,10 @@
 from flask import Flask
 from flask import request
 import HappySushiFunGame as fish
+from flask_cors import CORS
+
 app = Flask(__name__)
+CORS(app)
 
 game_id = None
 

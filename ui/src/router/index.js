@@ -1,9 +1,9 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-import Lobby from "../views/home/lobby/Lobby";
-import HostLobby from "../views/home/create_game/host_lobby/HostLobby";
-import JoinGame from "../views/home/JoinGame";
-import CreateGame from "../views/home/create_game/CreateGame";
+import Lobby from "../views/player/Lobby";
+import HostLobby from "../views/admin/HostLobby";
+import JoinGame from "../views/player/JoinGame";
+import CreateGame from "../views/admin/CreateGame";
 import Admin from "../views/admin/Admin";
 
 Vue.use(VueRouter);

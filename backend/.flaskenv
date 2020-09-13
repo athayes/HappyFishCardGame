@@ -1,1 +1,1 @@
-export FLASK_APP=coolserver.py
+export FLASK_APP=routes.py

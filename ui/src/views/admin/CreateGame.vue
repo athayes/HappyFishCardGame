@@ -30,7 +30,7 @@ export default {
         alert("Enter your name");
         return;
       }
-      await axios.post('https://localhost:3000/CreateGame', {
+      await axios.post("http://127.0.0.1:5000/CreateGame", {
         hostName
       });
       await this.$router.push("HostLobby");

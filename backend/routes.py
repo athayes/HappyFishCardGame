@@ -1,4 +1,5 @@
-from flask import Flask
+
+from flask import Flask, json
 from flask import request
 import HappySushiFunGame as fish
 from flask_cors import CORS
@@ -14,10 +15,15 @@ def start_game():
 # Recreate game 1
 @app.route('/CreateGame', methods=['POST'])
 def create_game():
-    player = request.json['hostName']
-    game_id = fish.Feck_It.add_game()
-    fish.Feck_It.add_player(player, game_id)
-    return game_id
+    hostName = request.json['hostName']
+    fish.Feck_It.reset_game()
+    fish.Feck_It.add_player(hostName)
+    return json.dumps(dict(success=True)), 200, {'ContentType': 'application/json'}
+
+# Recreate game 1
+@app.route('/GetGameObject', methods=['POST'])
+def get_game_object():
+    return fish.Feck_It.game
 
 @app.route('/JoinGame', methods=['POST'])
 def join():

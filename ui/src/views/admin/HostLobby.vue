@@ -18,11 +18,21 @@
       </table>
     </div>
 
-    <button class="btn">
+    <button @click="StartGame" class="btn">
       Start Game
     </button>
   </div>
 </template>
+
+<script>
+export default {
+  methods: {
+    StartGame: function() {
+      this.$router.push("StartGame");
+    }
+  }
+};
+</script>
 
 <style>
 .HostLobby {

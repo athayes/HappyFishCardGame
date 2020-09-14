@@ -427,22 +427,20 @@ class Player():
         self.game_id = game_id
 
 class Feck_It:
-    fecking_games = {} #{gameId: game object}
-    fecking_players = {} # {gameId: [players]}
+    game = None
+    players = []
     
     @staticmethod
-    def add_player(player, game):
-        fecking_players[game_id].add(Player(player.screen_name, game.Id))
+    def add_player(playerName):
+        Feck_It.players.append(playerName)
     
     @staticmethod
-    def add_game():
-        game_id = random.randint
-        fecking_games = {game_id: None}
-        return game_id
-    
+    def reset_game():
+        Feck_It.players = []
+
     @staticmethod
-    def start_game(game_id):
-        fecking_games[game_id] = Game(len(fecking_players[game_id]))
+    def start_game():
+        Feck_It.game = Game(Feck_It.players)
 
 ################ Testing code #####################
 if __name__ == "__main__":

@@ -1,0 +1,118 @@
+{
+	"info": {
+		"_postman_id": "818054bc-b120-45c0-9394-4cb473a6dd95",
+		"name": "fish",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "CreateGame",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"hostName\": \"reb\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:5000/CreateGame",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"CreateGame"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "JoinGame",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"playerName\": \"Cool H\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:5000/JoinGame",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"JoinGame"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "StartGame",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:5000/StartGame",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"StartGame"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetGameObject",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:5000/GetGameObject",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"GetGameObject"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}

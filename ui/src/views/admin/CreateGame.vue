@@ -31,7 +31,7 @@ export default {
         return;
       }
       await axios.post("http://127.0.0.1:5000/CreateGame", {
-        hostName
+        hostName: hostName
       });
       await this.$router.push("HostLobby");
     }

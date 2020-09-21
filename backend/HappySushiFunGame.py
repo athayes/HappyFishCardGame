@@ -26,8 +26,8 @@ class Hand:
 
 
 class Tableau:
-    def __init__(self, cards):
-        self.cards = cards
+    def __init__(self):
+        self.cards = []
 
     def __len__(self):
         return len(self.cards)
@@ -149,6 +149,9 @@ class Threshold_Card(Card):
 
 
 # Face value score cards
+class Nigiri(Card):
+   pass
+
 class Egg(Card):
     face_value = 1
     sort_value = 1
@@ -410,11 +413,16 @@ class Game:
     def __init__(self, players, cards_in_use=[Wasabi, Chopsticks, Dumpling, Tempura, Sashimi, Ice_Cream]):
         self.cards_in_use = cards_in_use
         self.players = players
+        self.num_players = len(self.players)
         self.round = 0
-        self.deck = Deck(cards_in_use, Game.CARDS_TO_DEAL[len(players)])
-        self.tableaus = [Tableau([]) for i in range(len(players))]
-        self.hands = [Hand([], self.tableaus[i]) for i in range(len(players))]
-        self.scores = [0 for i in range(len(players))]
+        self.deck = Deck(cards_in_use, Game.CARDS_TO_DEAL[self.num_players])
+        self.tableaus = {player.screen_name: Tableau() for player in self.players}
+        self.hands = {player.screen_name: Hand([], self.tableaus[player.Id]) for player in self.players}
+        
+    def fill_players(self):
+        for player in self.players:
+            player.hand = self.hands.get(player)
+            player.tableau = self.tableaus.get(player)
 
     def start_round(self):
         self.round += 1
@@ -438,6 +446,10 @@ class Player():
     def __init__(self, screen_name, game_id):
         self.screen_name = screen_name
         self.game_id = game_id
+        self.score = 0
+        self.tableau = None
+        self.pudding = 0
+        self.hand = None
 
 
 

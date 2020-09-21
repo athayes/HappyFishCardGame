@@ -12,7 +12,6 @@ def start_game():
     Lobby.start_game()
     return json.dumps(Lobby.game.players)
 
-
 # Recreate game 1
 @app.route('/CreateGame', methods=['POST'])
 def create_game():
@@ -29,11 +28,12 @@ def get_game_object():
 
 @app.route('/JoinGame', methods=['POST'])
 def join():
-    if Lobby.game is None:
         player_name = request.json['playerName']
-        Lobby.add_player(player_name)
-        return json.dumps(dict(success=True)), 200, {'ContentType': 'application/json'}
-    else:
+        if player_name in players:
+            return 'Name taken; pick a new name!'
+        if Lobby.game is None:
+            Lobby.add_player(player_name)
+            return json.dumps(dict(success=True)), 200, {'ContentType': 'application/json'}
         return 'You have to create a game first!'
 
 
@@ -52,3 +52,7 @@ class Lobby:
     @staticmethod
     def start_game():
         Lobby.game = fish.Game(Lobby.players)
+
+@app.route('/GetPlayerState', methods=['POST'])
+def get_state():
+    return JSON.serialize(Lobby.game.players) ##

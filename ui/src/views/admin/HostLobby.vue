@@ -5,14 +5,8 @@
       <table class="hostLobbyTable">
         <thead></thead>
         <tbody>
-          <tr>
-            <td>Bob</td>
-          </tr>
-          <tr>
-            <td>Eric</td>
-          </tr>
-          <tr>
-            <td>Daniel</td>
+          <tr v-for="player in players" :key="player">
+            <td>{{ player }}</td>
           </tr>
         </tbody>
       </table>
@@ -25,11 +19,25 @@
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
+  data: function() {
+    return {
+      players: []
+    };
+  },
   methods: {
     StartGame: function() {
       this.$router.push("StartGame");
     }
+  },
+  created() {
+    let self = this;
+    setInterval(async () => {
+      let response = await axios.post("http://127.0.0.1:5000/GetPlayersInLobby");
+      self.players = response.data.players;
+    }, 5 * 1000);
   }
 };
 </script>

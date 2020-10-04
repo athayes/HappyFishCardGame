@@ -112,6 +112,33 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "GetPlayersInLobby",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:5000/GetGameObject",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"GetGameObject"
+					]
+				}
+			},
+			"response": []
 		}
 	],
 	"protocolProfileBehavior": {}

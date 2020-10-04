@@ -26,10 +26,14 @@ def create_game():
 def get_game_object():
     return json.dumps({'players': Lobby.game.players})
 
+@app.route('/GetPlayersInLobby', methods=['POST'])
+def get_players_in_lobby():
+    return json.dumps({'players': Lobby.players})
+
 @app.route('/JoinGame', methods=['POST'])
 def join():
         player_name = request.json['playerName']
-        if player_name in players:
+        if player_name in Lobby.players:
             return 'Name taken; pick a new name!'
         if Lobby.game is None:
             Lobby.add_player(player_name)

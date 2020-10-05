@@ -1,48 +1,12 @@
 import random
 
 
-class Deck:
-    def __init__(self, card_types, num_to_deal):
-        self.cards = []
-        for card_type in card_types:
-            self.cards += [card_type() for i in range(num_to_deal)]
-
-    def shuffle(self):
-        random.shuffle(self.cards)
-
-    def deal(self, hand, num_cards):
-        hand = self.cards[0:num_cards]
-        self.cards = self.cards[num_cards:-1]
-
-
-class Hand:
-    def __init__(self, cards, tableau):
-        self.cards = cards
-        self.tableau = tableau
-
-    def play(self, card):
-        self.cards.remove(card)
-        self.tableau.add(card)
-
-
-class Tableau:
-    def __init__(self):
-        self.cards = []
-
-    def __len__(self):
-        return len(self.cards)
-
-    def __getitem__(self, key):
-        return self.cards[key]
-
-    def add(self, card):
-        self.cards.append(card)
-
-
 class Card:
     face_value = 0
-    sort_value = 0
     dessert = False
+    
+    def __init__(self, face_value=0):
+        self.face_value = face_value
 
     def play(self, hand, tableau):
         tableau += self
@@ -77,6 +41,9 @@ class Army_Card(Card):
     second_reward = 0
     punishment = 0
     power = 1
+
+    def __init__(self, power=1):
+        self.power = power
 
     @staticmethod
     def score(clazz, tableaus, scores):
@@ -150,33 +117,14 @@ class Threshold_Card(Card):
 
 # Face value score cards
 class Nigiri(Card):
-   pass
-
-class Egg(Card):
-    face_value = 1
-    sort_value = 1
-
-    @staticmethod
-    def score(tableaus, scores):
-        Card().score(Egg, tableaus, scores)
-
-
-class Salmon(Card):
-    face_value = 2
     sort_value = 2
+    
+    def __init__(self):
+        super().__init__(random.randint(1, 3))
 
     @staticmethod
     def score(tableaus, scores):
-        Card().score(Salmon, tableaus, scores)
-
-
-class Squid(Card):
-    face_value = 3
-    sort_value = 3
-
-    @staticmethod
-    def score(tableaus, scores):
-        Card().score(Squid, tableaus, scores)
+        Card().score(Nigiri, tableaus, scores)
 
 
 class Miso(Card):
@@ -229,11 +177,13 @@ class Chopsticks(Card):
 
 
 class Tea(Card):
-    sort_value = -1
+    sort_value = 0
 
 
 # Combo scoring cards
 class Wasabi(Card):
+    sort_value = 1
+
     def __init__(self):
         # score this first so linked nigiri is def not deleted
         super().__init__()
@@ -351,9 +301,8 @@ class Maki(Army_Card):
     reward = 6
     second_reward = 3
 
-    def __init__(self, power):
-        super().__init__()
-        self.power = power
+    def __init__(self):
+        super().__init__(random.randint(1, 3))
 
     @staticmethod
     def score(tableaus, scores):
@@ -402,11 +351,60 @@ class Pudding(Card):
         Army_Card().score(Pudding, tableaus, scores)
 
 
+class Deck:
+    CARD_DISTRIBUTION = {Nigiri: 12, Maki: 12, Temaki: 12, Uramaki: 12, Tempura: 8,
+    Sashimi: 8, Dumpling: 8, Eel: 8, Tofu: 8, Onigiri: 8, Edamame: 8, Miso: 8,
+    Chopsticks: 3, Soy: 3, Tea: 3, Menu: 3, Spoon: 3, Special: 3, Takeout: 3,
+    Wasabi: 3, Pudding: 15, Ice_Cream: 15, Fruit: 15}    
+    cards = []
+
+
+    def __init__(self, card_types):
+        self.cards = []
+        for card_type in card_types:
+            self.cards.extend([card_type() for i in range(Deck.CARD_DISTRIBUTION.get(card_type))])
+
+    def shuffle(self):
+        random.shuffle(self.cards)
+
+    def deal(self, hand, num_cards):
+        hand = self.cards[0:num_cards]
+        self.cards = self.cards[num_cards:-1]
+        
+    def __str__(self):
+        return self.cards.__str__()
+
+
+class Hand:
+    def __init__(self, cards):
+        self.cards = cards
+        self.tableau = tableau
+
+    def play(self, card):
+        self.cards.remove(card)
+        self.tableau.add(card)
+
+
+class Tableau:
+    def __init__(self):
+        self.cards = []
+
+    def __len__(self):
+        return len(self.cards)
+
+    def __getitem__(self, key):
+        return self.cards[key]
+
+    def add(self, card):
+        self.cards.append(card)
+
+
 class Game:
     SPECIALS = [Miso, Wasabi, Menu, Takeout, Special, Soy, Spoon, Chopsticks, Tea, Edamame]
     ROLLS = [Maki, Temaki, Uramaki]
     APPETIZERS = [Tofu, Dumpling, Tempura, Sashimi, Eel, Onigiri]
     DESSERT = [Pudding, Ice_Cream, Fruit]
+    
 
     CARDS_TO_DEAL = {2: 10, 3: 10, 4: 9, 5: 9, 6: 8, 7: 8, 8: 7}
 
@@ -415,9 +413,9 @@ class Game:
         self.players = players
         self.num_players = len(self.players)
         self.round = 0
-        self.deck = Deck(cards_in_use, Game.CARDS_TO_DEAL[self.num_players])
+        self.deck = Deck(cards_in_use)
         self.tableaus = {player.screen_name: Tableau() for player in self.players}
-        self.hands = {player.screen_name: Hand([], self.tableaus[player.Id]) for player in self.players}
+        #self.hands = {player.screen_name: Hand() for player in self.players}
         
     def fill_players(self):
         for player in self.players:
@@ -455,15 +453,17 @@ class Player():
 
 ################ Testing code #####################
 if __name__ == "__main__":
+    p1 = Player('a', 1)
+    p2 = Player('b', 1)
+    game = Game([p1, p2])
     chopstick = Chopsticks()
     dum1 = Dumpling()
     dum2 = Dumpling()
     dum3 = Dumpling()
-    m1 = Maki(2)
-    m2 = Maki(3)
+    m1 = Maki()
+    m2 = Maki()
     scores = [0, 0]
-    num_players = 7
-    tableaus = [Tableau([dum1]), Tableau([dum2, dum3])]
+    #tableaus = [Tableau([dum1]), Tableau([dum2, dum3])]
     # Maki.score(tableaus, scores)
-    Dumpling.score(tableaus, scores)
+    #Dumpling.score(tableaus, scores)
     print(scores)

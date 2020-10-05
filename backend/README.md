@@ -5,3 +5,6 @@ To install dependencies:
 
 To update the requirements.txt run
 * pip freeze > requirements.txt
+
+To run app
+* flask run

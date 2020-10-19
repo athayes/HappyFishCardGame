@@ -436,9 +436,9 @@ class Game:
         self.round += 1
         self.deck.shuffle()
         
-        for player in self.players{
-            self.players.get(player).hand = self.deck.deal_a_hand(CARDS_TO_DEAL.get(len(players))
-        }
+        for player in self.players:
+            self.players.get(player).hand = self.deck.deal_a_hand(CARDS_TO_DEAL.get(len(players)))
+
 
     def score_round(self):
         tableaus = []

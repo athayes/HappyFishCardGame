@@ -429,7 +429,7 @@ class Game:
         self.players = players
         self.num_players = len(self.players)
         self.round = 0
-        self.deck = Deck(cards_in_use)
+        self.deck = Deck(cards_in_use, players)
         self.dessert = dessert
 
     def start_round(self):

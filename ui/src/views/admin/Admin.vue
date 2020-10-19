@@ -1,7 +1,7 @@
 <template>
   <div class="Admin">
     <h2>Admin Screen</h2>
-    <p>Game not created<button @click="GoToCreatePage">Create Game</button></p>
+    <button @click="GoToCreatePage">Create Game</button>
 
     <h3>Advanced stuff</h3>
 

@@ -22,13 +22,27 @@ class Card:
         return self.__class__.__name__
 
     @staticmethod
-    def score(clazz, tableaus, scores):
+    def score(clazz, tableaus, player_ids, players):
         # Tableaus must be sorted
 
         for i in range(len(tableaus)):
             j = 0
             while j < len(tableaus[i]) and isinstance(tableaus[i][j], clazz):
-                scores[i] += clazz.face_value
+                players.get(player_ids[i]).score += clazz.face_value
+                j += 1
+            if j == len(tableaus[i]):
+                tableaus[i] = []
+            else:
+                tableaus[i] = tableaus[i][j:]
+                
+    @staticmethod
+    def count_dessert(tableaus, player_ids, players):
+        # Tableaus must be sorted
+
+        for i in range(len(tableaus)):
+            j = 0
+            while j < len(tableaus[i]) and isinstance(tableaus[i][j], clazz):
+                players.get(player_ids[i]).dessert += 1
                 j += 1
             if j == len(tableaus[i]):
                 tableaus[i] = []
@@ -46,7 +60,7 @@ class Army_Card(Card):
         self.power = power
 
     @staticmethod
-    def score(clazz, tableaus, scores):
+    def score(clazz, tableaus, player_ids, players):
         # Tableaus must be sorted
 
         card_cnts = [0 for i in range(num_players)]
@@ -66,7 +80,7 @@ class Army_Card(Card):
                        if min_score == element]
         neg_score = clazz.punishment // len(min_indices)
         for i in min_indices:
-            scores[i] += neg_score
+            players.get(player_ids[i]).score += neg_score
 
         # Find who came first
         max_score = max(card_cnts)
@@ -74,7 +88,7 @@ class Army_Card(Card):
                        if max_score == element]
         pos_score = clazz.reward // len(max_indices)
         for i in max_indices:
-            scores[i] += pos_score
+            players.get(player_ids[i]).score += pos_score
             card_cnts[i] = 0
 
         # Find who came second
@@ -84,7 +98,7 @@ class Army_Card(Card):
                            if max_score == element]
             pos_score = clazz.second_reward // len(max_indices)
             for i in max_indices:
-                scores[i] += pos_score
+                players.get(player_ids[i]).score += pos_score
 
 
 class Threshold_Card(Card):
@@ -94,7 +108,7 @@ class Threshold_Card(Card):
     max_count = 0
 
     @staticmethod
-    def score(clazz, tableaus, scores):
+    def score(clazz, tableaus, player_ids, players):
         # Tableaus must be sorted
 
         card_cnts = [0 for i in range(num_players)]
@@ -110,9 +124,9 @@ class Threshold_Card(Card):
 
         if Threshold_Card.min_count > 0:
             for i in range(len(scores)):
-                scores[i] += card_cnts[i] // Threshold_Card.min_count
+                players.get(player_ids[i]).score += card_cnts[i] // Threshold_Card.min_count
         else:
-            pass
+            pass # how to score negative points?
 
 
 # Face value score cards
@@ -123,7 +137,7 @@ class Nigiri(Card):
         super().__init__(random.randint(1, 3))
 
     @staticmethod
-    def score(tableaus, scores):
+    def score(tableaus, player_ids, players):
         Card().score(Nigiri, tableaus, scores)
 
 
@@ -132,8 +146,8 @@ class Miso(Card):
     face_value = 3
 
     @staticmethod
-    def score(tableaus, scores):
-        Card().score(Miso, tableaus, scores)
+    def score(tableaus, player_ids, players):
+        Card().score(Miso, tableaus, player_ids, players)
 
 
 # No score cards
@@ -142,8 +156,8 @@ class Menu(Card):
     face_value = 0
 
     @staticmethod
-    def score(tableaus, scores):
-        Card().score(Menu, tableaus, scores)
+    def score(tableaus, player_ids, players):
+        Card().score(Menu, tableaus, player_ids, players)
 
 
 class Takeout(Card):
@@ -163,8 +177,8 @@ class Spoon(Card):
     face_value = 0
 
     @staticmethod
-    def score(tableaus, scores):
-        Card().score(Spoon, tableaus, scores)
+    def score(tableaus, player_ids, players):
+        Card().score(Spoon, tableaus, player_ids, players)
 
 
 class Chopsticks(Card):
@@ -172,8 +186,8 @@ class Chopsticks(Card):
     sort_value = 10
 
     @staticmethod
-    def score(tableaus, scores):
-        Card().score(Chopsticks, tableaus, scores)
+    def score(tableaus, player_ids, players):
+        Card().score(Chopsticks, tableaus, player_ids, players)
 
 
 class Tea(Card):
@@ -190,14 +204,14 @@ class Wasabi(Card):
         self.nigiri = None
 
     @staticmethod
-    def score(tableaus, scores):
+    def score(tableaus, player_ids, players):
         # Tableaus must be sorted
 
         for i in range(len(tableaus)):
             j = 0
             while j < len(tableaus[i]) and isinstance(tableaus[i][j], Wasabi):
                 # The third will be added in the nigiri scoring method
-                scores[i] += tableaus[i][j].nigiri.face_value * 2
+                players.get(player_ids[i]).score += tableaus[i][j].nigiri.face_value * 2
                 j += 1
             if j == len(tableaus[i]):
                 tableaus[i] = []
@@ -212,7 +226,7 @@ class Tofu(Threshold_Card):
 
     @staticmethod
     def score(tableaus, scores):
-        Threshold_Card().score(Tofu, tableaus, scores)
+        Threshold_Card().score(Tofu, tableaus, player_ids, players)
 
 
 class Dumpling(Card):
@@ -220,7 +234,7 @@ class Dumpling(Card):
     score_vals = {1: 1, 2: 3, 3: 6, 4: 10, 5: 15}
 
     @staticmethod
-    def score(tableaus, scores):
+    def score(tableaus, player_ids, players):
         # Tableaus must be sorted
 
         for i in range(len(tableaus)):
@@ -238,7 +252,7 @@ class Dumpling(Card):
             for k in range(5, 0, -1):
                 val = Dumpling.score_vals[k] * (num_dumplings // k)
                 if val > 0:
-                    scores[i] += val
+                    players.get(player_ids[i]).score += val
                     num_dumplings -= k
 
 
@@ -248,8 +262,8 @@ class Tempura(Threshold_Card):
     min_count = 2
 
     @staticmethod
-    def score(tableaus, scores):
-        Threshold_Card().score(Tempura, tableaus, scores)
+    def score(tableaus, player_ids, players):
+        Threshold_Card().score(Tempura, tableaus, player_ids, players)
 
 
 class Sashimi(Threshold_Card):
@@ -259,8 +273,8 @@ class Sashimi(Threshold_Card):
     min_count = 3
 
     @staticmethod
-    def score(tableaus, scores):
-        Threshold_Card().score(Sashimi, tableaus, scores)
+    def score(tableaus, player_ids, players):
+        Threshold_Card().score(Sashimi, tableaus, player_ids, players)
 
 
 class Eel(Threshold_Card):
@@ -270,8 +284,8 @@ class Eel(Threshold_Card):
     min_count = 2
 
     @staticmethod
-    def score(tableaus, scores):
-        Threshold_Card().score(Eel, tableaus, scores)
+    def score(tableaus, player_ids, players):
+        Threshold_Card().score(Eel, tableaus, player_ids, players)
 
 
 class Ice_Cream(Threshold_Card):
@@ -281,8 +295,8 @@ class Ice_Cream(Threshold_Card):
     punishment = 0
 
     @staticmethod
-    def score(tableaus, scores):
-        Threshold_Card().score(Ice_Cream, tableaus, scores)
+    def score(tableaus, player_ids, players):
+        Threshold_Card().score(Ice_Cream, tableaus, player_ids, players)
 
 
 class Fruit(Card):
@@ -305,8 +319,8 @@ class Maki(Army_Card):
         super().__init__(random.randint(1, 3))
 
     @staticmethod
-    def score(tableaus, scores):
-        Army_Card().score(Maki, tableaus, scores)
+    def score(tableaus, player_ids, players):
+        Army_Card().score(Maki, tableaus, player_ids, players)
 
 
 class Temaki(Army_Card):
@@ -315,8 +329,8 @@ class Temaki(Army_Card):
     punishment = -4
 
     @staticmethod
-    def score(tableaus, scores):
-        Army_Card().score(Temaki, tableaus, scores)
+    def score(tableaus, player_ids, players):
+        Army_Card().score(Temaki, tableaus, player_ids, players)
 
 
 class Uramaki(Card):
@@ -335,9 +349,9 @@ class Onigiri(Card):
     score_vals = {1: 1, 2: 4, 3: 9, 4: 16}
     sort_value = 19
 
-    def __init__(self, type):
+    def __init__(self, card_type):
         super().__init__()
-        self.type = type
+        self.card_type = card_type
 
 
 class Pudding(Card):
@@ -347,8 +361,8 @@ class Pudding(Card):
     punihsment = -6
 
     @staticmethod
-    def score(tableaus, scores):
-        Army_Card().score(Pudding, tableaus, scores)
+    def score(tableaus, player_ids, players):
+        Army_Card().score(Pudding, tableaus, player_ids, players)
 
 
 class Deck:
@@ -359,30 +373,32 @@ class Deck:
     cards = []
 
 
-    def __init__(self, card_types):
+    def __init__(self, card_types, players):
         self.cards = []
+        self.players = players
         for card_type in card_types:
             self.cards.extend([card_type() for i in range(Deck.CARD_DISTRIBUTION.get(card_type))])
 
     def shuffle(self):
         random.shuffle(self.cards)
 
-    def deal(self, hand, num_cards):
+    def deal_a_hand(self, num_cards):
         hand = self.cards[0:num_cards]
         self.cards = self.cards[num_cards:-1]
+        return hand
         
     def __str__(self):
         return self.cards.__str__()
 
 
 class Hand:
-    def __init__(self, cards):
+    def __init__(self, cards, players):
         self.cards = cards
-        self.tableau = tableau
+        self.players = players
 
-    def play(self, card):
+    def play(self, card, tableau, player):
         self.cards.remove(card)
-        self.tableau.add(card)
+        self.players.get(player).tableau.add(card)
 
 
 class Tableau:
@@ -408,36 +424,35 @@ class Game:
 
     CARDS_TO_DEAL = {2: 10, 3: 10, 4: 9, 5: 9, 6: 8, 7: 8, 8: 7}
 
-    def __init__(self, players, cards_in_use=[Wasabi, Chopsticks, Dumpling, Tempura, Sashimi, Ice_Cream]):
+    def __init__(self, players, cards_in_use=[Wasabi, Chopsticks, Dumpling, Tempura, Sashimi], dessert=Pudding):
         self.cards_in_use = cards_in_use
         self.players = players
         self.num_players = len(self.players)
         self.round = 0
         self.deck = Deck(cards_in_use)
-        self.tableaus = {player.screen_name: Tableau() for player in self.players}
-        #self.hands = {player.screen_name: Hand() for player in self.players}
-        
-    def fill_players(self):
-        for player in self.players:
-            player.hand = self.hands.get(player)
-            player.tableau = self.tableaus.get(player)
+        self.dessert = dessert
 
     def start_round(self):
         self.round += 1
         self.deck.shuffle()
-        # How to keep pudding?
-
-        for hand in self.hands:
-            self.deck.deal(hand, Game.CARDS_TO_DEAL.get(self.num_players))
+        
+        for player in self.players{
+            self.players.get(player).hand = self.deck.deal_a_hand(CARDS_TO_DEAL.get(len(players))
+        }
 
     def score_round(self):
-        for tableau in tableaus:
-            tableau.sort()
+        tableaus = []
+        player_ids = [] # dictionaries do not enforce order, so need to hold these static
+        for player in players.keys():
+            players.get(player).tableau.sort()
+            tableaus.add(players.get(player).tableau)
+            player_ids.add(player)
         for card_type in self.cards_in_use:  # ensure dessert not counted here
-            card_type.score(card_type, tableaus, scores)
+                Card.count_dessert(tableaus, player_ids, self.players)
+        card_type.score(card_type, tableaus, player_ids, self.players)
 
     def score_dessert(self):
-        pass
+        self.dessert.score(card_type, tableaus, player_ids, self.players)
 
 
 class Player():
@@ -445,9 +460,9 @@ class Player():
         self.screen_name = screen_name
         self.game_id = game_id
         self.score = 0
-        self.tableau = None
-        self.pudding = 0
-        self.hand = None
+        self.tableau = []
+        self.dessert = []
+        self.hand
 
 
 

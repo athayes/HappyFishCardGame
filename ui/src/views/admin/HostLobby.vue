@@ -28,8 +28,9 @@ export default {
     };
   },
   methods: {
-    StartGame: function() {
-      this.$router.push("StartGame");
+    StartGame: async function() {
+      await axios.post("http://127.0.0.1:5000/StartGame");
+      await this.$router.push("StartGame");
     }
   },
   async created() {

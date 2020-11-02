@@ -1,6 +1,8 @@
 <template>
   <div class="Admin">
-    <h2>Admin Screen</h2>
+    <h1>Host</h1>
+    <h3>Create Game</h3>
+
     <button @click="GoToCreatePage">Create Game</button>
 
     <h3>Advanced stuff</h3>

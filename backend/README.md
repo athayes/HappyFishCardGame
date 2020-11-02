@@ -7,4 +7,5 @@ To update the requirements.txt run
 * pip freeze > requirements.txt
 
 To run app
+* source venv/bin/activate
 * flask run

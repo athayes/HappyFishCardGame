@@ -42,8 +42,7 @@
           <p>{{ pickedCard.name }}</p>
         </div>
         <p class="description">
-          This is the description of the card. If it has lots of rules it'd be
-          nice to see them :)
+          {{  pickedCard.description }}
         </p>
 
         <div>
@@ -71,7 +70,7 @@
         <div class="card" v-for="card in tableau" :key="card.name">
           <!-- div contents-->
           <img v-bind:src="card.image" />
-          <p>{{ card.name }}</p>
+          {{ card.name }}
         </div>
       </div>
     </div>
@@ -79,7 +78,8 @@
 </template>
 
 <script>
-import Card from "../../../models/Card";
+import {cardFactory} from "../../../models/Card";
+
 export const VIEWS = {
   pickACard: 1,
   confirmCard: 2,
@@ -93,15 +93,15 @@ export default {
       currentView: VIEWS.pickACard,
       pickedCard: {},
       hand: [
-        new Card("Egg", "/assets/egg.png", false),
-        new Card("Chopsticks", "/assets/chopsticks.png", false),
-        new Card("Ice Cream", "assets/ice-cream.png", false),
-        new Card("Sashimi", "assets/sashimi.png", false)
+        cardFactory("Egg"),
+        cardFactory("Chopsticks"),
+        cardFactory("Ice Cream"),
+        cardFactory("Sashimi")
       ],
       tableau: [
-        new Card("Maki", "/assets/maki.png", false),
-        new Card("Temaki", "/assets/temaki.png", false),
-        new Card("Wasabi", "assets/wasabi.png", false)
+        cardFactory("Maki"),
+        cardFactory("Temaki"),
+        cardFactory("Wasabi"),
       ]
     };
   },
@@ -154,6 +154,10 @@ export default {
 }
 
 img {
-  height: 200px;
+  height: 100px;
+}
+
+p {
+  margin: 20px 0px 10px 0px;
 }
 </style>

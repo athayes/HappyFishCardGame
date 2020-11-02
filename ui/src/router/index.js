@@ -5,6 +5,7 @@ import HostLobby from "../views/admin/HostLobby";
 import JoinGame from "../views/player/JoinGame";
 import CreateGame from "../views/admin/CreateGame";
 import Admin from "../views/admin/Admin";
+import PickACard from "../views/tests_and_demos/pick_a_card/PickACard";
 
 Vue.use(VueRouter);
 
@@ -14,15 +15,7 @@ const routes = [
     component: JoinGame
   },
   {
-    path: "/Rebecca",
-    component: Admin
-  },
-  {
     path: "/Host",
-    component: Admin
-  },
-  {
-    path: "/Admin",
     component: Admin
   },
   {
@@ -40,6 +33,10 @@ const routes = [
   {
     path: "/Lobby",
     component: Lobby
+  },
+  {
+    path: "/PickACard",
+    component: PickACard
   }
 ];
 

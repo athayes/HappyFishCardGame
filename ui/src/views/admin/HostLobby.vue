@@ -30,7 +30,7 @@ export default {
   methods: {
     StartGame: async function() {
       await axios.post("http://127.0.0.1:5000/StartGame");
-      await this.$router.push("StartGame");
+      await this.$router.push("PickACard");
     }
   },
   async created() {

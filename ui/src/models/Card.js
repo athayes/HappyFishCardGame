@@ -29,7 +29,7 @@ export function cardFactory(name) {
   if (name === "Sashimi") {
     return {
       name: name,
-      image: "/assets/ice-cream.png",
+      image: "/assets/sashimi.png",
       description: "Sashimi Description",
       played: false
     }

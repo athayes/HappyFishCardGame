@@ -6,7 +6,7 @@
           class="btn-secondary"
           @click.stop="currentView = VIEWS.viewTableau"
         >
-          My Tableau
+          View Tableaus
         </button>
       </div>
 
@@ -31,7 +31,7 @@
           class="btn-secondary"
           @click.stop="currentView = VIEWS.viewTableau"
         >
-          My Tableau
+          View Tableaus
         </button>
       </div>
 
@@ -58,10 +58,10 @@
     <div v-if="currentView === VIEWS.viewTableau">
       <div class="menu-buttons">
         <button
-          class="btn-secondary"
+          class="btn-secondary btn"
           @click.stop="currentView = VIEWS.pickACard"
         >
-          Back
+          View Hand
         </button>
       </div>
 
@@ -70,7 +70,7 @@
         <div class="card" v-for="card in tableau" :key="card.name">
           <!-- div contents-->
           <img v-bind:src="card.image" />
-          {{ card.name }}
+          <p>{{ card.name }}</p>
         </div>
       </div>
     </div>
@@ -102,6 +102,13 @@ export default {
         cardFactory("Maki"),
         cardFactory("Temaki"),
         cardFactory("Wasabi"),
+        cardFactory("Wasabi"),
+        cardFactory("Wasabi"),
+        cardFactory("Wasabi"),
+        cardFactory("Wasabi"),
+        cardFactory("Wasabi"),
+        cardFactory("Wasabi"),
+        cardFactory("Wasabi"),
       ]
     };
   },
@@ -128,19 +135,14 @@ export default {
 
 .hand {
   display: flex;
-  flex-wrap: nowrap;
+  flex-wrap: wrap;
   align-items: flex-start;
   justify-content: center;
 }
 
-.description {
-  width: 20%;
-  margin: 20px;
-}
-
 .card {
   height: 40%;
-  width: 20%;
+  width: 100px;
   margin: 10px;
   text-align: center;
   font-size: 30px;
@@ -155,9 +157,15 @@ export default {
 
 img {
   height: 100px;
+  width: 100px;
 }
 
 p {
-  margin: 20px 0px 10px 0px;
+  margin: 10px 0px 10px 0px;
+  font-size: 20px;
+}
+
+h3 {
+  margin: 0px;
 }
 </style>

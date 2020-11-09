@@ -6,11 +6,27 @@ from flask_cors import CORS
 app = Flask(__name__)
 CORS(app)
 
+class Lobby:
+    game = None
+    players = []
+
+    @staticmethod
+    def add_player(player_name):
+        Lobby.players.append(player_name)
+
+    @staticmethod
+    def reset_game():
+        Lobby.players = []
+
+    @staticmethod
+    def start_game():
+        Lobby.game = fish.Game(Lobby.players)
 
 @app.route('/StartGame', methods=['POST'])
 def start_game():
     Lobby.start_game()
-    return json.dumps(Lobby.game.players)
+    
+    return Lobby.game.player_json()
 
 # Recreate game 1
 @app.route('/CreateGame', methods=['POST'])
@@ -40,23 +56,6 @@ def join():
             return json.dumps(dict(success=True)), 200, {'ContentType': 'application/json'}
         return 'You have to create a game first!'
 
-
-class Lobby:
-    game = None
-    players = []
-
-    @staticmethod
-    def add_player(player_name):
-        Lobby.players.append(player_name)
-
-    @staticmethod
-    def reset_game():
-        Lobby.players = []
-
-    @staticmethod
-    def start_game():
-        Lobby.game = fish.Game(Lobby.players)
-
-@app.route('/GetPlayerState', methods=['POST'])
+@app.route('/GetPlayers', methods=['POST'])
 def get_state():
-    return JSON.serialize(Lobby.game.players) ##
+    return Lobby.game.players.get(Lobby.players[0]).to_json()

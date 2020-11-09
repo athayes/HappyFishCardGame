@@ -1,5 +1,5 @@
 import random
-
+import json
 
 class Card:
     face_value = 0
@@ -424,13 +424,20 @@ class Game:
 
     CARDS_TO_DEAL = {2: 10, 3: 10, 4: 9, 5: 9, 6: 8, 7: 8, 8: 7}
 
-    def __init__(self, players, cards_in_use=[Wasabi, Chopsticks, Dumpling, Tempura, Sashimi], dessert=Pudding):
+    def __init__(self, player_names, cards_in_use=[Wasabi, Chopsticks, Dumpling, Tempura, Sashimi], dessert=Pudding):
         self.cards_in_use = cards_in_use
-        self.players = players
-        self.num_players = len(self.players)
+        self.num_players = len(player_names)
         self.round = 0
-        self.deck = Deck(cards_in_use, players)
+        self.deck = Deck(cards_in_use, player_names)
         self.dessert = dessert
+        self.players = {player: Player(player, self) for player in player_names}
+        
+    def player_json(self):
+        data = {}
+        for player_name, player in self.players.items():
+            data[player_name] = player.to_json()
+        return data
+        
 
     def start_round(self):
         self.round += 1
@@ -452,6 +459,12 @@ class Game:
         card_type.score(card_type, tableaus, player_ids, self.players)
 
     def score_dessert(self):
+        tableaus = []
+        player_ids = [] # dictionaries do not enforce order, so need to hold these static
+        for player in players.keys():
+            players.get(player).tableau.sort()
+            tableaus.add(players.get(player).tableau)
+            player_ids.add(player)
         self.dessert.score(card_type, tableaus, player_ids, self.players)
 
 
@@ -462,7 +475,16 @@ class Player():
         self.score = 0
         self.tableau = []
         self.dessert = []
-        self.hand
+        self.hand = []
+        
+        
+    def to_json(self):
+        data = {}
+        data['score'] = self.score
+        data['tableau'] = self.tableau
+        data['dessert'] = self.dessert
+        data['hand'] = self.hand
+        return data
 
 
 

@@ -21,6 +21,7 @@ class Lobby:
     @staticmethod
     def start_game():
         Lobby.game = fish.Game(Lobby.players)
+        Lobby.game.start_round()
 
 @app.route('/StartGame', methods=['POST'])
 def start_game():

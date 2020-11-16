@@ -20,6 +20,11 @@ class Card:
 
     def __str__(self):
         return self.__class__.__name__
+        
+    def to_json(self):
+        data = {}
+        data['name'] = 'Maki'
+        return data
 
     @staticmethod
     def score(clazz, tableaus, player_ids, players):
@@ -444,7 +449,7 @@ class Game:
         self.deck.shuffle()
         
         for player in self.players:
-            self.players.get(player).hand = self.deck.deal_a_hand(CARDS_TO_DEAL.get(len(players)))
+            self.players.get(player).hand = self.deck.deal_a_hand(Game.CARDS_TO_DEAL.get(len(self.players)))
 
 
     def score_round(self):
@@ -483,7 +488,9 @@ class Player():
         data['score'] = self.score
         data['tableau'] = self.tableau
         data['dessert'] = self.dessert
-        data['hand'] = self.hand
+        data['hand'] = []
+        for c in self.hand:
+            data['hand'].extend(c.to_json())
         return data
 
 

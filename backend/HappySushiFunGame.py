@@ -23,7 +23,7 @@ class Card:
         
     def to_json(self):
         data = {}
-        data['name'] = 'Maki'
+        data['name'] = self.__class__.__name__
         return data
 
     @staticmethod
@@ -490,7 +490,7 @@ class Player():
         data['dessert'] = self.dessert
         data['hand'] = []
         for c in self.hand:
-            data['hand'].extend(c.to_json())
+            data['hand'].append(c.to_json())
         return data
 
 

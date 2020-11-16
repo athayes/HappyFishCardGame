@@ -104,6 +104,12 @@ class Army_Card(Card):
             pos_score = clazz.second_reward // len(max_indices)
             for i in max_indices:
                 players.get(player_ids[i]).score += pos_score
+                
+    def to_json(self):
+        data = {}
+        data['name'] = self.__class__.__name__
+        data['power']  = self.power
+        return data
 
 
 class Threshold_Card(Card):
@@ -137,14 +143,29 @@ class Threshold_Card(Card):
 # Face value score cards
 class Nigiri(Card):
     sort_value = 2
-    
-    def __init__(self):
-        super().__init__(random.randint(1, 3))
+    face_value = 0
 
+
+class Egg(Nigiri):
+    face_value = 1
+    
     @staticmethod
     def score(tableaus, player_ids, players):
-        Card().score(Nigiri, tableaus, scores)
-
+        Card().score(Egg, tableaus, scores)
+    
+class Salmon(Nigiri):
+    face_value = 2;
+    
+    @staticmethod
+    def score(tableaus, player_ids, players):
+        Card().score(Salmon, tableaus, scores)
+    
+class Squid(Nigiri):
+    face_value = 3;
+    
+    @staticmethod
+    def score(tableaus, player_ids, players):
+        Card().score(Squid, tableaus, scores)
 
 class Miso(Card):
     sort_value = 4
@@ -371,18 +392,22 @@ class Pudding(Card):
 
 
 class Deck:
-    CARD_DISTRIBUTION = {Nigiri: 12, Maki: 12, Temaki: 12, Uramaki: 12, Tempura: 8,
+    CARD_DISTRIBUTION = {Maki: 12, Temaki: 12, Uramaki: 12, Tempura: 8,
     Sashimi: 8, Dumpling: 8, Eel: 8, Tofu: 8, Onigiri: 8, Edamame: 8, Miso: 8,
     Chopsticks: 3, Soy: 3, Tea: 3, Menu: 3, Spoon: 3, Special: 3, Takeout: 3,
     Wasabi: 3, Pudding: 15, Ice_Cream: 15, Fruit: 15}    
     cards = []
 
 
-    def __init__(self, card_types, players):
+    def __init__(self, card_types, players, dessert):
         self.cards = []
         self.players = players
         for card_type in card_types:
             self.cards.extend([card_type() for i in range(Deck.CARD_DISTRIBUTION.get(card_type))])
+        self.cards.extend([dessert() for i in range(5)])
+        self.cards.extend([Egg() for i in range(4)])
+        self.cards.extend([Salmon() for i in range(4)])
+        self.cards.extend([Squid() for i in range(4)])
 
     def shuffle(self):
         random.shuffle(self.cards)
@@ -429,11 +454,11 @@ class Game:
 
     CARDS_TO_DEAL = {2: 10, 3: 10, 4: 9, 5: 9, 6: 8, 7: 8, 8: 7}
 
-    def __init__(self, player_names, cards_in_use=[Wasabi, Chopsticks, Dumpling, Tempura, Sashimi], dessert=Pudding):
+    def __init__(self, player_names, cards_in_use=[Wasabi, Chopsticks, Dumpling, Tempura, Sashimi, Maki], dessert=Pudding):
         self.cards_in_use = cards_in_use
         self.num_players = len(player_names)
         self.round = 0
-        self.deck = Deck(cards_in_use, player_names)
+        self.deck = Deck(cards_in_use, player_names, dessert)
         self.dessert = dessert
         self.players = {player: Player(player, self) for player in player_names}
         

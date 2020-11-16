@@ -6,7 +6,7 @@
           class="btn-secondary"
           @click.stop="currentView = VIEWS.viewTableau"
         >
-          My Tableau
+          View Tableaus
         </button>
       </div>
 
@@ -15,7 +15,7 @@
         <div
           class="card"
           v-for="(card, index) in hand"
-          :key="card.name"
+          :key="card.index"
           @click.stop="chooseCard(card, index)"
         >
           <!-- div contents-->
@@ -31,7 +31,7 @@
           class="btn-secondary"
           @click.stop="currentView = VIEWS.viewTableau"
         >
-          My Tableau
+          View Tableaus
         </button>
       </div>
 
@@ -58,10 +58,10 @@
     <div v-if="currentView === VIEWS.viewTableau">
       <div class="menu-buttons">
         <button
-          class="btn-secondary"
+          class="btn-secondary btn"
           @click.stop="currentView = VIEWS.pickACard"
         >
-          Back
+          View Hand
         </button>
       </div>
 
@@ -70,7 +70,7 @@
         <div class="card" v-for="card in tableau" :key="card.name">
           <!-- div contents-->
           <img v-bind:src="card.image" />
-          {{ card.name }}
+          <p>{{ card.name }}</p>
         </div>
       </div>
     </div>
@@ -79,6 +79,8 @@
 
 <script>
 import {cardFactory} from "../../../models/Card";
+import axios from "axios";
+
 
 export const VIEWS = {
   pickACard: 1,
@@ -89,14 +91,12 @@ export const VIEWS = {
 export default {
   data() {
     return {
+      playerName: "Cool H",
       VIEWS: VIEWS,
       currentView: VIEWS.pickACard,
       pickedCard: {},
       hand: [
-        cardFactory("Egg"),
-        cardFactory("Chopsticks"),
-        cardFactory("Ice Cream"),
-        cardFactory("Sashimi")
+        cardFactory("Egg")
       ],
       tableau: [
         cardFactory("Maki"),
@@ -104,6 +104,22 @@ export default {
         cardFactory("Wasabi"),
       ]
     };
+  },
+  async mounted() {
+    let self = this;
+    let response = await axios.post("http://127.0.0.1:5000/GetGameObject");
+    self.players = response.data.players;
+      console.log(response);
+      let responseHand = response.data[self.playerName].hand;
+      let hand = [];
+
+      for (let card of responseHand) {
+        let cardObject = cardFactory(card.name);
+        hand.push(cardObject);
+      }
+
+      self.hand = hand;
+      console.log(self.hand);
   },
 
   methods: {
@@ -116,6 +132,7 @@ export default {
     confirmCard: function(card) {
       console.log(card.name);
     }
+
   }
 };
 </script>
@@ -128,19 +145,14 @@ export default {
 
 .hand {
   display: flex;
-  flex-wrap: nowrap;
+  flex-wrap: wrap;
   align-items: flex-start;
   justify-content: center;
 }
 
-.description {
-  width: 20%;
-  margin: 20px;
-}
-
 .card {
   height: 40%;
-  width: 20%;
+  width: 100px;
   margin: 10px;
   text-align: center;
   font-size: 30px;
@@ -155,9 +167,15 @@ export default {
 
 img {
   height: 100px;
+  width: 100px;
 }
 
 p {
-  margin: 20px 0px 10px 0px;
+  margin: 10px 0px 10px 0px;
+  font-size: 20px;
+}
+
+h3 {
+  margin: 0px;
 }
 </style>

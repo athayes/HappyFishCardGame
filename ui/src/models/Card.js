@@ -17,9 +17,9 @@ export function cardFactory(name) {
     }
   }
 
-  if (name === "Ice Cream") {
+  if (name === "IceCream") {
     return {
-      name: name,
+      name: "Ice Cream",
       image: "/assets/ice-cream.png",
       description: "Ice Cream Description",
       played: false
@@ -29,7 +29,7 @@ export function cardFactory(name) {
   if (name === "Sashimi") {
     return {
       name: name,
-      image: "/assets/ice-cream.png",
+      image: "/assets/sashimi.png",
       description: "Sashimi Description",
       played: false
     }
@@ -62,5 +62,23 @@ export function cardFactory(name) {
     }
   }
 
-  throw("Invalid card type");
+  if (name === "Tempura") {
+    return {
+      name: name,
+      image: "/assets/tempura.png",
+      description: "Tempura Description",
+      played: false
+    }
+  }
+
+  if (name === "Dumpling") {
+    return {
+      name: name,
+      image: "/assets/dumpling.png",
+      description: "Dumpling Description",
+      played: false
+    }
+  }
+
+  throw("Invalid card type " + name);
 }

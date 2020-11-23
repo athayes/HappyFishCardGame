@@ -60,3 +60,10 @@ def join():
 @app.route('/GetPlayers', methods=['POST'])
 def get_state():
     return Lobby.game.players.get(Lobby.players[0]).to_json()
+    
+@app.route('/GetPlayersChosen', methods=['GET'])
+def get_all_chosen():
+    all_chosen = True
+    for player in Lobby.game.players:
+        all_chosen = all_chosen and Lobby.game.players.get(player).chosen
+    return json.dumps(all_chosen)

@@ -67,7 +67,7 @@
 
       <h3>Your tableau</h3>
       <div class="hand">
-        <div class="card" v-for="card in tableau" :key="card.name">
+        <div class="card" v-for="card in tableau" :key="card.index">
           <!-- div contents-->
           <img v-bind:src="card.image" />
           <p>{{ card.name }}</p>
@@ -104,26 +104,26 @@ export default {
     let self = this;
     let response = await axios.post("http://127.0.0.1:5000/GetGameObject");
     self.players = response.data.players;
-      console.log(response);
-      let hand = [];
-      let tableau = [];
+    let hand = [];
+    let tableau = [];
 
-      for (let card of response.data[self.playerName].hand) {
-        hand.push(cardFactory(card.name));
-      }
+    for (let card of response.data[self.playerName].hand) {
+      hand.push(cardFactory(card.name));
+    }
 
-      for (let card of response.data[self.playerName].tableau) {
-        tableau.push(cardFactory(card.name));
-      }
+    for (let card of response.data[self.playerName].tableau) {
+      tableau.push(cardFactory(card.name));
+    }
 
-      self.hand = hand;
-      self.tableau = tableau
+    self.hand = hand;
+    self.tableau = tableau;
   },
 
   methods: {
     chooseCard: function(card, index) {
       console.log(card + index);
       this.pickedCard = card;
+      this.pickedCard.index = index;
       this.currentView = VIEWS.confirmCard;
     },
 

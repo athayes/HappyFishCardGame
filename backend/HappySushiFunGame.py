@@ -427,14 +427,14 @@ class Hand:
 
     def play(self, card, tableau, player):
         self.cards.remove(card)
-        self.player.tableau.add(card)
+        player.tableau.add(card)
+        play.chosen = True
         
     def to_json(self):
-        data = {}
-        data['hand'] = []
+        hand = []
         for c in self.cards:
-            data['hand'].append(c.to_json())
-        return data
+            hand.append(c.to_json())
+        return hand
 
 
 class Tableau:
@@ -451,11 +451,10 @@ class Tableau:
         self.cards.append(card)
         
     def to_json(self):
-        data = {}
-        data['tableau'] = []
+        tableau = []
         for c in self.cards:
-            data['tableau'].append(c.to_json())
-        return data 
+            tableau.append(c.to_json())
+        return tableau 
 
 
 class Game:

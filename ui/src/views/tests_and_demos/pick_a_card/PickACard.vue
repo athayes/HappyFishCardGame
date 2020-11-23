@@ -80,6 +80,7 @@
 <script>
 import {cardFactory} from "../../../models/Card";
 import axios from "axios";
+import Cookies from "js-cookie";
 
 
 export const VIEWS = {
@@ -91,18 +92,12 @@ export const VIEWS = {
 export default {
   data() {
     return {
-      playerName: "Cool H",
+      playerName: Cookies.get("HappyFishCardGame"),
       VIEWS: VIEWS,
       currentView: VIEWS.pickACard,
       pickedCard: {},
-      hand: [
-        cardFactory("Egg")
-      ],
-      tableau: [
-        cardFactory("Maki"),
-        cardFactory("Temaki"),
-        cardFactory("Wasabi"),
-      ]
+      hand: [],
+      tableau: []
     };
   },
   async mounted() {
@@ -110,16 +105,19 @@ export default {
     let response = await axios.post("http://127.0.0.1:5000/GetGameObject");
     self.players = response.data.players;
       console.log(response);
-      let responseHand = response.data[self.playerName].hand;
       let hand = [];
+      let tableau = [];
 
-      for (let card of responseHand) {
-        let cardObject = cardFactory(card.name);
-        hand.push(cardObject);
+      for (let card of response.data[self.playerName].hand) {
+        hand.push(cardFactory(card.name));
+      }
+
+      for (let card of response.data[self.playerName].tableau) {
+        tableau.push(cardFactory(card.name));
       }
 
       self.hand = hand;
-      console.log(self.hand);
+      self.tableau = tableau
   },
 
   methods: {

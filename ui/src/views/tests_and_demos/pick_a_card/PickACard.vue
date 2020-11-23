@@ -67,7 +67,7 @@
 
       <h3>Your tableau</h3>
       <div class="hand">
-        <div class="card" v-for="card in tableau" :key="card.name">
+        <div class="card" v-for="card in tableau" :key="card.index">
           <!-- div contents-->
           <img v-bind:src="card.image" />
           <p>{{ card.name }}</p>

@@ -415,20 +415,26 @@ class Deck:
     def deal_a_hand(self, num_cards):
         hand = self.cards[0:num_cards]
         self.cards = self.cards[num_cards:-1]
-        return hand
+        return Hand(hand)
         
     def __str__(self):
         return self.cards.__str__()
 
 
 class Hand:
-    def __init__(self, cards, players):
+    def __init__(self, cards):
         self.cards = cards
-        self.players = players
 
     def play(self, card, tableau, player):
         self.cards.remove(card)
-        self.players.get(player).tableau.add(card)
+        self.player.tableau.add(card)
+        
+    def to_json(self):
+        data = {}
+        data['hand'] = []
+        for c in self.cards:
+            data['hand'].append(c.to_json())
+        return data
 
 
 class Tableau:
@@ -443,6 +449,13 @@ class Tableau:
 
     def add(self, card):
         self.cards.append(card)
+        
+    def to_json(self):
+        data = {}
+        data['tableau'] = []
+        for c in self.cards:
+            data['tableau'].append(c.to_json())
+        return data 
 
 
 class Game:
@@ -503,19 +516,17 @@ class Player():
         self.screen_name = screen_name
         self.game_id = game_id
         self.score = 0
-        self.tableau = []
+        self.tableau = Tableau()
         self.dessert = []
-        self.hand = []
-        
+        self.hand = None
+        self.chosen = False
         
     def to_json(self):
         data = {}
         data['score'] = self.score
-        data['tableau'] = self.tableau
+        data['tableau'] = self.tableau.to_json()
         data['dessert'] = self.dessert
-        data['hand'] = []
-        for c in self.hand:
-            data['hand'].append(c.to_json())
+        data['hand'] = self.hand.to_json()
         return data
 
 

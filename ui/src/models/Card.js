@@ -80,5 +80,33 @@ export function cardFactory(name) {
     }
   }
 
+  if (name === "Squid") {
+    return {
+      name: name,
+      image: "/assets/squid.png",
+      description: "Squid Description",
+      played: false
+    }
+  }
+
+  if (name === "Pudding") {
+    return {
+      name: name,
+      image: "/assets/pudding.png",
+      description: "Pudding Description",
+      played: false
+    }
+  }
+
+  if (name === "Salmon") {
+    return {
+      name: name,
+      image: "/assets/salmon.png",
+      description: "Salmon Description",
+      played: false
+    }
+  }
+
+
   throw("Invalid card type " + name);
 }

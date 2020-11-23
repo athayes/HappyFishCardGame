@@ -43,7 +43,6 @@ export default {
         "http://127.0.0.1:5000/GetPlayersInLobby"
       );
       self.players = response.data.players;
-      console.log(response.data.players);
     }, 5 * 1000);
   },
   beforeDestroy() {

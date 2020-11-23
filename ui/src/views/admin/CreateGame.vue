@@ -16,6 +16,8 @@
 
 <script>
 import axios from "axios";
+import Cookies from 'js-cookie';
+
 export default {
   data: function() {
     return {
@@ -33,6 +35,8 @@ export default {
       await axios.post("http://127.0.0.1:5000/CreateGame", {
         hostName: hostName
       });
+
+      Cookies.set('HappyFishCardGame', hostName);
       await this.$router.push("HostLobby");
     }
   }

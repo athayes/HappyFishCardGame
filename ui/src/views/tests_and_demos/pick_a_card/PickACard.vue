@@ -1,5 +1,5 @@
 <template>
-  <div class = "pickACard">
+  <div class="pickACard">
     <div v-if="currentView === VIEWS.pickACard">
       <div class="menu-buttons">
         <button
@@ -37,12 +37,12 @@
 
       <h3>You want this card?</h3>
       <div class="hand">
-        <div class="card" @click.stop="confirmCard(card, index)">
+        <div class="card" @click.stop="confirmCard()">
           <img v-bind:src="pickedCard.image" />
           <p>{{ pickedCard.name }}</p>
         </div>
         <p class="description">
-          {{  pickedCard.description }}
+          {{ pickedCard.description }}
         </p>
 
         <div>
@@ -78,10 +78,9 @@
 </template>
 
 <script>
-import {cardFactory} from "../../../models/Card";
+import { cardFactory } from "../../../models/Card";
 import axios from "axios";
 import Cookies from "js-cookie";
-
 
 export const VIEWS = {
   pickACard: 1,
@@ -127,10 +126,19 @@ export default {
       this.currentView = VIEWS.confirmCard;
     },
 
-    confirmCard: function(card) {
-      console.log(card.name);
-    }
+    confirmCard: async function() {
+      let self = this;
+      let response = await axios.post("http://127.0.0.1:5000/PickCard", {
+        playerName: self.playerName,
+        index: self.pickedCard.index
+      });
 
+      // then we wait, calling all players picked every 5 seconds
+      console.log(response);
+
+      // when all players picked, get data, update state of the component, and return to choose card
+      this.currentView = VIEWS.pickACard;
+    }
   }
 };
 </script>

@@ -67,3 +67,10 @@ def get_all_chosen():
     for player in Lobby.game.players:
         all_chosen = all_chosen and Lobby.game.players.get(player).chosen
     return json.dumps(all_chosen)
+    
+@app.route('/PickCard', methods=['POST'])
+def pick_card():
+    player = request.json["playerName"]
+    cardIndex = request.json["index"]
+    Lobby.game.players.get(player).play(cardIndex)
+    return json.dumps(dict(success=True)), 200, {'ContentType': 'application/json'}

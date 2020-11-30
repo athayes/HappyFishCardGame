@@ -424,11 +424,6 @@ class Deck:
 class Hand:
     def __init__(self, cards):
         self.cards = cards
-
-    def play(self, card, tableau, player):
-        self.cards.remove(card)
-        player.tableau.add(card)
-        play.chosen = True
         
     def to_json(self):
         hand = []
@@ -519,6 +514,10 @@ class Player():
         self.dessert = []
         self.hand = None
         self.chosen = False
+
+    def play(self, index):
+        self.tableau.add(self.hand.cards.pop(index))
+        self.chosen = True
         
     def to_json(self):
         data = {}

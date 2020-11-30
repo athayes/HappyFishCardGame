@@ -5,7 +5,7 @@ export function cardFactory(name) {
       image: "/assets/egg.png",
       description: "Egg Description",
       played: false
-    }
+    };
   }
 
   if (name === "Chopsticks") {
@@ -14,7 +14,7 @@ export function cardFactory(name) {
       image: "/assets/chopsticks.png",
       description: "Chopsticks Description",
       played: false
-    }
+    };
   }
 
   if (name === "IceCream") {
@@ -23,7 +23,7 @@ export function cardFactory(name) {
       image: "/assets/ice-cream.png",
       description: "Ice Cream Description",
       played: false
-    }
+    };
   }
 
   if (name === "Sashimi") {
@@ -32,7 +32,7 @@ export function cardFactory(name) {
       image: "/assets/sashimi.png",
       description: "Sashimi Description",
       played: false
-    }
+    };
   }
 
   if (name === "Maki") {
@@ -41,7 +41,7 @@ export function cardFactory(name) {
       image: "/assets/maki.png",
       description: "Maki Description",
       played: false
-    }
+    };
   }
 
   if (name === "Temaki") {
@@ -50,7 +50,7 @@ export function cardFactory(name) {
       image: "/assets/temaki.png",
       description: "Temaki Description",
       played: false
-    }
+    };
   }
 
   if (name === "Wasabi") {
@@ -59,7 +59,7 @@ export function cardFactory(name) {
       image: "/assets/wasabi.png",
       description: "Wasabi Description",
       played: false
-    }
+    };
   }
 
   if (name === "Tempura") {
@@ -68,7 +68,7 @@ export function cardFactory(name) {
       image: "/assets/tempura.png",
       description: "Tempura Description",
       played: false
-    }
+    };
   }
 
   if (name === "Dumpling") {
@@ -77,7 +77,7 @@ export function cardFactory(name) {
       image: "/assets/dumpling.png",
       description: "Dumpling Description",
       played: false
-    }
+    };
   }
 
   if (name === "Squid") {
@@ -86,7 +86,7 @@ export function cardFactory(name) {
       image: "/assets/squid.png",
       description: "Squid Description",
       played: false
-    }
+    };
   }
 
   if (name === "Pudding") {
@@ -95,7 +95,7 @@ export function cardFactory(name) {
       image: "/assets/pudding.png",
       description: "Pudding Description",
       played: false
-    }
+    };
   }
 
   if (name === "Salmon") {
@@ -104,9 +104,8 @@ export function cardFactory(name) {
       image: "/assets/salmon.png",
       description: "Salmon Description",
       played: false
-    }
+    };
   }
 
-
-  throw("Invalid card type " + name);
+  throw "Invalid card type " + name;
 }

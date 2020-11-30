@@ -16,7 +16,7 @@
 
 <script>
 import axios from "axios";
-import Cookies from 'js-cookie';
+import Cookies from "js-cookie";
 
 export default {
   data: function() {
@@ -36,7 +36,7 @@ export default {
         hostName: hostName
       });
 
-      Cookies.set('HappyFishCardGame', hostName);
+      Cookies.set("HappyFishCardGame", hostName);
       await this.$router.push("HostLobby");
     }
   }

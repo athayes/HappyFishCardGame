@@ -37,7 +37,7 @@
 
       <h3>You want this card?</h3>
       <div class="hand">
-        <div class="card" @click.stop="confirmCard()">
+        <div class="card">
           <img v-bind:src="pickedCard.image" />
           <p>{{ pickedCard.name }}</p>
         </div>
@@ -46,7 +46,7 @@
         </p>
 
         <div>
-          <button class="btn-block">Yeah!</button>
+          <button class="btn-block" @click.stop="confirmCard()">Yeah!</button>
           <br />
           <button class="btn-block" @click.stop="currentView = VIEWS.pickACard">
             No
@@ -74,6 +74,10 @@
         </div>
       </div>
     </div>
+
+    <div v-if="currentView === VIEWS.waiting" class="waiting">
+      <h1>Waiting for other players to pick cards...</h1>
+    </div>
   </div>
 </template>
 
@@ -85,7 +89,8 @@ import Cookies from "js-cookie";
 export const VIEWS = {
   pickACard: 1,
   confirmCard: 2,
-  viewTableau: 3
+  viewTableau: 3,
+  waiting: 4
 };
 
 export default {
@@ -128,16 +133,26 @@ export default {
 
     confirmCard: async function() {
       let self = this;
-      let response = await axios.post("http://127.0.0.1:5000/PickCard", {
+      await axios.post("http://127.0.0.1:5000/PickCard", {
         playerName: self.playerName,
         index: self.pickedCard.index
       });
 
+      this.currentView = VIEWS.waiting;
       // then we wait, calling all players picked every 5 seconds
-      console.log(response);
+      self.interval = setInterval(async () => {
+        let response = await axios.post(
+            "http://127.0.0.1:5000/GetPlayersChosen"
+        );
+        let allChosen = response.data['all_chosen'];
+        console.log(response.data);
+        console.log(allChosen);
+        if (allChosen) {
+          clearInterval(self.interval);
+          this.$forceUpdate();
+        }
+      }, 5 * 1000);
 
-      // when all players picked, get data, update state of the component, and return to choose card
-      this.currentView = VIEWS.pickACard;
     }
   }
 };

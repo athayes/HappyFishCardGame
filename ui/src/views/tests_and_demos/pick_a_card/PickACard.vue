@@ -94,9 +94,7 @@ export const VIEWS = {
 };
 
 async function isAllChosen() {
-  let response = await axios.post(
-      "http://127.0.0.1:5000/GetPlayersChosen"
-  );
+  let response = await axios.post("http://127.0.0.1:5000/GetPlayersChosen");
   return response.data['all_chosen'];
 }
 
@@ -111,12 +109,9 @@ export default {
       tableau: []
     };
   },
+
   async mounted() {
-    let self = this;
-    let data = await getData(self.playerName);
-    self.players = data.players;
-    self.hand = data.hand;
-    self.tableau = data.tableau;
+    await this.getData();
   },
 
   methods: {
@@ -136,36 +131,28 @@ export default {
       self.currentView = VIEWS.waiting;
       self.interval = setInterval(async () => {
         if (await isAllChosen()) {
-          await this.resetUI;
+          clearInterval(self.interval);
+          this.currentView = VIEWS.pickACard;
+          await this.getData();
         }
       }, 5 * 1000);
     },
 
-    resetUI: async function() {
-      let self = this;
-      clearInterval(self.interval);
-      self.currentView = VIEWS.pickACard;
-      let data = await self.getData();
-      self.hand = data.hand;
-      self.tableau = data.tableau;
-    },
-
     getData: async function() {
-      let self = this;
       let response = await axios.post("http://127.0.0.1:5000/GetGameObject");
-      self.players = response.data.players;
+      this.players = response.data.players;
 
       let hand = [];
-      for (let card of response.data[playerName].hand) {
+      for (let card of response.data[self.playerName].hand) {
         hand.push(cardFactory(card.name));
       }
-      self.hand = response.data.hand;
+      this.hand = hand;
 
       let tableau = [];
-      for (let card of response.data[playerName].tableau) {
+      for (let card of response.data[self.playerName].tableau) {
         tableau.push(cardFactory(card.name));
       }
-      self.tableau = tableau;
+      this.tableau = tableau;
     }
   }
 };

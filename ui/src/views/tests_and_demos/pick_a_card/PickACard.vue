@@ -93,17 +93,12 @@ export const VIEWS = {
   waiting: 4
 };
 
-async function isAllChosen() {
-  let response = await axios.post("http://127.0.0.1:5000/GetPlayersChosen");
-  return response.data['all_chosen'];
-}
-
 export default {
   data() {
     return {
+      currentView: VIEWS.pickACard,
       playerName: Cookies.get("HappyFishCardGame"),
       VIEWS: VIEWS,
-      currentView: VIEWS.pickACard,
       pickedCard: {},
       hand: [],
       tableau: []
@@ -111,7 +106,7 @@ export default {
   },
 
   async mounted() {
-    await this.getData();
+    await this.refreshData();
   },
 
   methods: {
@@ -130,15 +125,17 @@ export default {
 
       self.currentView = VIEWS.waiting;
       self.interval = setInterval(async () => {
-        if (await isAllChosen()) {
+        let response = await axios.post("http://127.0.0.1:5000/GetPlayersChosen");
+        let isAllChosen = response.data['all_chosen'];
+        if (isAllChosen) {
           clearInterval(self.interval);
           this.currentView = VIEWS.pickACard;
-          await this.getData();
+          await this.refreshData();
         }
       }, 5 * 1000);
     },
 
-    getData: async function() {
+    refreshData: async function() {
       let response = await axios.post("http://127.0.0.1:5000/GetGameObject");
       this.players = response.data.players;
 

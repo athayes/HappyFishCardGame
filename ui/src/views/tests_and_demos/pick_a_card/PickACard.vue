@@ -96,36 +96,21 @@ export const VIEWS = {
 export default {
   data() {
     return {
+      currentView: VIEWS.pickACard,
       playerName: Cookies.get("HappyFishCardGame"),
       VIEWS: VIEWS,
-      currentView: VIEWS.pickACard,
       pickedCard: {},
       hand: [],
       tableau: []
     };
   },
+
   async mounted() {
-    let self = this;
-    let response = await axios.post("http://127.0.0.1:5000/GetGameObject");
-    self.players = response.data.players;
-    let hand = [];
-    let tableau = [];
-
-    for (let card of response.data[self.playerName].hand) {
-      hand.push(cardFactory(card.name));
-    }
-
-    for (let card of response.data[self.playerName].tableau) {
-      tableau.push(cardFactory(card.name));
-    }
-
-    self.hand = hand;
-    self.tableau = tableau;
+    await this.refreshData();
   },
 
   methods: {
     chooseCard: function(card, index) {
-      console.log(card + index);
       this.pickedCard = card;
       this.pickedCard.index = index;
       this.currentView = VIEWS.confirmCard;
@@ -138,21 +123,33 @@ export default {
         index: self.pickedCard.index
       });
 
-      this.currentView = VIEWS.waiting;
-      // then we wait, calling all players picked every 5 seconds
+      self.currentView = VIEWS.waiting;
       self.interval = setInterval(async () => {
-        let response = await axios.post(
-            "http://127.0.0.1:5000/GetPlayersChosen"
-        );
-        let allChosen = response.data['all_chosen'];
-        console.log(response.data);
-        console.log(allChosen);
-        if (allChosen) {
+        let response = await axios.post("http://127.0.0.1:5000/GetPlayersChosen");
+        let isAllChosen = response.data['all_chosen'];
+        if (isAllChosen) {
           clearInterval(self.interval);
-          this.$forceUpdate();
+          this.currentView = VIEWS.pickACard;
+          await this.refreshData();
         }
       }, 5 * 1000);
+    },
 
+    refreshData: async function() {
+      let response = await axios.post("http://127.0.0.1:5000/GetGameObject");
+      this.players = response.data.players;
+
+      let hand = [];
+      for (let card of response.data[self.playerName].hand) {
+        hand.push(cardFactory(card.name));
+      }
+      this.hand = hand;
+
+      let tableau = [];
+      for (let card of response.data[self.playerName].tableau) {
+        tableau.push(cardFactory(card.name));
+      }
+      this.tableau = tableau;
     }
   }
 };

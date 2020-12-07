@@ -93,6 +93,13 @@ export const VIEWS = {
   waiting: 4
 };
 
+async function isAllChosen() {
+  let response = await axios.post(
+      "http://127.0.0.1:5000/GetPlayersChosen"
+  );
+  return response.data['all_chosen'];
+}
+
 export default {
   data() {
     return {
@@ -106,26 +113,14 @@ export default {
   },
   async mounted() {
     let self = this;
-    let response = await axios.post("http://127.0.0.1:5000/GetGameObject");
-    self.players = response.data.players;
-    let hand = [];
-    let tableau = [];
-
-    for (let card of response.data[self.playerName].hand) {
-      hand.push(cardFactory(card.name));
-    }
-
-    for (let card of response.data[self.playerName].tableau) {
-      tableau.push(cardFactory(card.name));
-    }
-
-    self.hand = hand;
-    self.tableau = tableau;
+    let data = await getData(self.playerName);
+    self.players = data.players;
+    self.hand = data.hand;
+    self.tableau = data.tableau;
   },
 
   methods: {
     chooseCard: function(card, index) {
-      console.log(card + index);
       this.pickedCard = card;
       this.pickedCard.index = index;
       this.currentView = VIEWS.confirmCard;
@@ -138,21 +133,39 @@ export default {
         index: self.pickedCard.index
       });
 
-      this.currentView = VIEWS.waiting;
-      // then we wait, calling all players picked every 5 seconds
+      self.currentView = VIEWS.waiting;
       self.interval = setInterval(async () => {
-        let response = await axios.post(
-            "http://127.0.0.1:5000/GetPlayersChosen"
-        );
-        let allChosen = response.data['all_chosen'];
-        console.log(response.data);
-        console.log(allChosen);
-        if (allChosen) {
-          clearInterval(self.interval);
-          this.$forceUpdate();
+        if (await isAllChosen()) {
+          await this.resetUI;
         }
       }, 5 * 1000);
+    },
 
+    resetUI: async function() {
+      let self = this;
+      clearInterval(self.interval);
+      self.currentView = VIEWS.pickACard;
+      let data = await self.getData();
+      self.hand = data.hand;
+      self.tableau = data.tableau;
+    },
+
+    getData: async function() {
+      let self = this;
+      let response = await axios.post("http://127.0.0.1:5000/GetGameObject");
+      self.players = response.data.players;
+
+      let hand = [];
+      for (let card of response.data[playerName].hand) {
+        hand.push(cardFactory(card.name));
+      }
+      self.hand = response.data.hand;
+
+      let tableau = [];
+      for (let card of response.data[playerName].tableau) {
+        tableau.push(cardFactory(card.name));
+      }
+      self.tableau = tableau;
     }
   }
 };

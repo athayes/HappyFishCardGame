@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "818054bc-b120-45c0-9394-4cb473a6dd95",
+		"_postman_id": "d5e6a5b3-3548-4705-ab01-ebdb982561d6",
 		"name": "fish",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -135,6 +135,80 @@
 					"port": "5000",
 					"path": [
 						"GetGameObject"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetPlayers",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "localhost:5000/GetPlayers",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"GetPlayers"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetAllChosen",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "localhost:5000/GetPlayersChosen",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"GetPlayersChosen"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PickCard",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"playerName\": \"Cool H\",\n    \"index\": 1\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:5000/PickCard",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"PickCard"
 					]
 				}
 			},

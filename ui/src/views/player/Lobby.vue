@@ -1,15 +1,7 @@
 <template>
   <div class="Lobby">
-    <h3>Players</h3>
-    <div class="userTable paper container container-xs">
-      <table class="lobbyTable">
-        <tbody>
-          <tr v-for="player in players" :key="player">
-            <td>{{ player }}</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+    <h3>Lobby</h3>
+    <p>Players: {{ players.join(", ") }}</p>
     <h3>Waiting for x to start the game...</h3>
   </div>
 </template>
@@ -45,11 +37,6 @@ export default {
 <style>
 .Lobby {
   text-align: center;
-  color: #2c3e50;
 }
 
-.lobbyTable {
-  text-align: left;
-  font-weight: bold;
-}
 </style>

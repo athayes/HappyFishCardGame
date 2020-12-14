@@ -76,7 +76,7 @@
     </div>
 
     <div v-if="currentView === VIEWS.waiting" class="waiting">
-      <h1>Waiting for other players to pick cards...</h1>
+      <h2>Waiting for other players to pick cards...</h2>
     </div>
   </div>
 </template>
@@ -172,7 +172,9 @@ export default {
 .card {
   height: 40%;
   width: 100px;
-  margin: 10px;
+  margin-top: 10px;
+  margin-right: 10px;
+  margin-left: 10px;
   text-align: center;
   font-size: 30px;
 }

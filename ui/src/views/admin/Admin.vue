@@ -1,29 +1,17 @@
 <template>
   <div class="Admin">
-    <h1>Host</h1>
-    <h3>Create Game</h3>
-
+    <h2>Host Menu</h2>
     <button @click="GoToCreatePage">Create Game</button>
-
-    <h3>Advanced stuff</h3>
-
     <button>Reset Game</button>
-    <button @click="ViewGameObject">View game object</button>
-    <br />
   </div>
 </template>
 
 <script>
-import axios from "axios";
 
 export default {
   methods: {
     GoToCreatePage: function() {
       this.$router.push("CreateGame");
-    },
-    ViewGameObject: async function() {
-      let game = await axios.post("http://127.0.0.1:5000/GetGameObject");
-      console.log(JSON.stringify(game));
     }
   }
 };

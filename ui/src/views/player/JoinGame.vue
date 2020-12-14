@@ -1,6 +1,6 @@
 <template>
   <div class="JoinRoom">
-    <h1>Happy Fish Card Game</h1>
+    <h2>Happy Fish Card Game</h2>
     <label for="playerName">Your name</label>
     <input
       v-model="name"
@@ -8,13 +8,9 @@
       type="text"
       id="playerName"
     />
-    <br />
     <button class="btn btn-secondary" @click="joinGame">
       Join Game
     </button>
-
-    <br />
-    <br />
     <p>
       The host of the game should go <router-link to="/Host">here</router-link>
     </p>

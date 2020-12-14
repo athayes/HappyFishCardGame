@@ -1,15 +1,7 @@
 <template>
   <div class="HostLobby">
-    <h3>Waiting for you to start the game...</h3>
-    <div class="userTable paper container container-xs">
-      <table class="hostLobbyTable">
-        <tbody>
-          <tr v-for="player in players" :key="player">
-            <td>{{ player }}</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+    <h3>Lobby</h3>
+        <p>Players: {{ players.join(", ") }}</p>
 
     <button @click="StartGame" class="btn">
       Start Game

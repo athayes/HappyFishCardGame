@@ -1,11 +1,9 @@
 <template>
   <div class="Admin">
-    <h1>Host</h1>
-    <h3>Create Game</h3>
-
+    <h2>Host Menu</h2>
     <button @click="GoToCreatePage">Create Game</button>
 
-    <h3>Advanced stuff</h3>
+    <p>Advanced stuff</p>
 
     <button>Reset Game</button>
     <button @click="ViewGameObject">View game object</button>

@@ -1,6 +1,6 @@
 <template>
   <div class="HostLobby">
-    <h3>Lobby</h3>
+    <h2>Lobby</h2>
     <p>Players: {{ players.join(", ") }}</p>
 
     <button @click="StartGame" class="btn">

@@ -6,13 +6,14 @@ import JoinGame from "../views/player/JoinGame";
 import CreateGame from "../views/admin/CreateGame";
 import Admin from "../views/admin/Admin";
 import PickACard from "../views/tests_and_demos/pick_a_card/PickACard";
+import Home from "../views/Home";
 
 Vue.use(VueRouter);
 
 const routes = [
   {
     path: "/",
-    component: JoinGame
+    component: Home
   },
   {
     path: "/Host",

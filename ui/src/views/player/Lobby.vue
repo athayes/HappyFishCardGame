@@ -1,8 +1,8 @@
 <template>
   <div class="Lobby">
-    <h3>Lobby</h3>
+    <h2>Lobby</h2>
     <p>Players: {{ players.join(", ") }}</p>
-    <h3>Waiting for x to start the game...</h3>
+    <p>Waiting for x to start the game...</p>
   </div>
 </template>
 

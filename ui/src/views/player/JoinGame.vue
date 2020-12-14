@@ -1,9 +1,9 @@
 <template>
   <div class="JoinRoom">
-    <h2>Happy Fish Card Game</h2>
+    <h2>Join Game</h2>
     <label for="playerName">Your name</label>
     <input
-      v-model="name"
+      v-model="playerName"
       class="JoinGameEnterName"
       type="text"
       id="playerName"
@@ -11,9 +11,6 @@
     <button class="btn btn-secondary" @click="joinGame">
       Join Game
     </button>
-    <p>
-      The host of the game should go <router-link to="/Host">here</router-link>
-    </p>
   </div>
 </template>
 
@@ -28,6 +25,11 @@ export default {
   },
   methods: {
     async joinGame() {
+      if (this.playerName === "") {
+        alert("Enter your name");
+        return;
+      }
+
       await axios.post("http://127.0.0.1:5000/JoinGame", {
         playerName: this.playerName
       });

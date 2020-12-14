@@ -73,4 +73,6 @@ def pick_card():
     player = request.json["playerName"]
     cardIndex = request.json["index"]
     Lobby.game.players.get(player).play(cardIndex)
+    Lobby.game.check_round_over()
     return json.dumps(dict(success=True)), 200, {'ContentType': 'application/json'}
+

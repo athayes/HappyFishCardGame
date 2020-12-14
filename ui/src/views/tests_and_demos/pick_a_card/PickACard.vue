@@ -136,6 +136,7 @@ export default {
     },
 
     refreshData: async function() {
+      let self = this;
       let response = await axios.post("http://127.0.0.1:5000/GetGameObject");
       this.players = response.data.players;
 

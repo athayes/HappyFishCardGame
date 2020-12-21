@@ -134,17 +134,17 @@ export default {
     refreshData: async function() {
       let self = this;
       let response = await axios.post("http://127.0.0.1:5000/GetGameObject");
-      this.players = response.data.players;
+      this.players = response.data;
 
       let hand = [];
       for (let card of response.data[self.playerName].hand) {
-        hand.push(cardFactory(card.name, card.power));
+        hand.push(cardFactory(card.name, Object.keys(response.data).length, card.power));
       }
       this.hand = hand;
 
       let tableau = [];
       for (let card of response.data[self.playerName].tableau) {
-        tableau.push(cardFactory(card.name, card.power));
+        tableau.push(cardFactory(card.name, Object.keys(response.data).length, card.power));
       }
       this.tableau = tableau;
     }

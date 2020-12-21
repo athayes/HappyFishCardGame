@@ -27,32 +27,33 @@ class Card:
         return data
 
     @staticmethod
-    def score(clazz, tableaus, players):
+    def score(clazz, player_keys, players):
         # Tableaus must be sorted
 
-        for i in range(len(players)):
+        for i in range(len(player_keys)):
+            tableau = players.get(player_keys[i]).tableau
             j = 0
-            while j < len(tableaus[i]) and isinstance(tableaus[i][j], clazz):
-                players.get(i).score += clazz.face_value
+            while j < len(tableau) and isinstance(tableau[j], clazz):
+                players.get(player_keys[i]).score += clazz.face_value
                 j += 1
-            if j == len(tableaus[i]):
-                tableaus[i] = []
+            if j == len(player_keys[i]):
+                players.get(player_keys[i]).tableau = []
             else:
-                tableaus[i] = tableaus[i][j:]
+                players.get(player_keys[i]).tableau = tableau[j:]
                 
-    @staticmethod
-    def count_dessert(clazz, tableaus, player_ids, players):
+    @staticmethod #### TODO #####
+    def count_dessert(clazz, player_keys, players):
         # Tableaus must be sorted
 
-        for i in range(len(tableaus)):
+        for i in range(len(player_keys)):
             j = 0
-            while j < len(tableaus[i]) and isinstance(tableaus[i][j], clazz):
-                players.get(player_ids[i]).dessert += 1
+            while j < len(tableau) and isinstance(tableau[j], clazz):
+                players.get(player_keys[i]).dessert += 1
                 j += 1
-            if j == len(tableaus[i]):
-                tableaus[i] = []
+            if j == len(tableau):
+                players.get(player_keys[i]).tableau = []
             else:
-                tableaus[i] = tableaus[i][j:]
+                players.get(player_keys[i]).tableau = tableau[j:]
 
 
 class Army_Card(Card):
@@ -65,19 +66,20 @@ class Army_Card(Card):
         self.power = power
 
     @staticmethod
-    def score(clazz, tableaus, players):
+    def score(clazz, player_keys, players):
         # Tableaus must be sorted
 
-        card_cnts = [0 for i in range(num_players)]
-        for i in range(len(tableaus)):
+        card_cnts = [0 for i in range(len(player_keys))]
+        for i in range(len(player_keys)):
+            tableau = players.get(player_keys[i]).tableau
             j = 0
-            while j < len(tableaus[i]) and isinstance(tableaus[i][j], clazz):
-                card_cnts[i] += tableaus[i][j].power
+            while j < len(tableau) and isinstance(tableau[j], clazz):
+                card_cnts[i] += tableau[j].power
                 j += 1
-            if j == len(tableaus[i]):
-                tableaus[i] = []
+            if j == len(tableau):
+                players.get(player_keys[i]).tableau = []
             else:
-                tableaus[i] = tableaus[i][j:]
+                players.get(player_keys[i]).tableau = tableau[j:]
 
         # Find who should get negative points (who came last)  
         min_score = min(card_cnts)
@@ -85,7 +87,7 @@ class Army_Card(Card):
                        if min_score == element]
         neg_score = clazz.punishment // len(min_indices)
         for i in min_indices:
-            players.get(i).score += neg_score
+            players.get(player_keys[i]).score += neg_score
 
         # Find who came first
         max_score = max(card_cnts)
@@ -93,7 +95,7 @@ class Army_Card(Card):
                        if max_score == element]
         pos_score = clazz.reward // len(max_indices)
         for i in max_indices:
-            players.get(player_ids[i]).score += pos_score
+            players.get(player_keys[i]).score += pos_score
             card_cnts[i] = 0
 
         # Find who came second
@@ -103,7 +105,7 @@ class Army_Card(Card):
                            if max_score == element]
             pos_score = clazz.second_reward // len(max_indices)
             for i in max_indices:
-                players.get(player_ids[i]).score += pos_score
+                players.get(player_keys[i]).score += pos_score
                 
     def to_json(self):
         data = {}
@@ -119,23 +121,24 @@ class Threshold_Card(Card):
     max_count = 0
 
     @staticmethod
-    def score(clazz, tableaus, players):
+    def score(clazz, player_keys, players):
         # Tableaus must be sorted
 
-        card_cnts = [0 for i in range(num_players)]
-        for i in range(len(tableaus)):
+        card_cnts = [0 for i in range(len(player_keys))]
+        for i in range(len(player_keys)):
+            tableau = players.get(player_keys[i]).tableau
             j = 0
-            while j < len(tableaus[i]) and isinstance(tableaus[i][j], clazz):
+            while j < len(tableau) and isinstance(tableau[j], clazz):
                 card_cnts[i] += 1
                 j += 1
-            if j == len(tableaus[i]):
-                tableaus[i] = []
+            if j == len(tableau):
+                players.get(player_keys[i]).tableau = []
             else:
-                tableaus[i] = tableaus[i][j:]
+                players.get(player_keys[i]).tableau = tableau[j:]
 
         if Threshold_Card.min_count > 0:
             for i in range(len(scores)):
-                players.get(i).score += card_cnts[i] // Threshold_Card.min_count
+                players.get(player_keys[i]).score += card_cnts[i] // Threshold_Card.min_count
         else:
             pass # how to score negative points?
 
@@ -150,30 +153,30 @@ class Egg(Nigiri):
     face_value = 1
     
     @staticmethod
-    def score(tableaus, players, scores):
-        Card().score(Egg, tableaus, scores)
+    def score(player_keys, players):
+        Card().score(Egg, player_keys, players)
     
 class Salmon(Nigiri):
     face_value = 2;
     
     @staticmethod
-    def score(tableaus, players, scores):
-        Card().score(Salmon, tableaus, scores)
+    def score(player_keys, players):
+        Card().score(Salmon, player_keys, players)
     
 class Squid(Nigiri):
     face_value = 3;
     
     @staticmethod
-    def score(tableaus, players, scores):
-        Card().score(Squid, tableaus, scores)
+    def score(player_keys, players):
+        Card().score(Squid, player_keys, players)
 
 class Miso(Card):
     sort_value = 4
     face_value = 3
 
     @staticmethod
-    def score(tableaus, players, scores):
-        Card().score(Miso, tableaus, players)
+    def score(player_keys, players):
+        Card().score(Miso, player_keys, players)
 
 
 # No score cards
@@ -182,8 +185,8 @@ class Menu(Card):
     face_value = 0
 
     @staticmethod
-    def score(tableaus, players):
-        Card().score(Menu, tableaus, player_ids, players)
+    def score(player_keys, players):
+        Card().score(Menu, player_keys, players)
 
 
 class Takeout(Card):
@@ -203,8 +206,8 @@ class Spoon(Card):
     face_value = 0
 
     @staticmethod
-    def score(tableaus, players):
-        Card().score(Spoon, tableaus, players)
+    def score(player_keys, players):
+        Card().score(Spoon, player_keys, players)
 
 
 class Chopsticks(Card):
@@ -212,8 +215,8 @@ class Chopsticks(Card):
     sort_value = 10
 
     @staticmethod
-    def score(tableaus, players):
-        Card().score(Chopsticks, tableaus, players)
+    def score(player_keys, players):
+        Card().score(Chopsticks, player_keys, players)
 
 
 class Tea(Card):
@@ -229,20 +232,22 @@ class Wasabi(Card):
         super().__init__()
         self.nigiri = None
 
-    @staticmethod
-    def score(tableaus, players):
+    @staticmethod ### TODO ##### Add nigiri to wasabi when playing
+    def score(player_keys, players):
         # Tableaus must be sorted
 
-        for i in range(len(tableaus)):
+        for i in range(len(player_keys)):
+            tableau = players.get(player_keys[i]).tableau
             j = 0
-            while j < len(tableaus[i]) and isinstance(tableaus[i][j], Wasabi):
-                # The third will be added in the nigiri scoring method
-                players.get(i).score += tableaus[i][j].nigiri.face_value * 2
+            while j < len(tableau) and isinstance(tableau[j], Wasabi):
+                if tableau[j].nigiri != None:
+                    # The third will be added in the nigiri scoring method
+                    players.get(player_keys[i]).score += tableau[j].nigiri.face_value * 2
                 j += 1
-            if j == len(tableaus[i]):
-                tableaus[i] = []
+            if j == len(tableau):
+                players.get(player_keys[i]).tableau = []
             else:
-                tableaus[i] = tableaus[i][j:]
+                players.get(player_keys[i]).tableau = tableau[j:]
 
 
 class Tofu(Threshold_Card):
@@ -251,8 +256,8 @@ class Tofu(Threshold_Card):
     score_vals = {1: 2, 2: 6}
 
     @staticmethod
-    def score(tableaus, players, scores):
-        Threshold_Card().score(Tofu, tableaus, players)
+    def score(player_keys, players):
+        Threshold_Card().score(Tofu, player_keys, players)
 
 
 class Dumpling(Card):
@@ -260,25 +265,26 @@ class Dumpling(Card):
     score_vals = {1: 1, 2: 3, 3: 6, 4: 10, 5: 15}
 
     @staticmethod
-    def score(tableaus, players):
+    def score(player_keys, players):
         # Tableaus must be sorted
 
-        for i in range(len(tableaus)):
+        for i in range(len(player_keys)):
+            tableau = players.get(player_keys[i]).tableau
             j = 0
             num_dumplings = 0
-            while j < len(tableaus[i]) and isinstance(tableaus[i][j], Dumpling):
+            while j < len(tableau) and isinstance(tableau[j], Dumpling):
                 num_dumplings += 1
                 j += 1
-            if j == len(tableaus[i]):
-                tableaus[i] = []
+            if j == len(tableau):
+                players.get(player_keys[i]).tableau = []
             else:
-                tableaus[i] = tableaus[i][j:]
+                players.get(player_keys[i]).tableau = tableau[j:]
 
             # Add the scores
             for k in range(5, 0, -1):
                 val = Dumpling.score_vals[k] * (num_dumplings // k)
                 if val > 0:
-                    players.get(i).score += val
+                    players.get(player_keys[i]).score += val
                     num_dumplings -= k
 
 
@@ -288,8 +294,8 @@ class Tempura(Threshold_Card):
     min_count = 2
 
     @staticmethod
-    def score(tableaus, players):
-        Threshold_Card().score(Tempura, tableaus, players)
+    def score(player_keys, players):
+        Threshold_Card().score(Tempura, player_keys, players)
 
 
 class Sashimi(Threshold_Card):
@@ -299,8 +305,8 @@ class Sashimi(Threshold_Card):
     min_count = 3
 
     @staticmethod
-    def score(tableaus, players):
-        Threshold_Card().score(Sashimi, tableaus, players)
+    def score(player_keys, players):
+        Threshold_Card().score(Sashimi, player_keys, players)
 
 
 class Eel(Threshold_Card):
@@ -310,8 +316,8 @@ class Eel(Threshold_Card):
     min_count = 2
 
     @staticmethod
-    def score(tableaus, players):
-        Threshold_Card().score(Eel, tableaus, players)
+    def score(player_keys, players):
+        Threshold_Card().score(Eel, player_keys, players)
 
 
 class Ice_Cream(Threshold_Card):
@@ -321,8 +327,8 @@ class Ice_Cream(Threshold_Card):
     punishment = 0
 
     @staticmethod
-    def score(tableaus, players):
-        Threshold_Card().score(Ice_Cream, tableaus, players)
+    def score(player_keys, players):
+        Threshold_Card().score(Ice_Cream, player_keys, players)
 
 
 class Fruit(Card):
@@ -345,8 +351,8 @@ class Maki(Army_Card):
         super().__init__(random.randint(1, 3))
 
     @staticmethod
-    def score(tableaus, player_ids, players):
-        Army_Card().score(Maki, tableaus, player_ids, players)
+    def score(player_keys, players):
+        Army_Card().score(Maki, player_keys, players)
 
 
 class Temaki(Army_Card):
@@ -355,8 +361,8 @@ class Temaki(Army_Card):
     punishment = -4
 
     @staticmethod
-    def score(tableaus, player_ids, players):
-        Army_Card().score(Temaki, tableaus, player_ids, players)
+    def score(player_keys, players):
+        Army_Card().score(Temaki, player_keys, players)
 
 
 class Uramaki(Card):
@@ -387,8 +393,8 @@ class Pudding(Card):
     punihsment = -6
 
     @staticmethod
-    def score(tableaus, player_ids, players):
-        Army_Card().score(Pudding, tableaus, player_ids, players)
+    def score(player_keys, players):
+        Army_Card().score(Pudding, player_keys, players)
 
 
 class Deck:
@@ -474,12 +480,19 @@ class Game:
         self.deck = Deck(cards_in_use, player_names, dessert)
         self.dessert = dessert
         self.players = {player: Player(player) for player in player_names}
-        
+        self.player_keys = list(self.players.keys())
+
     def player_json(self):
         data = {}
         for player_name, player in self.players.items():
             data[player_name] = player.to_json()
         return data
+        
+    def rotate_hands(self):
+        tmp = self.players.get(self.player_keys[0]).hand
+        for i in range(len(self.player_keys)-1):
+            self.players.get(self.player_keys[i]).hand = self.players.get(self.player_keys[i+1]).hand
+        self.players.get(self.player_keys[len(self.player_keys)-1]).hand = tmp
         
     def check_round_over(self):
         start_new_round = True
@@ -495,6 +508,12 @@ class Game:
                 self.score_dessert()
                 return True
             return False
+    
+    def check_all_players_chosen(self):
+        all_chosen = True
+        for player in self.players:
+            all_chosen = all_chosen and self.players.get(player).chosen
+        return all_chosen
 
     def start_round(self):
         self.round += 1
@@ -505,16 +524,11 @@ class Game:
 
 
     def score_round(self):
-        tableaus = []
-        player_ids = [] # dictionaries do not enforce order, so need to hold these static
-        for player in self.players.keys():
-            print(player)
-            self.players.get(player).tableau.sort()
-            tableaus.append(self.players.get(player).tableau)
-            player_ids.append(player)
         for card_type in self.cards_in_use:  # ensure dessert not counted here
-                Card.count_dessert(self.dessert, tableaus, player_ids, self.players)
-        card_type.score(card_type, tableaus, self.players)
+            print(card_type)
+            print('\n')
+            print(self.players)
+            card_type.score(self.player_keys, self.players)
 
     def score_dessert(self):
         tableaus = []
@@ -523,7 +537,7 @@ class Game:
             self.players.get(player).tableau.sort()
             tableaus.append(self.players.get(player).tableau)
             player_ids.append(player)
-        self.dessert.score(card_type, tableaus, player_ids, self.players)
+        self.dessert.score(card_type, tableaus, self.players)
 
 
 class Player():

@@ -63,9 +63,7 @@ def get_state():
     
 @app.route('/GetPlayersChosen', methods=['POST'])
 def get_all_chosen():
-    all_chosen = True
-    for player in Lobby.game.players:
-        all_chosen = all_chosen and Lobby.game.players.get(player).chosen
+    all_chosen = Lobby.game.check_all_players_chosen()
     return json.dumps({"all_chosen" : all_chosen })
     
 @app.route('/PickCard', methods=['POST'])
@@ -73,6 +71,7 @@ def pick_card():
     player = request.json["playerName"]
     cardIndex = request.json["index"]
     Lobby.game.players.get(player).play(cardIndex)
-    Lobby.game.check_round_over()
+    if not Lobby.game.check_round_over() and Lobby.game.check_all_players_chosen():
+        Lobby.game.rotate_hands()
     return json.dumps(dict(success=True)), 200, {'ContentType': 'application/json'}
 

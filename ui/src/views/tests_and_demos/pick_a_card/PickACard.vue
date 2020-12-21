@@ -18,9 +18,9 @@
           :key="card.index"
           @click.stop="chooseCard(card, index)"
         >
-          <!-- div contents-->
           <img v-bind:src="card.image" />
-          <p>{{ card.name }}</p>
+          <p class="name">{{ card.name }}</p>
+          <p class="hint">{{ card.hint }}</p>
         </div>
       </div>
     </div>
@@ -37,21 +37,24 @@
 
       <h3>You want this card?</h3>
       <div class="hand">
-        <div class="card">
-          <img v-bind:src="pickedCard.image" />
-          <p>{{ pickedCard.name }}</p>
+          <div class="card-and-description">
+            <div class="card">
+              <img v-bind:src="pickedCard.image" />
+              <p class="name">{{ pickedCard.name }}</p>
+              <p class="hint">{{ pickedCard.hint }}</p>
+            </div>
+            <p class="description">
+              {{ pickedCard.description }}
+            </p>
         </div>
-        <p class="description">
-          {{ pickedCard.description }}
-        </p>
+      </div>
 
-        <div class="confirm-buttons">
-          <button class="btn-block" @click.stop="confirmCard()">Yeah!</button>
-          <br />
-          <button class="btn-block" @click.stop="currentView = VIEWS.pickACard">
-            No
-          </button>
-        </div>
+      <div class="confirm-buttons">
+        <button class="btn" @click.stop="confirmCard()">Yeah!</button>
+        <br />
+        <button class="btn" @click.stop="currentView = VIEWS.pickACard">
+          No
+        </button>
       </div>
     </div>
 
@@ -171,7 +174,7 @@ export default {
 
 .card {
   height: 40%;
-  width: 100px;
+  width: 110px;
   margin-top: 10px;
   margin-right: 10px;
   margin-left: 10px;
@@ -188,20 +191,35 @@ export default {
 
 .confirm-buttons {
   display: flex;
+  justify-content: center;
+}
+
+.card-and-description {
+  display: flex;
+  align-items: center;
+}
+
+
+.name {
+  font-family: "Patrick Hand SC",sans-serif;
+  font-size: 20px;
+  margin: 5px;
+}
+
+.hint {
+  font-size: 15px;
+  margin: 5px;
+  font-family: "Patrick Hand SC",sans-serif;
 }
 
 .description {
   margin: 10px;
+  width: 300px;
 }
 
 img {
-  height: 100px;
+  height: 80px;
   width: 100px;
-}
-
-p {
-  margin: 10px 0px 10px 0px;
-  font-size: 20px;
 }
 
 h3 {

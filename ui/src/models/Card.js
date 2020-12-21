@@ -1,4 +1,4 @@
-export function cardFactory(name) {
+export function cardFactory(name, power) {
   if (name === "Egg") {
     return {
       name: "Egg Nigiri",
@@ -63,8 +63,18 @@ export function cardFactory(name) {
   }
 
   if (name === "Maki") {
+    let newName;
+    if (power === 1) {
+      newName = "Maki x1"
+    }
+    if (power === 2) {
+      newName = "Maki x2"
+    }
+    if (power === 3) {
+      newName = "Maki x3"
+    }
     return {
-      name: name,
+      name: newName,
       image: "/assets/maki.png",
       description: "Whoever has the most Maki scores 6 points. Whoever has second most scores 3. If multiple players tie for most or second most, all players receive the full points",
       hint: "Most: 6 / 4 / 2"

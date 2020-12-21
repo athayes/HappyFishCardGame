@@ -45,7 +45,7 @@
           {{ pickedCard.description }}
         </p>
 
-        <div>
+        <div class="confirm-buttons">
           <button class="btn-block" @click.stop="confirmCard()">Yeah!</button>
           <br />
           <button class="btn-block" @click.stop="currentView = VIEWS.pickACard">
@@ -129,8 +129,8 @@ export default {
         let isAllChosen = response.data['all_chosen'];
         if (isAllChosen) {
           clearInterval(self.interval);
+          await self.refreshData();
           this.currentView = VIEWS.pickACard;
-          await this.refreshData();
         }
       }, 5 * 1000);
     },
@@ -184,6 +184,14 @@ export default {
   display: flex;
   align-items: center;
   justify-content: left;
+}
+
+.confirm-buttons {
+  display: flex;
+}
+
+.description {
+  margin: 10px;
 }
 
 img {

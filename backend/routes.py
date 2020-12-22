@@ -41,7 +41,9 @@ def create_game():
 # Recreate game 1
 @app.route('/GetGameObject', methods=['POST'])
 def get_game_object():
-    return Lobby.game.player_json()
+    return {
+        "players": Lobby.game.player_json()
+    }
 
 @app.route('/GetPlayersInLobby', methods=['POST'])
 def get_players_in_lobby():

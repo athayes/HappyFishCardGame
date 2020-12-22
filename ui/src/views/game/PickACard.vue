@@ -78,7 +78,7 @@
 </template>
 
 <script>
-import { cardFactory } from "../../../models/Card";
+import { cardFactory } from "../../models/Card";
 import axios from "axios";
 import Cookies from "js-cookie";
 

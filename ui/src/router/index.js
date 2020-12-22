@@ -5,7 +5,7 @@ import HostLobby from "../views/admin/HostLobby";
 import JoinGame from "../views/player/JoinGame";
 import CreateGame from "../views/admin/CreateGame";
 import Admin from "../views/admin/Admin";
-import PickACard from "../views/tests_and_demos/pick_a_card/PickACard";
+import PickACard from "../views/game/PickACard";
 import Home from "../views/Home";
 
 Vue.use(VueRouter);

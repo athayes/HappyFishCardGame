@@ -125,7 +125,6 @@ export function cardFactory(name, numPlayers, power) {
   if (name === "Pudding") {
     let description, hint;
 
-    console.log(numPlayers);
     if (numPlayers === 2) {
       description = "2 player game: At the end of the game, players compare how many pudding cards they have. The player with the most scores 6 points.";
       hint = "Most: 6"

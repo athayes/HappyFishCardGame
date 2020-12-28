@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "d5e6a5b3-3548-4705-ab01-ebdb982561d6",
+		"_postman_id": "3120d497-9dee-47f4-a91f-7e7714745618",
 		"name": "fish",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -12,12 +12,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"hostName\": \"reb\"\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
+					"raw": "{\n    \"hostName\": \"reb\"\n}"
 				},
 				"url": {
 					"raw": "localhost:5000/CreateGame",
@@ -39,12 +34,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"playerName\": \"Cool H\"\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
+					"raw": "{\n    \"playerName\": \"Cool H\"\n}"
 				},
 				"url": {
 					"raw": "localhost:5000/JoinGame",
@@ -66,12 +56,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
+					"raw": ""
 				},
 				"url": {
 					"raw": "localhost:5000/StartGame",
@@ -93,12 +78,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
+					"raw": ""
 				},
 				"url": {
 					"raw": "localhost:5000/GetGameObject",
@@ -120,12 +100,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
+					"raw": ""
 				},
 				"url": {
 					"raw": "localhost:5000/GetGameObject",
@@ -135,28 +110,6 @@
 					"port": "5000",
 					"path": [
 						"GetGameObject"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "GetPlayers",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": ""
-				},
-				"url": {
-					"raw": "localhost:5000/GetPlayers",
-					"host": [
-						"localhost"
-					],
-					"port": "5000",
-					"path": [
-						"GetPlayers"
 					]
 				}
 			},
@@ -194,12 +147,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"playerName\": \"Cool H\",\n    \"index\": 1\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
+					"raw": "{\n    \"playerName\": \"Cool H\",\n    \"index\": 1\n}"
 				},
 				"url": {
 					"raw": "localhost:5000/PickCard",
@@ -214,6 +162,5 @@
 			},
 			"response": []
 		}
-	],
-	"protocolProfileBehavior": {}
+	]
 }

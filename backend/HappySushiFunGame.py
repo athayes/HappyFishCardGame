@@ -37,9 +37,9 @@ class Card:
                 players.get(player_keys[i]).score += clazz.face_value
                 j += 1
             if j == len(player_keys[i]):
-                players.get(player_keys[i]).tableau = []
+                players.get(player_keys[i]).tableau.cards = []
             else:
-                players.get(player_keys[i]).tableau = tableau[j:]
+                players.get(player_keys[i]).tableau.cards = tableau[j:]
                 
     @staticmethod #### TODO #####
     def count_dessert(clazz, player_keys, players):
@@ -51,9 +51,9 @@ class Card:
                 players.get(player_keys[i]).dessert += 1
                 j += 1
             if j == len(tableau):
-                players.get(player_keys[i]).tableau = []
+                players.get(player_keys[i]).tableau.cards = []
             else:
-                players.get(player_keys[i]).tableau = tableau[j:]
+                players.get(player_keys[i]).tableau.cards = tableau[j:]
 
 
 class Army_Card(Card):
@@ -77,9 +77,9 @@ class Army_Card(Card):
                 card_cnts[i] += tableau[j].power
                 j += 1
             if j == len(tableau):
-                players.get(player_keys[i]).tableau = []
+                players.get(player_keys[i]).tableau.cards = []
             else:
-                players.get(player_keys[i]).tableau = tableau[j:]
+                players.get(player_keys[i]).tableau.cards = tableau[j:]
 
         # Find who should get negative points (who came last)  
         min_score = min(card_cnts)
@@ -132,9 +132,9 @@ class Threshold_Card(Card):
                 card_cnts[i] += 1
                 j += 1
             if j == len(tableau):
-                players.get(player_keys[i]).tableau = []
+                players.get(player_keys[i]).tableau.cards = []
             else:
-                players.get(player_keys[i]).tableau = tableau[j:]
+                players.get(player_keys[i]).tableau.cards = tableau[j:]
 
         if Threshold_Card.min_count > 0:
             for i in range(len(scores)):
@@ -157,14 +157,14 @@ class Egg(Nigiri):
         Card().score(Egg, player_keys, players)
     
 class Salmon(Nigiri):
-    face_value = 2;
+    face_value = 2
     
     @staticmethod
     def score(player_keys, players):
         Card().score(Salmon, player_keys, players)
     
 class Squid(Nigiri):
-    face_value = 3;
+    face_value = 3
     
     @staticmethod
     def score(player_keys, players):
@@ -245,9 +245,9 @@ class Wasabi(Card):
                     players.get(player_keys[i]).score += tableau[j].nigiri.face_value * 2
                 j += 1
             if j == len(tableau):
-                players.get(player_keys[i]).tableau = []
+                players.get(player_keys[i]).tableau.cards = []
             else:
-                players.get(player_keys[i]).tableau = tableau[j:]
+                players.get(player_keys[i]).tableau.cards = tableau[j:]
 
 
 class Tofu(Threshold_Card):
@@ -276,9 +276,9 @@ class Dumpling(Card):
                 num_dumplings += 1
                 j += 1
             if j == len(tableau):
-                players.get(player_keys[i]).tableau = []
+                players.get(player_keys[i]).tableau.cards = []
             else:
-                players.get(player_keys[i]).tableau = tableau[j:]
+                players.get(player_keys[i]).tableau.cards = tableau[j:]
 
             # Add the scores
             for k in range(5, 0, -1):
@@ -441,7 +441,7 @@ class Hand:
         return len(self.cards)
 
 
-class Tableau():
+class Tableau:
     def __init__(self):
         self.cards = []
 
@@ -471,7 +471,7 @@ class Game:
     DESSERT = [Pudding, Ice_Cream, Fruit]
     
 
-    CARDS_TO_DEAL = {2: 10, 3: 10, 4: 9, 5: 9, 6: 8, 7: 8, 8: 7}
+    CARDS_TO_DEAL = {2: 2, 3: 10, 4: 9, 5: 9, 6: 8, 7: 8, 8: 7} ##2: 10
 
     def __init__(self, player_names, cards_in_use=[Wasabi, Chopsticks, Dumpling, Tempura, Sashimi, Maki], dessert=Pudding):
         self.cards_in_use = cards_in_use
@@ -489,10 +489,18 @@ class Game:
         return data
         
     def rotate_hands(self):
-        tmp = self.players.get(self.player_keys[0]).hand
+        tmp_list = []
+        for card in self.players.get(self.player_keys[0]).hand.cards:
+            tmp_list.append(card)
+        tmp = Hand(tmp_list)
         for i in range(len(self.player_keys)-1):
-            self.players.get(self.player_keys[i]).hand = self.players.get(self.player_keys[i+1]).hand
+            new_list = []
+            for card in self.players.get(self.player_keys[i+1]).hand.cards:
+                new_list.append(card)
+            self.players.get(self.player_keys[i]).hand = Hand(new_list)
+            self.players.get(self.player_keys[i]).chosen = False
         self.players.get(self.player_keys[len(self.player_keys)-1]).hand = tmp
+        self.players.get(self.player_keys[len(self.player_keys)-1]).chosen = False
         
     def check_round_over(self):
         start_new_round = True

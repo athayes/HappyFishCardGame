@@ -57,9 +57,15 @@
         >
           View Hand
         </button>
+        <button
+            class="btn-secondary btn"
+            @click.stop="nextTableau"
+        >
+          Next button
+        </button>
       </div>
 
-      <h3>Your tableau</h3>
+      <h3>{{ selectedTableauName}}'s tableau</h3>
       <div class="hand">
         <div class="card" v-for="card in selectedTableau" :key="card.index">
           <!-- div contents-->
@@ -103,7 +109,11 @@ export default {
 
   computed: {
     selectedTableau: function() {
-      return this.tableauList{this.selectedTableauIndex};
+      return this.tableauList[this.selectedTableauIndex].tableau;
+    },
+
+    selectedTableauName: function() {
+      return this.tableauList[this.selectedTableauIndex].player;
     }
   },
 
@@ -143,7 +153,6 @@ export default {
       let self = this;
       let response = await axios.post("http://127.0.0.1:5000/GetGameObject");
       this.players = response.data.players;
-      this.selectedTableauPlayer = self.playerName;
 
       let hand = [];
       for (let card of this.players[self.playerName].hand) {
@@ -170,13 +179,17 @@ export default {
         });
         index++;
       }
-
-      console.log(list);
       this.tableauList = list;
+
+      this.selectedTableauIndex = this.tableauList.findIndex((x) => { return x.player === self.playerName; })
     },
 
     nextTableau: function() {
-      // find the index of the current player
+      if (this.selectedTableauIndex + 1 >= this.tableauList.length) {
+        this.selectedTableauIndex = 0;
+      } else {
+        this.selectedTableauIndex++;
+      }
     },
 
     previousTableau: function() {

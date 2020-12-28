@@ -97,15 +97,13 @@ export default {
       pickedCard: {},
       hand: [],
       tableauList: [],
-      selectedTableauPlayer: ""
+      selectedTableauIndex: 0
     };
   },
 
   computed: {
     selectedTableau: function() {
-      for (player of tableauList) {
-        if
-      }
+      return this.tableauList{this.selectedTableauIndex};
     }
   },
 
@@ -155,24 +153,30 @@ export default {
       }
       this.hand = hand;
 
-      let playerTableauMap = {};
+      let list = [];
       for (let [key, player] of Object.entries(this.players)) {
-        let playerTableau = [];
+        let tableau = [];
+        let index = 0;
         for (let card of player.tableau) {
-          playerTableau.push(
+          tableau.push(
             cardFactory(card.name, Object.keys(this.players).length, card.power)
           );
         }
 
-        playerTableauMap[key] = playerTableau;
+        list.push({
+          tableau: tableau,
+          player: key,
+          index: index
+        });
+        index++;
       }
 
-      this.playerTableauMap = playerTableauMap;
-      console.log(playerTableauMap);
+      console.log(list);
+      this.tableauList = list;
     },
 
     nextTableau: function() {
-
+      // find the index of the current player
     },
 
     previousTableau: function() {

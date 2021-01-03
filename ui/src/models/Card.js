@@ -117,7 +117,7 @@ export function cardFactory(name, numPlayers, power) {
     return {
       name: name,
       image: "/assets/dumpling.png",
-      description: "The more dumpling cards you have, the more points you will score, as follows: 1,3,6,10,15 .",
+      description: "The more dumpling cards you have, the more points you will score, as follows: 1,3,6,10,15",
       hint: "1 3 6 10 15"
     };
   }

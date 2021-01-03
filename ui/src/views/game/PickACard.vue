@@ -26,18 +26,17 @@
     </div>
 
     <div v-if="currentView === VIEWS.confirmCard">
-
       <h3>You want this card?</h3>
       <div class="hand">
-          <div class="card-and-description">
-            <div class="card">
-              <img v-bind:src="pickedCard.image" />
-              <p class="name">{{ pickedCard.name }}</p>
-              <p class="hint">{{ pickedCard.hint }}</p>
-            </div>
-            <p class="description">
-              {{ pickedCard.description }}
-            </p>
+        <div class="card-and-description">
+          <div class="card">
+            <img v-bind:src="pickedCard.image" />
+            <p class="name">{{ pickedCard.name }}</p>
+            <p class="hint">{{ pickedCard.hint }}</p>
+          </div>
+          <p class="description">
+            {{ pickedCard.description }}
+          </p>
         </div>
       </div>
 
@@ -60,9 +59,19 @@
         </button>
       </div>
 
-      <h3>Your tableau</h3>
+      <div class="menu-buttons-right">
+        <button class="btn-secondary btn" @click.stop="previousTableau">
+          &lt;-
+        </button>
+
+        <button class="btn-secondary btn" @click.stop="nextTableau">
+          -&gt;
+        </button>
+      </div>
+
+      <h3>{{ selectedTableauName }}'s tableau</h3>
       <div class="hand">
-        <div class="card" v-for="card in tableau" :key="card.index">
+        <div class="card" v-for="card in selectedTableau" :key="card.index">
           <!-- div contents-->
           <img v-bind:src="card.image" />
           <p class="name">{{ card.name }}</p>
@@ -97,8 +106,20 @@ export default {
       VIEWS: VIEWS,
       pickedCard: {},
       hand: [],
-      tableau: []
+      tableauList: [],
+      selectedTableauIndex: 0
     };
+  },
+
+  computed: {
+    selectedTableau: function() {
+      console.log(this.tableauList[0].tableau);
+      return this.tableauList[this.selectedTableauIndex].tableau;
+    },
+
+    selectedTableauName: function() {
+      return this.tableauList[this.selectedTableauIndex].player;
+    }
   },
 
   async mounted() {
@@ -121,8 +142,10 @@ export default {
 
       self.currentView = VIEWS.waiting;
       self.interval = setInterval(async () => {
-        let response = await axios.post("http://127.0.0.1:5000/GetPlayersChosen");
-        let isAllChosen = response.data['all_chosen'];
+        let response = await axios.post(
+          "http://127.0.0.1:5000/GetPlayersChosen"
+        );
+        let isAllChosen = response.data["all_chosen"];
         if (isAllChosen) {
           clearInterval(self.interval);
           await self.refreshData();
@@ -137,16 +160,51 @@ export default {
       this.players = response.data.players;
 
       let hand = [];
-      for (let card of response.data.players[self.playerName].hand) {
-        hand.push(cardFactory(card.name, Object.keys(this.players).length, card.power));
+      for (let card of this.players[self.playerName].hand) {
+        hand.push(
+          cardFactory(card.name, Object.keys(this.players).length, card.power)
+        );
       }
       this.hand = hand;
 
-      let tableau = [];
-      for (let card of response.data.players[self.playerName].tableau) {
-        tableau.push(cardFactory(card.name, Object.keys(this.players).length, card.power));
+      let list = [];
+      for (let [key, player] of Object.entries(this.players)) {
+        let tableau = [];
+        let index = 0;
+        for (let card of player.tableau) {
+          tableau.push(
+            cardFactory(card.name, Object.keys(this.players).length, card.power)
+          );
+        }
+
+        list.push({
+          tableau: tableau,
+          player: key,
+          index: index
+        });
+        index++;
       }
-      this.tableau = tableau;
+      this.tableauList = list;
+
+      this.selectedTableauIndex = this.tableauList.findIndex(x => {
+        return x.player === self.playerName;
+      });
+    },
+
+    nextTableau: function() {
+      if (this.selectedTableauIndex + 1 >= this.tableauList.length) {
+        this.selectedTableauIndex = 0;
+      } else {
+        this.selectedTableauIndex++;
+      }
+    },
+
+    previousTableau: function() {
+      if (this.selectedTableauIndex === 0) {
+        this.selectedTableauIndex = this.tableauList.length - 1;
+      } else {
+        this.selectedTableauIndex--;
+      }
     }
   }
 };
@@ -182,6 +240,11 @@ export default {
   justify-content: left;
 }
 
+.menu-buttons-right {
+  float: right;
+  right: 1px;
+}
+
 .confirm-buttons {
   display: flex;
   justify-content: center;
@@ -193,7 +256,7 @@ export default {
 }
 
 .name {
-  font-family: "Patrick Hand SC",sans-serif;
+  font-family: "Patrick Hand SC", sans-serif;
   font-size: 20px;
   margin: 5px;
 }
@@ -201,11 +264,11 @@ export default {
 .hint {
   font-size: 15px;
   margin: 5px;
-  font-family: "Patrick Hand SC",sans-serif;
+  font-family: "Patrick Hand SC", sans-serif;
 }
 
 .description {
-  font-family: "Patrick Hand SC",sans-serif;
+  font-family: "Patrick Hand SC", sans-serif;
   margin: 25px;
   width: 300px;
   font-size: 22px;

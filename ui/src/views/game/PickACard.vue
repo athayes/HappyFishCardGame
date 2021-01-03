@@ -241,8 +241,8 @@ export default {
 }
 
 .menu-buttons-right {
-  position: absolute;
-  right: 7px;
+  float: right;
+  right: 1px;
 }
 
 .confirm-buttons {

@@ -57,15 +57,19 @@
         >
           View Hand
         </button>
-        <button
-            class="btn-secondary btn"
-            @click.stop="nextTableau"
-        >
-          Next button
+      </div>
+
+      <div class="menu-buttons-right">
+        <button class="btn-secondary btn" @click.stop="previousTableau">
+          &lt;-
+        </button>
+
+        <button class="btn-secondary btn" @click.stop="nextTableau">
+          -&gt;
         </button>
       </div>
 
-      <h3>{{ selectedTableauName}}'s tableau</h3>
+      <h3>{{ selectedTableauName }}'s tableau</h3>
       <div class="hand">
         <div class="card" v-for="card in selectedTableau" :key="card.index">
           <!-- div contents-->
@@ -109,6 +113,7 @@ export default {
 
   computed: {
     selectedTableau: function() {
+      console.log(this.tableauList[0].tableau);
       return this.tableauList[this.selectedTableauIndex].tableau;
     },
 
@@ -181,7 +186,9 @@ export default {
       }
       this.tableauList = list;
 
-      this.selectedTableauIndex = this.tableauList.findIndex((x) => { return x.player === self.playerName; })
+      this.selectedTableauIndex = this.tableauList.findIndex(x => {
+        return x.player === self.playerName;
+      });
     },
 
     nextTableau: function() {
@@ -193,7 +200,11 @@ export default {
     },
 
     previousTableau: function() {
-
+      if (this.selectedTableauIndex === 0) {
+        this.selectedTableauIndex = this.tableauList.length - 1;
+      } else {
+        this.selectedTableauIndex--;
+      }
     }
   }
 };
@@ -227,6 +238,11 @@ export default {
   display: flex;
   align-items: center;
   justify-content: left;
+}
+
+.menu-buttons-right {
+  position: absolute;
+  right: 7px;
 }
 
 .confirm-buttons {

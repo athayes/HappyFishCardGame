@@ -16,8 +16,7 @@ class Card:
         return self.sort_value < other.sort_value
 
     def __gt__(self, other):
-        return self.sort_value > other.sort_value
-
+        return self.sort_value > other.sort_v
     def __str__(self):
         return self.__class__.__name__
         
@@ -36,7 +35,7 @@ class Card:
             while j < len(tableau) and isinstance(tableau[j], clazz):
                 players.get(player_keys[i]).score += clazz.face_value
                 j += 1
-            if j == len(player_keys[i]):
+            if j == len(tableau)-1:
                 players.get(player_keys[i]).tableau.cards = []
             else:
                 players.get(player_keys[i]).tableau.cards = tableau[j:]
@@ -124,7 +123,7 @@ class Threshold_Card(Card):
     def score(clazz, player_keys, players):
         # Tableaus must be sorted
 
-        card_cnts = [0 for i in range(len(player_keys))]
+        card_cnts = [0 for k in range(len(player_keys))]
         for i in range(len(player_keys)):
             tableau = players.get(player_keys[i]).tableau
             j = 0
@@ -136,9 +135,9 @@ class Threshold_Card(Card):
             else:
                 players.get(player_keys[i]).tableau.cards = tableau[j:]
 
-        if Threshold_Card.min_count > 0:
-            for i in range(len(scores)):
-                players.get(player_keys[i]).score += card_cnts[i] // Threshold_Card.min_count
+        if clazz.min_count > 0:
+            for i in range(len(player_keys)):
+                players.get(player_keys[i]).score += card_cnts[i] // clazz.min_count * clazz.reward
         else:
             pass # how to score negative points?
 
@@ -224,7 +223,7 @@ class Tea(Card):
 
 
 # Combo scoring cards
-class Wasabi(Card):
+class Wasabi(Card):  #### TODO link wasabi to nigiri
     sort_value = 1
 
     def __init__(self):
@@ -402,7 +401,6 @@ class Deck:
     Sashimi: 8, Dumpling: 8, Eel: 8, Tofu: 8, Onigiri: 8, Edamame: 8, Miso: 8,
     Chopsticks: 3, Soy: 3, Tea: 3, Menu: 3, Spoon: 3, Special: 3, Takeout: 3,
     Wasabi: 3, Pudding: 15, Ice_Cream: 15, Fruit: 15}    
-    cards = []
 
 
     def __init__(self, card_types, players, dessert):
@@ -475,6 +473,7 @@ class Game:
 
     def __init__(self, player_names, cards_in_use=[Wasabi, Chopsticks, Dumpling, Tempura, Sashimi, Maki], dessert=Pudding):
         self.cards_in_use = cards_in_use
+        self.cards_in_use.extend([Egg, Salmon, Squid])
         self.num_players = len(player_names)
         self.round = 0
         self.deck = Deck(cards_in_use, player_names, dessert)
@@ -532,10 +531,11 @@ class Game:
 
 
     def score_round(self):
+    ##for testing
+        Wasabi.score(self.player_keys, self.players)
+        Egg.score(self.player_keys, self.players)
+        return
         for card_type in self.cards_in_use:  # ensure dessert not counted here
-            print(card_type)
-            print('\n')
-            print(self.players)
             card_type.score(self.player_keys, self.players)
 
     def score_dessert(self):

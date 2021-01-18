@@ -27,12 +27,12 @@ export default {
   },
   async created() {
     let self = this;
-    let response = await axios.post("http://127.0.0.1:5000/GetPlayersInLobby");
+    let response = await axios.post("http://127.0.0.1:5000/GetLobby");
     self.players = response.data.players;
 
     self.interval = setInterval(async () => {
       let response = await axios.post(
-        "http://127.0.0.1:5000/GetPlayersInLobby"
+        "http://127.0.0.1:5000/GetLobby"
       );
       self.players = response.data.players;
     }, 5 * 1000);

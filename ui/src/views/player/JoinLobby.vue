@@ -1,14 +1,14 @@
 <template>
-  <div class="JoinRoom">
+  <div class="joinRoom">
     <h2>Join Game</h2>
     <label for="playerName">Your name</label>
     <input
       v-model="playerName"
-      class="JoinGameEnterName"
+      class="joinLobbyEnterName"
       type="text"
       id="playerName"
     />
-    <button class="btn btn-secondary" @click="joinGame">
+    <button class="btn btn-secondary" @click="JoinLobby">
       Join Game
     </button>
   </div>
@@ -16,6 +16,7 @@
 
 <script>
 import axios from "axios";
+import Cookies from "js-cookie";
 
 export default {
   data: function() {
@@ -24,15 +25,16 @@ export default {
     };
   },
   methods: {
-    async joinGame() {
+    async JoinLobby() {
       if (this.playerName === "") {
         alert("Enter your name");
         return;
       }
 
-      await axios.post("http://127.0.0.1:5000/JoinGame", {
+      await axios.post("http://127.0.0.1:5000/JoinLobby", {
         playerName: this.playerName
       });
+      Cookies.set("HappyFishCardGame", this.playerName);
       await this.$router.push("Lobby");
     }
   }
@@ -40,7 +42,7 @@ export default {
 </script>
 
 <style>
-.JoinRoom {
+.joinRoom {
   text-align: center;
   color: #2c3e50;
 }
@@ -49,7 +51,7 @@ label {
   text-align: left;
 }
 
-.JoinGameEnterName {
+.joinLobbyEnterName {
   display: block;
   margin-right: auto;
   margin-left: auto;

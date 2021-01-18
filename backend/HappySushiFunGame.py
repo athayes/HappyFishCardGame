@@ -16,7 +16,8 @@ class Card:
         return self.sort_value < other.sort_value
 
     def __gt__(self, other):
-        return self.sort_value > other.sort_v
+        return self.sort_value > other.sort_value
+
     def __str__(self):
         return self.__class__.__name__
         
@@ -407,7 +408,7 @@ class Deck:
         self.cards = []
         self.players = players
         for card_type in card_types:
-            self.cards.extend([card_type() for i in range(Deck.CARD_DISTRIBUTION.get(card_type))])
+            self.cards.append(card_type() for i in range(Deck.CARD_DISTRIBUTION.get(card_type)))
         self.cards.extend([dessert() for i in range(5)])
         self.cards.extend([Egg() for i in range(4)])
         self.cards.extend([Salmon() for i in range(4)])
@@ -471,9 +472,8 @@ class Game:
 
     CARDS_TO_DEAL = {2: 2, 3: 10, 4: 9, 5: 9, 6: 8, 7: 8, 8: 7} ##2: 10
 
-    def __init__(self, player_names, cards_in_use=[Wasabi, Chopsticks, Dumpling, Tempura, Sashimi, Maki], dessert=Pudding):
+    def __init__(self, player_names, cards_in_use=[Maki, Wasabi, Chopsticks, Dumpling, Tempura, Sashimi], dessert=Pudding):
         self.cards_in_use = cards_in_use
-        self.cards_in_use.extend([Egg, Salmon, Squid])
         self.num_players = len(player_names)
         self.round = 0
         self.deck = Deck(cards_in_use, player_names, dessert)

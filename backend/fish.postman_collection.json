@@ -6,7 +6,7 @@
 	},
 	"item": [
 		{
-			"name": "CreateGame",
+			"name": "CreateLobby",
 			"request": {
 				"method": "POST",
 				"header": [],
@@ -28,7 +28,7 @@
 			"response": []
 		},
 		{
-			"name": "JoinGame",
+			"name": "JoinLobby",
 			"request": {
 				"method": "POST",
 				"header": [],
@@ -44,6 +44,28 @@
 					"port": "5000",
 					"path": [
 						"JoinGame"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetLobby",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "localhost:5000/GetGameObject",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"GetGameObject"
 					]
 				}
 			},
@@ -94,34 +116,9 @@
 			"response": []
 		},
 		{
-			"name": "GetPlayersInLobby",
+			"name": "GetAllChosen",
 			"request": {
 				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": ""
-				},
-				"url": {
-					"raw": "localhost:5000/GetGameObject",
-					"host": [
-						"localhost"
-					],
-					"port": "5000",
-					"path": [
-						"GetGameObject"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "GetAllChosen",
-			"protocolProfileBehavior": {
-				"disableBodyPruning": true
-			},
-			"request": {
-				"method": "GET",
 				"header": [],
 				"body": {
 					"mode": "raw",

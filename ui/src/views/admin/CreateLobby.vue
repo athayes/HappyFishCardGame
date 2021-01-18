@@ -1,14 +1,14 @@
 <template>
-  <div class="CreateGame">
+  <div class="CreateLobby">
     <h2>Create Game</h2>
     <label>Your name</label>
     <input
       v-model="hostName"
-      class="CreateGameEnterName"
+      class="CreateLobbyEnterName"
       type="text"
       placeholder="Name"
     />
-    <button @click="createGame()">
+    <button @click="CreateLobby()">
       Continue
     </button>
   </div>
@@ -26,13 +26,13 @@ export default {
   },
 
   methods: {
-    createGame: async function() {
+    CreateLobby: async function() {
       let hostName = this.hostName;
       if (hostName === "") {
         alert("Enter your name");
         return;
       }
-      await axios.post("http://127.0.0.1:5000/CreateGame", {
+      await axios.post("http://127.0.0.1:5000/CreateLobby", {
         hostName: hostName
       });
 
@@ -44,12 +44,12 @@ export default {
 </script>
 
 <style>
-.CreateGame {
+.CreateLobby {
   text-align: center;
   color: #2c3e50;
 }
 
-.CreateGameEnterName {
+.CreateLobbyEnterName {
   display: block;
   margin-right: auto;
   margin-left: auto;

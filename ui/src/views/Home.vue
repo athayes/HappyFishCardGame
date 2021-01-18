@@ -1,7 +1,7 @@
 <template>
   <div class="Home">
     <h2>Happy Fish Card Game</h2>
-    <button class="btn btn-secondary" @click="joinGame">
+    <button class="btn btn-secondary" @click="JoinLobby">
       Join Game
     </button>
     <p>
@@ -14,8 +14,8 @@
 
 export default {
   methods: {
-    async joinGame() {
-      await this.$router.push("JoinGame");
+    async JoinLobby() {
+      await this.$router.push("JoinLobby");
     }
   }
 };

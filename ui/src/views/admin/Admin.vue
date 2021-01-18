@@ -11,7 +11,7 @@
 export default {
   methods: {
     GoToCreatePage: function() {
-      this.$router.push("CreateGame");
+      this.$router.push("CreateLobby");
     }
   }
 };

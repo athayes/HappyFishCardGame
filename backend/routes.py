@@ -7,6 +7,8 @@ app = Flask(__name__)
 CORS(app)
 
 class Lobby:
+    host_name = None
+    is_game_started = False
     game = None
     players = []
 
@@ -23,6 +25,7 @@ class Lobby:
     def start_game():
         Lobby.game = fish.Game(Lobby.players)
         Lobby.game.start_round()
+        Lobby.is_game_started = True
 
 @app.route('/StartGame', methods=['POST'])
 def start_game():
@@ -31,11 +34,12 @@ def start_game():
     return Lobby.game.player_json()
 
 # Recreate game 1
-@app.route('/CreateGame', methods=['POST'])
+@app.route('/CreateLobby', methods=['POST'])
 def create_game():
     host_name = request.json['hostName']
     Lobby.reset_game()
     Lobby.add_player(host_name)
+    Lobby.host_name = host_name
     return json.dumps(dict(success=True)), 200, {'ContentType': 'application/json'}
 
 
@@ -46,11 +50,15 @@ def get_game_object():
         "players": Lobby.game.player_json()
     }
 
-@app.route('/GetPlayersInLobby', methods=['POST'])
+@app.route('/GetLobby', methods=['POST'])
 def get_players_in_lobby():
-    return json.dumps({'players': Lobby.players})
+    return {'players': Lobby.players,
+         'host_name': Lobby.host_name,
+         'is_game_started': Lobby.is_game_started
+     }
 
-@app.route('/JoinGame', methods=['POST'])
+
+@app.route('/JoinLobby', methods=['POST'])
 def join():
         player_name = request.json['playerName']
         if player_name in Lobby.players:

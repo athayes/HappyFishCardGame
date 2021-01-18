@@ -2,8 +2,8 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 import Lobby from "../views/player/Lobby";
 import HostLobby from "../views/admin/HostLobby";
-import JoinGame from "../views/player/JoinGame";
-import CreateGame from "../views/admin/CreateGame";
+import JoinLobby from "../views/player/JoinLobby";
+import CreateLobby from "../views/admin/CreateLobby";
 import Admin from "../views/admin/Admin";
 import PickACard from "../views/game/PickACard";
 import Home from "../views/Home";
@@ -20,16 +20,16 @@ const routes = [
     component: Admin
   },
   {
-    path: "/CreateGame",
-    component: CreateGame
+    path: "/CreateLobby",
+    component: CreateLobby
   },
   {
     path: "/HostLobby",
     component: HostLobby
   },
   {
-    path: "/JoinGame",
-    component: JoinGame
+    path: "/JoinLobby",
+    component: JoinLobby
   },
   {
     path: "/Lobby",

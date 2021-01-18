@@ -408,7 +408,7 @@ class Deck:
         self.cards = []
         self.players = players
         for card_type in card_types:
-            self.cards.append(card_type() for i in range(Deck.CARD_DISTRIBUTION.get(card_type)))
+            self.cards.extend([card_type() for i in range(Deck.CARD_DISTRIBUTION.get(card_type))])
         self.cards.extend([dessert() for i in range(5)])
         self.cards.extend([Egg() for i in range(4)])
         self.cards.extend([Salmon() for i in range(4)])

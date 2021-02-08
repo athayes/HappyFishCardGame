@@ -59,7 +59,7 @@ def get_players_in_lobby():
 
 
 @app.route('/JoinLobby', methods=['POST'])
-def join():
+def join_lobby():
         player_name = request.json['playerName']
         if player_name in Lobby.players:
             return 'Name taken; pick a new name!'
@@ -86,3 +86,11 @@ def pick_card():
         Lobby.game.rotate_hands()
     return json.dumps(dict(success=True)), 200, {'ContentType': 'application/json'}
 
+@app.route('/SetUpTestGame', methods=['POST'])
+def set_up_test_game():
+    Lobby.reset_game()
+    Lobby.add_player("reb")
+    Lobby.add_player("Cool H")
+    Lobby.host_name = "reb"
+    Lobby.start_game()
+    return json.dumps(dict(success=True)), 200, {'ContentType': 'application/json'}

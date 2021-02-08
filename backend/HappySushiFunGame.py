@@ -147,6 +147,13 @@ class Threshold_Card(Card):
 class Nigiri(Card):
     sort_value = 2
     face_value = 0
+    
+    def play(self, hand, tableau):
+        tableau += self
+        hand.remove(self)
+        for card in tableau:
+            if isinstance(card, Wasabi) and card.nigiri == None:
+                card.nigiri = self
 
 
 class Egg(Nigiri):
@@ -224,7 +231,7 @@ class Tea(Card):
 
 
 # Combo scoring cards
-class Wasabi(Card):  #### TODO link wasabi to nigiri
+class Wasabi(Card):
     sort_value = 1
 
     def __init__(self):
@@ -232,7 +239,7 @@ class Wasabi(Card):  #### TODO link wasabi to nigiri
         super().__init__()
         self.nigiri = None
 
-    @staticmethod ### TODO ##### Add nigiri to wasabi when playing
+    @staticmethod
     def score(player_keys, players):
         # Tableaus must be sorted
 
@@ -244,10 +251,12 @@ class Wasabi(Card):  #### TODO link wasabi to nigiri
                     # The third will be added in the nigiri scoring method
                     players.get(player_keys[i]).score += tableau[j].nigiri.face_value * 2
                 j += 1
+            print(players.get(player_keys[i]).tableau.cards)
             if j == len(tableau):
                 players.get(player_keys[i]).tableau.cards = []
             else:
                 players.get(player_keys[i]).tableau.cards = tableau[j:]
+            print(players.get(player_keys[i]).tableau.cards)
 
 
 class Tofu(Threshold_Card):
@@ -407,12 +416,15 @@ class Deck:
     def __init__(self, card_types, players, dessert):
         self.cards = []
         self.players = players
-        for card_type in card_types:
-            self.cards.extend([card_type() for i in range(Deck.CARD_DISTRIBUTION.get(card_type))])
-        self.cards.extend([dessert() for i in range(5)])
-        self.cards.extend([Egg() for i in range(4)])
-        self.cards.extend([Salmon() for i in range(4)])
-        self.cards.extend([Squid() for i in range(4)])
+        self.cards.extend([Salmon() for i in range(3)])
+        self.cards.extend([Wasabi() for i in range(1)])
+        self.cards.extend([Egg() for i in range(1)])
+       # for card_type in card_types:
+       #     self.cards.extend([card_type() for i in range(Deck.CARD_DISTRIBUTION.get(card_type))])
+       # self.cards.extend([dessert() for i in range(5)])
+       # self.cards.extend([Egg() for i in range(4)])
+        #self.cards.extend([Salmon() for i in range(4)])
+        #self.cards.extend([Squid() for i in range(4)])
 
     def shuffle(self):
         random.shuffle(self.cards)
@@ -533,6 +545,7 @@ class Game:
     def score_round(self):
     ##for testing
         Wasabi.score(self.player_keys, self.players)
+        Salmon.score(self.player_keys, self.players)
         Egg.score(self.player_keys, self.players)
         return
         for card_type in self.cards_in_use:  # ensure dessert not counted here

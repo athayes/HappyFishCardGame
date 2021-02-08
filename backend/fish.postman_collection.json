@@ -158,6 +158,28 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "SetUpTestGame",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "localhost:5000/SetUpTestGame",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"SetUpTestGame"
+					]
+				}
+			},
+			"response": []
 		}
 	]
 }

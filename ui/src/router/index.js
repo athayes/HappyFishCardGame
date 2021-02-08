@@ -7,6 +7,7 @@ import CreateLobby from "../views/admin/CreateLobby";
 import Admin from "../views/admin/Admin";
 import PickACard from "../views/game/PickACard";
 import Home from "../views/Home";
+import SetUpTestGame from "@/views/admin/SetUpTestGame";
 
 Vue.use(VueRouter);
 
@@ -38,6 +39,10 @@ const routes = [
   {
     path: "/PickACard",
     component: PickACard
+  },
+  {
+    path: "/SetUpTestGame",
+    component: SetUpTestGame
   }
 ];
 

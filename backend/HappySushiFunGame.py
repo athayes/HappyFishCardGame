@@ -539,6 +539,7 @@ class Game:
         self.deck.shuffle()
         
         for player in self.players:
+            self.players.get(player).chosen = False
             self.players.get(player).hand = self.deck.deal_a_hand(Game.CARDS_TO_DEAL.get(len(self.players)))
 
 

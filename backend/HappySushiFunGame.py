@@ -147,13 +147,6 @@ class Threshold_Card(Card):
 class Nigiri(Card):
     sort_value = 2
     face_value = 0
-    
-    def play(self, hand, tableau):
-        tableau += self
-        hand.remove(self)
-        for card in tableau:
-            if isinstance(card, Wasabi) and card.nigiri == None:
-                card.nigiri = self
 
 
 class Egg(Nigiri):
@@ -238,6 +231,7 @@ class Wasabi(Card):
         # score this first so linked nigiri is def not deleted
         super().__init__()
         self.nigiri = None
+
 
     @staticmethod
     def score(player_keys, players):
@@ -416,12 +410,15 @@ class Deck:
     def __init__(self, card_types, players, dessert):
         self.cards = []
         self.players = players
-        for card_type in card_types:
-            self.cards.extend([card_type() for i in range(Deck.CARD_DISTRIBUTION.get(card_type))])
-        self.cards.extend([dessert() for i in range(5)])
+     #   for card_type in card_types:
+      #      self.cards.extend([card_type() for i in range(Deck.CARD_DISTRIBUTION.get(card_type))])
+      #  self.cards.extend([dessert() for i in range(5)])
+        self.cards.extend([Wasabi() for i in range(1)])
         self.cards.extend([Egg() for i in range(4)])
-        self.cards.extend([Salmon() for i in range(4)])
-        self.cards.extend([Squid() for i in range(4)])
+        self.cards.extend([Wasabi() for i in range(1)])
+        self.cards.extend([Egg() for i in range(4)])
+     #   self.cards.extend([Salmon() for i in range(4)])
+     #   self.cards.extend([Squid() for i in range(4)])
 
     def shuffle(self):
         random.shuffle(self.cards)
@@ -543,7 +540,7 @@ class Game:
     def score_round(self):
     ##for testing
         Wasabi.score(self.player_keys, self.players)
-        Salmon.score(self.player_keys, self.players)
+        #Salmon.score(self.player_keys, self.players)
         Egg.score(self.player_keys, self.players)
         return
         for card_type in self.cards_in_use:  # ensure dessert not counted here
@@ -570,7 +567,12 @@ class Player():
         self.hand_empty = False
 
     def play(self, index):
-        self.tableau.add(self.hand.cards.pop(index))
+        tmp_card = self.hand.cards.pop(index)
+        self.tableau.add(tmp_card)
+        if isinstance(tmp_card, Nigiri):
+            for card in self.tableau:
+                if isinstance(card, Wasabi) and card.nigiri is None:
+                    card.nigiri = tmp_card
         self.chosen = True
         if len(self.hand) == 0:
             self.hand_empty = True

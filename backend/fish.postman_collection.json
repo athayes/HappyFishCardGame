@@ -116,7 +116,7 @@
 			"response": []
 		},
 		{
-			"name": "GetAllChosen",
+			"name": "GetPlayersChosen",
 			"request": {
 				"method": "POST",
 				"header": [],
@@ -132,6 +132,35 @@
 					"port": "5000",
 					"path": [
 						"GetPlayersChosen"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CanPlayCard",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"playerName\": \"Cool H\"\n}"
+				},
+				"url": {
+					"raw": "localhost:5000/CanPlayCard",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"CanPlayCard"
 					]
 				}
 			},

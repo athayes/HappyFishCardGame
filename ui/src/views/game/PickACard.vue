@@ -142,11 +142,11 @@ export default {
 
       self.currentView = VIEWS.waiting;
       self.interval = setInterval(async () => {
-        let response = await axios.post(
-          "http://127.0.0.1:5000/GetPlayersChosen"
-        );
-        let isAllChosen = response.data["all_chosen"];
-        if (isAllChosen) {
+        let response = await axios.post("http://127.0.0.1:5000/CanPlayCard", {
+          playerName: self.playerName
+        });
+        let canPlay = response.data["canPlayCard"];
+        if (canPlay) {
           clearInterval(self.interval);
           await self.refreshData();
           this.currentView = VIEWS.pickACard;

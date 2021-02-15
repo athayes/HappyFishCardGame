@@ -416,15 +416,12 @@ class Deck:
     def __init__(self, card_types, players, dessert):
         self.cards = []
         self.players = players
-        self.cards.extend([Salmon() for i in range(3)])
-        self.cards.extend([Wasabi() for i in range(1)])
-        self.cards.extend([Egg() for i in range(1)])
-       # for card_type in card_types:
-       #     self.cards.extend([card_type() for i in range(Deck.CARD_DISTRIBUTION.get(card_type))])
-       # self.cards.extend([dessert() for i in range(5)])
-       # self.cards.extend([Egg() for i in range(4)])
-        #self.cards.extend([Salmon() for i in range(4)])
-        #self.cards.extend([Squid() for i in range(4)])
+        for card_type in card_types:
+            self.cards.extend([card_type() for i in range(Deck.CARD_DISTRIBUTION.get(card_type))])
+        self.cards.extend([dessert() for i in range(5)])
+        self.cards.extend([Egg() for i in range(4)])
+        self.cards.extend([Salmon() for i in range(4)])
+        self.cards.extend([Squid() for i in range(4)])
 
     def shuffle(self):
         random.shuffle(self.cards)

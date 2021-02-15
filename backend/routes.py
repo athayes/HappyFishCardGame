@@ -94,3 +94,8 @@ def set_up_test_game():
     Lobby.host_name = "reb"
     Lobby.start_game()
     return json.dumps(dict(success=True)), 200, {'ContentType': 'application/json'}
+
+@app.route('/GetPlayerChosen', methods=['POST'])
+def get_all_chosen():
+    player = request.json["playerName"]
+    return not Lobby.game.players.get(player).chosen

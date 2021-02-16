@@ -1,4 +1,4 @@
-from simple_fish import make_deck, shuffle_deck, deal_hand
+from simple_fish import make_deck, shuffle_deck, deal_hand, Game
 import numpy as np
 
 
@@ -16,9 +16,30 @@ def test_shuffle_deck():
 
 def test_deal_hand():
     test_deck = make_deck([("Maki", 6), ("Sashimi", 6), ("Salmon", 6)])
-    result = deal_hand(test_deck, 6)
-    hand = result["hand"]
-    deck = result["deck"]
+    hand, deck = deal_hand(test_deck, 6)
     assert len(hand) == 6
     assert len(deck) == 12
-    # np.testing.assert_array_equal(test_deck, (hand.extend(deck)).sort)
+    np.testing.assert_array_equal(test_deck.sort(), (hand + deck).sort())
+
+
+def test_game_init():
+    game = Game(
+        ["reb", "Cool H"],
+        make_deck([("Maki", 6), ("Sashimi", 6), ("Salmon", 6)]),
+        4
+    )
+    assert game.round == 0
+    assert game.players
+    assert game.deck
+
+
+def test_game_start_round():
+    game = Game(
+        ["reb", "Cool H"],
+        make_deck([("Maki", 6), ("Sashimi", 6), ("Salmon", 6)]),
+        3
+    )
+    game.start_round()
+    assert game.round == 1
+    assert len(game.deck) == 12
+    assert len(game.players[0].hand) == 3

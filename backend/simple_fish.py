@@ -21,38 +21,36 @@ def deal_hand(deck, hand_size):
     new_deck = deck.copy()
     hand = new_deck[0:hand_size]
     new_deck = deck[hand_size:]
-    return {"hand": hand, "deck": new_deck}
+    return hand, new_deck
 
-
+# Python doesn't allow the creation of a dictionary with a variable as a key
+# (it can, but it's too complicated to justify the effort)
+# So lets use an array
+# Anthony will update the frontend to match this
 def make_players(player_names):
     players = []
     for player_name in player_names:
         players.append(Player(player_name))
-    return OrderedDict(players)
+    return players
 
 
 class Game:
-    def __init__(self, players):
-        deck = make_deck({"EGG": 4, "WASABI": 2})
-        self.deck = shuffle_deck(deck)
-        self.players = players
+    def __init__(self, player_names, deck, hand_size):
+        self.deck = deck
+        self.players = make_players(player_names)
         self.round = 0
+        self.hand_size = hand_size
 
     def start_round(self):
         self.round += 1
         self.deck = shuffle_deck(self.deck)
         players = []
         for player in self.players:
-            result = deal_hand(self.deck, player)
-            hand = result["hand"]
-            deck = result["deck"]
+            hand, deck = deal_hand(self.deck, self.hand_size)
             self.deck = deck
-            new_player = {
-                **player,
-                'chosen': False,
-                'hand': hand
-            }
-            players.append(new_player)
+            player.chosen = False
+            player.hand = hand
+            players.append(player)
         self.players = players
 
     # def rotate_hands(self):
@@ -63,26 +61,28 @@ class Game:
     #         if index !== 0:
     #             self.players
 
-    def check_round_over(self):
-        start_new_round = True
-        for player in self.players:
-            start_new_round = start_new_round and self.players.get(player).hand_empty
-        print(start_new_round)
-        if start_new_round:
-            self.score_round()
-            if start_new_round and self.round < 2:
-                self.start_round()
-                return True
-            elif start_new_round and self.round == 2:
-                self.score_dessert()
-                return True
-            return False
-
-    def check_all_players_chosen(self):
-        all_chosen = True
-        for player in self.players:
-            all_chosen = all_chosen and self.players.get(player).chosen
-        return all_chosen
+#     def check_round_over(self):
+#         start_new_round = True
+#         for player in self.players:
+#             start_new_round = start_new_round and self.players.get(player).hand_empty
+#         print(start_new_round)
+#         if start_new_round:
+#             self.score_round()
+#             if start_new_round and self.round < 2:
+#                 self.start_round()
+#                 return True
+#             elif start_new_round and self.round == 2:
+#                 self.score_dessert()
+#                 return True
+#             return False
+#
+#     def check_all_players_chosen(self):
+#         all_chosen = True
+#         for player in self.players:
+#             all_chosen = all_chosen and self.players.get(player).chosen
+#         return all_chosen
+#
+#
 
 
 class Player:
@@ -94,17 +94,17 @@ class Player:
         self.hand = []
         self.chosen = False
 
-    def play(self, index):
-        self.tableau.add(self.hand.cards.pop(index))
-        self.chosen = True
-
-    def to_json(self):
-        data = {}
-        data['score'] = self.score
-        data['tableau'] = self.tableau.to_json()
-        data['dessert'] = self.dessert
-        data['hand'] = self.hand.to_json()
-        return data
+    # def play(self, index):
+    #     self.tableau.add(self.hand.cards.pop(index))
+    #     self.chosen = True
+    #
+    # def to_json(self):
+    #     data = {}
+    #     data['score'] = self.score
+    #     data['tableau'] = self.tableau.to_json()
+    #     data['dessert'] = self.dessert
+    #     data['hand'] = self.hand.to_json()
+    #     return data
 
 ################ Testing code #####################
 # if __name__ == "__main__":

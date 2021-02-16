@@ -13,6 +13,7 @@ def test_shuffle_deck():
     new_deck = shuffle_deck(deck)
     np.testing.assert_array_equal(deck.sort(), new_deck.sort())
 
+
 def test_deal_hand():
     test_deck = make_deck([("Maki", 6), ("Sashimi", 6), ("Salmon", 6)])
     result = deal_hand(test_deck, 6)

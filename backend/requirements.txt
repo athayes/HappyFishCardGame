@@ -1,3 +1,4 @@
+attrs==20.3.0
 click==7.1.2
 dnspython==1.16.0
 eventlet==0.26.1
@@ -5,12 +6,20 @@ Flask==1.1.2
 Flask-Cors==3.0.9
 Flask-SocketIO==4.3.1
 greenlet==0.4.16
+iniconfig==1.1.1
 itsdangerous==1.1.0
 Jinja2==2.11.2
 MarkupSafe==1.1.1
 monotonic==1.5
+numpy==1.20.1
+packaging==20.9
+pluggy==0.13.1
+py==1.10.0
+pyparsing==2.4.7
+pytest==6.2.2
 python-dotenv==0.14.0
 python-engineio==3.13.1
 python-socketio==4.6.0
 six==1.15.0
+toml==0.10.2
 Werkzeug==1.0.1

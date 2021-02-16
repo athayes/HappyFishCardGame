@@ -26,7 +26,7 @@ def test_game_init():
     game = Game(
         ["reb", "Cool H"],
         make_deck([("Maki", 6), ("Sashimi", 6), ("Salmon", 6)]),
-        4
+        3
     )
     assert game.round == 0
     assert game.players

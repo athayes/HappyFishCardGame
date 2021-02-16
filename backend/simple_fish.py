@@ -17,22 +17,36 @@ def shuffle_deck(deck):
     return new_deck
 
 
+# note this function is mutable
+def deal_hands(players, deck, hand_size):
+    for player in players:
+        new_hand, new_deck = deal_hand(deck, hand_size)
+        deck = new_deck
+        player.hand = new_hand
+        player.chosen = False
+    return players, deck
+
+
 def deal_hand(deck, hand_size):
-    new_deck = deck.copy()
-    hand = new_deck[0:hand_size]
-    new_deck = deck[hand_size:]
-    return hand, new_deck
+    deck = deck.copy()
+    hand = deck[0:hand_size]
+    deck = deck[hand_size:]
+    return hand, deck
 
 
-# Python doesn't allow the creation of a dictionary with a variable as a key
-# (it can, but it's too complicated to justify the effort)
-# So lets use an array
-# Anthony will update the frontend to match this
+# players is an array now, not a dict
 def make_players(player_names):
     players = []
     for player_name in player_names:
         players.append(Player(player_name))
     return players
+
+
+def find_player(player_name, players):
+    for index, player in enumerate(players):
+        if player.player_name == player_name:
+            return index, player
+    raise ValueError("player not found in list")
 
 
 class Game:
@@ -41,18 +55,37 @@ class Game:
         self.players = make_players(player_names)
         self.round = 0
         self.hand_size = hand_size
+        self.start_round()
 
     def start_round(self):
         self.round += 1
         self.deck = shuffle_deck(self.deck)
-        players = []
-        for player in self.players:
-            hand, deck = deal_hand(self.deck, self.hand_size)
-            self.deck = deck
-            player.chosen = False
-            player.hand = hand
-            players.append(player)
+        players, deck = deal_hands(self.players, self.deck, self.hand_size)
         self.players = players
+        self.deck = deck
+
+    # Play method is now in the Game class, so we always have access to the whole state
+    # Methods to find players and cards in players hands are pure functions
+    def play_card(self, player_name, card_index):
+        index, player = find_player(player_name, self.players)
+
+        card_name = player.hand[card_index]
+        if card_name == "Chopsticks":
+            # handle chopsticks case here
+            # probably return a different json
+            return
+
+        player.tableau.append(player.hand.pop(card_index))
+        player.chosen = True
+        self.players[index] = player
+
+    # def to_json(self):
+    #     data = {}
+    #     data['players'] = self.players
+    #     # data['dessert'] = self.dessert
+    #     # data['hand'] = self.hand.to_json()
+    #     return data
+
 
     # def rotate_hands(self):
     #     new_players = []
@@ -96,17 +129,6 @@ class Player:
         self.hand = []
         self.chosen = False
 
-    # def play(self, index):
-    #     self.tableau.add(self.hand.cards.pop(index))
-    #     self.chosen = True
-    #
-    # def to_json(self):
-    #     data = {}
-    #     data['score'] = self.score
-    #     data['tableau'] = self.tableau.to_json()
-    #     data['dessert'] = self.dessert
-    #     data['hand'] = self.hand.to_json()
-    #     return data
 
 ################ Testing code #####################
 # if __name__ == "__main__":

@@ -2,7 +2,6 @@ import random
 from collections import OrderedDict
 
 
-# cards is an array of tuples (pairs)
 def make_deck(cards):
     deck = []
     for card in cards:
@@ -17,7 +16,6 @@ def shuffle_deck(deck):
     return new_deck
 
 
-# note this function is mutable
 def deal_hands(players, deck, hand_size):
     for player in players:
         new_hand, new_deck = deal_hand(deck, hand_size)
@@ -34,7 +32,6 @@ def deal_hand(deck, hand_size):
     return hand, deck
 
 
-# players is an array now, not a dict
 def make_players(player_names):
     players = []
     for player_name in player_names:
@@ -64,8 +61,6 @@ class Game:
         self.players = players
         self.deck = deck
 
-    # Play method is now in the Game class, so we always have access to the whole state
-    # Methods to find players and cards in players hands are pure functions
     def play_card(self, player_name, card_index):
         index, player = find_player(player_name, self.players)
 

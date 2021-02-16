@@ -23,6 +23,7 @@ def deal_hand(deck, hand_size):
     new_deck = deck[hand_size:]
     return hand, new_deck
 
+
 # Python doesn't allow the creation of a dictionary with a variable as a key
 # (it can, but it's too complicated to justify the effort)
 # So lets use an array
@@ -60,6 +61,7 @@ class Game:
     #     for index, value in hands:
     #         if index !== 0:
     #             self.players
+
 
 #     def check_round_over(self):
 #         start_new_round = True

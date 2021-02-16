@@ -428,6 +428,7 @@ class Deck:
 
     def deal_a_hand(self, num_cards):
         hand = self.cards[0:num_cards]
+        # note - this should be self.cards[num_cards:]
         self.cards = self.cards[num_cards:-1]
         return Hand(hand)
         

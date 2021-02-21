@@ -22,3 +22,5 @@ yarn-error.log*
 *.iml
 
 venv/
+**/htmlcov/
+.coverage

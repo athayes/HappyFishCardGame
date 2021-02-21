@@ -2,6 +2,9 @@ from src.deck import shuffle_deck
 
 
 # note this function is mutable
+from src.scoring import score_all
+
+
 def deal_hands(players, deck, hand_size):
     for player in players:
         new_hand, new_deck = deal_hand(deck, hand_size)
@@ -97,7 +100,7 @@ class Game:
     def check_round_over(self):
         if not self.all_hands_empty():
             return False
-        # self.score_round() TODO
+        self.score_round()
         if self.round < 2:
             self.start_round()
             return True
@@ -105,6 +108,9 @@ class Game:
             # self.score_dessert() TODO
             return True
         return False
+
+    def score_round(self):
+        self.players = score_all(self.players)
 
     def all_players_chosen(self):
         for player in self.players:

@@ -5,17 +5,19 @@ from src.cards import is_maki, get_maki_number
 
 def score_maki(old_players):
     players = old_players
-    players = find_maki_totals(players)
-    counts = []
+    players = player_find_maki_totals(players)
+    first_place = 0
+    second_place = 0
     for player in players:
-        counts.append(player.maki_count)
-    unique_counts = np.unique(counts)
-    unique_counts_ordered = list(reversed(unique_counts))
+        if player.maki_count > first_place:
+            first_place = player.maki_count
+        elif first_place > player.maki_count > second_place:
+            second_place = player.maki_count
 
     for player in players:
-        if player.maki_count == unique_counts_ordered[0]:
+        if player.maki_count == first_place and first_place != 0:
             player.score += 6
-        if player.maki_count == unique_counts_ordered[1]:
+        if player.maki_count == second_place and second_place != 0:
             player.score += 3
         # clean up
         player.maki_count = 0
@@ -23,7 +25,7 @@ def score_maki(old_players):
     return players
 
 
-def find_maki_totals(old_players):
+def player_find_maki_totals(old_players):
     players = old_players
     for player_ind, player in enumerate(players):
         maki_count = 0
@@ -34,5 +36,5 @@ def find_maki_totals(old_players):
                 card_indices.append(card_ind)
         player.maki_count = maki_count
         # remove the cards from the player's tableau
-        player.tableau = np.delete(player.tableau, card_indices)
+        player.tableau = list(np.delete(player.tableau, card_indices))
     return players

@@ -27,7 +27,7 @@ def score_wasabi(arg_tableau):
             wasabi_index = index
             indices.append(wasabi_index)
 
-    tableau = np.delete(tableau, indices)
+    tableau = list(np.delete(tableau, indices))
     return tableau, score
 
 def score_nigiri(arg_tableau):
@@ -39,5 +39,5 @@ def score_nigiri(arg_tableau):
             score += get_nigiri_score(card)
             indices.append(index)
 
-    tableau = np.delete(tableau, indices)
+    tableau = list(np.delete(tableau, indices))
     return tableau, score

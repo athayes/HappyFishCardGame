@@ -1,5 +1,6 @@
+from src.cards import egg_nigiri
 from src.deck import make_deck
-from src.fish import shuffle_deck, deal_hand, Game, make_players, find_player, rotate_hands
+from src.fish import deal_hand, Game, make_players, find_player, rotate_hands
 import numpy as np
 
 
@@ -32,7 +33,7 @@ def test_rotate_hands():
 
 def test_np_delete():
     hand = ["0", "1", "2", "3", "4", "5"]
-    new_hand = np.delete(hand, [0, 2, 4])
+    new_hand = list(np.delete(hand, [0, 2, 4]))
     np.testing.assert_array_equal(new_hand, ["1", "3", "5"])
 
 
@@ -74,3 +75,19 @@ def test_game_play_card():
     assert len(reb.tableau) == 1
     assert not coolh.chosen
     assert not reb.chosen
+
+def test_score_round():
+    game = Game(
+        ["reb", "Cool H"],
+        make_deck([("Maki", 6), ("Sashimi", 6), ("Salmon", 6)]),
+        3
+    )
+    game.players[0].tableau = make_deck([(egg_nigiri, 3)])
+    game.players[1].tableau = make_deck([(egg_nigiri, 3)])
+    game.score_round()
+
+    reb_index, reb = find_player("reb", game.players)
+    coolh_index, coolh = find_player("Cool H", game.players)
+    print(game.to_json())
+    assert reb.score == 3
+    assert coolh.score == 3

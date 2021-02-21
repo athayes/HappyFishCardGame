@@ -88,8 +88,6 @@ def pick_card():
     player = request.json["playerName"]
     card_index = request.json["index"]
     Lobby.game.play_card(player, card_index)
-    if not Lobby.game.check_round_over() and Lobby.game.all_players_chosen():
-        Lobby.game.rotate_hands()
     return json.dumps(dict(success=True)), 200, {'ContentType': 'application/json'}
 
 

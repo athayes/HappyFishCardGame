@@ -86,6 +86,8 @@ class Game:
 
         if not self.check_round_over() and self.all_players_chosen():
             self.players = rotate_hands(self.players)
+            for player in self.players:
+                player.chosen = False
 
     def player_json(self):
         data = []

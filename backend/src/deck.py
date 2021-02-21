@@ -2,8 +2,11 @@ import random
 
 
 # Deck factory functions
+from src.cards import egg_nigiri, salmon_nigiri, squid_nigiri
+
+
 def basic_deck():
-    return make_deck([("Maki", 6), ("Sashimi", 6), ("Salmon", 6)])
+    return make_deck([(egg_nigiri, 6), (salmon_nigiri, 6), (squid_nigiri, 6)])
 
 
 def shuffle_deck(deck):

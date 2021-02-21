@@ -1,6 +1,6 @@
 import numpy as np
 
-from src.cards import maki_1, maki_2, maki_3
+from src.cards import is_maki, get_maki_number
 
 
 def score_army_cards(old_players):
@@ -35,26 +35,12 @@ def find_maki_counts(old_players):
         card_indices = []
         for card_ind, card in enumerate(player.tableau):
             if is_maki(card):
-                maki_count += get_maki_count(card)
+                maki_count += get_maki_number(card)
                 card_indices.append(card_ind)
         player.maki_count = maki_count
         # remove the cards from the player's tableau
         player.tableau = np.delete(player.tableau, card_indices)
     return players
-
-
-def is_maki(card):
-    return card in (maki_1, maki_2, maki_3)
-
-
-def get_maki_count(maki_card):
-    if maki_card == maki_1:
-        return 1
-    if maki_card == maki_2:
-        return 2
-    if maki_card == maki_3:
-        return 3
-    raise Exception("Only accepts Maki cards!")
 
 
 def count_maki(old_player):
@@ -63,6 +49,7 @@ def count_maki(old_player):
     return player
 
 
+# TODO
 def score_players(old_players):
     players = old_players
     for player in players:

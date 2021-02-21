@@ -1,5 +1,5 @@
 from src.cards import egg_nigiri, salmon_nigiri, squid_nigiri, wasabi, maki_1
-from src.fish import Player
+from src.player import Player
 from src.scoring_functions.wasabi_and_nigiri import score_nigiri, score_wasabi, \
     score_wasabi_and_nigiri
 

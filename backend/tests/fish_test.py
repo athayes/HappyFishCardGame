@@ -1,6 +1,7 @@
 from src.cards import egg_nigiri
 from src.deck import make_deck
-from src.fish import deal_hand, Game, make_players, find_player, rotate_hands
+from src.fish import deal_hand, Game, find_player, rotate_hands
+from src.player import make_players
 import numpy as np
 
 

@@ -1,6 +1,6 @@
 from src.deck import shuffle_deck
-from src.player import Player
 from src.scoring import score_all
+from src.player import make_players
 
 # note this function is mutable
 def deal_hands(players, deck, hand_size):
@@ -17,14 +17,6 @@ def deal_hand(deck, hand_size):
     hand = deck[0:hand_size]
     deck = deck[hand_size:]
     return hand, deck
-
-
-# players is an array
-def make_players(player_names):
-    players = []
-    for player_name in player_names:
-        players.append(Player(player_name))
-    return players
 
 
 def find_player(player_name, players):

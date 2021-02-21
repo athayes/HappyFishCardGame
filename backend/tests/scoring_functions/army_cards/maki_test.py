@@ -1,7 +1,7 @@
 from src.cards import maki_2, maki_3
 from src.deck import make_deck
 from src.scoring_functions.army_cards.maki import score_maki, find_maki_totals
-from src.fish import make_players
+from src.player import make_players
 
 def test_player_find_maki_totals():
     players = make_test_players()

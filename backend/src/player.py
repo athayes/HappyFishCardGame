@@ -15,3 +15,10 @@ class Player:
             'dessert': self.dessert,
             'hand': self.hand
         }
+
+# players is an array
+def make_players(player_names):
+    players = []
+    for player_name in player_names:
+        players.append(Player(player_name))
+    return players

@@ -45,7 +45,7 @@ def test_rotate_hands():
 def test_np_delete():
     hand = ["0", "1", "2", "3", "4", "5"]
     new_hand = np.delete(hand, [0, 2, 4])
-    np.testing.assert_array_equal(new_hand, [1, 3, 5])
+    np.testing.assert_array_equal(new_hand, ["1", "3", "5"])
 
 
 # Game class tests

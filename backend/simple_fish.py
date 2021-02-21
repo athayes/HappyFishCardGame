@@ -52,6 +52,7 @@ def rotate_hands(players):
     return players
 
 
+
 class Game:
     def __init__(self, player_names, deck, hand_size):
         self.deck = deck
@@ -134,6 +135,7 @@ class Player:
         self.dessert = []
         self.hand = []
         self.chosen = False
+
 
     def to_json(self):
         return {

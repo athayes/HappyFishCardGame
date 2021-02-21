@@ -1,9 +1,9 @@
 from flask import Flask, json
 
 from flask import request
-from src import fish
 from flask_cors import CORS
 
+from src import fish
 from src.deck import basic_deck
 
 app = Flask(__name__)

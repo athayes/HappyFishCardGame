@@ -1,7 +1,7 @@
 from src.cards import egg_nigiri
 from src.deck import make_deck
-from src.fish import deal_hand, Game, find_player, rotate_hands
-from src.player import make_players
+from src.game import deal_hand, Game, rotate_hands
+from src.player import make_players, find_player
 import numpy as np
 
 
@@ -11,13 +11,6 @@ def test_deal_hand():
     assert len(hand) == 6
     assert len(deck) == 12
     np.testing.assert_array_equal(test_deck.sort(), (hand + deck).sort())
-
-
-def test_make_players():
-    player_names = ["reb", "Cool H"]
-    players = make_players(player_names)
-    print(players)
-
 
 def test_rotate_hands():
     players = make_players(["P_Zero", "P_One", "P_Two", "P_Three"])
@@ -32,6 +25,7 @@ def test_rotate_hands():
     np.testing.assert_array_equal(players[3].hand, make_deck([("H_Zero", 3)]))
 
 
+# Just to confirm numpy.delete works as expected
 def test_np_delete():
     hand = ["0", "1", "2", "3", "4", "5"]
     new_hand = list(np.delete(hand, [0, 2, 4]))

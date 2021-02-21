@@ -3,7 +3,7 @@ from flask import Flask, json
 from flask import request
 from flask_cors import CORS
 
-from src import fish
+from src import game
 from src.deck import basic_deck
 
 app = Flask(__name__)
@@ -27,7 +27,7 @@ class Lobby:
 
     @staticmethod
     def start_game():
-        Lobby.game = fish.Game(Lobby.players, basic_deck(), 3)
+        Lobby.game = game.Game(Lobby.players, basic_deck(), 3)
         Lobby.game.start_round()
         Lobby.is_game_started = True
 

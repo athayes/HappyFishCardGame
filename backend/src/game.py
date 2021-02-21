@@ -1,6 +1,6 @@
 from src.deck import shuffle_deck
 from src.scoring import score_all
-from src.player import make_players
+from src.player import make_players, find_player
 
 # note this function is mutable
 def deal_hands(players, deck, hand_size):
@@ -17,14 +17,6 @@ def deal_hand(deck, hand_size):
     hand = deck[0:hand_size]
     deck = deck[hand_size:]
     return hand, deck
-
-
-def find_player(player_name, players):
-    for index, player in enumerate(players):
-        if player.player_name == player_name:
-            return index, player
-    raise ValueError("player not found in list")
-
 
 def rotate_hands(players):
     old_hands = list(player.hand for player in players)

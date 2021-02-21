@@ -1,3 +1,5 @@
+from typing import List
+
 class Player:
     def __init__(self, player_name):
         self.player_name = player_name
@@ -16,9 +18,14 @@ class Player:
             'hand': self.hand
         }
 
-# players is an array
-def make_players(player_names):
+def make_players(player_names) -> List[Player]:
     players = []
     for player_name in player_names:
         players.append(Player(player_name))
     return players
+
+def find_player(player_name, players):
+    for index, player in enumerate(players):
+        if player.player_name == player_name:
+            return index, player
+    raise ValueError("player not found in list")

@@ -1,6 +1,6 @@
 from flask import Flask, json
 from flask import request
-import HappySushiFunGame as fish
+from for_reference import HappySushiFunGame as fish
 from flask_cors import CORS
 
 app = Flask(__name__)

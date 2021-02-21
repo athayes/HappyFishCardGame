@@ -49,3 +49,10 @@ def test_score_wasabi_and_nigiri_2():
     player.tableau = [wasabi, squid_nigiri, maki_1]
     player = score_wasabi_and_nigiri(player)
     assert player.score == 9
+
+def test_score_two_wasabi():
+    player = Player("test_player")
+    player.tableau = [wasabi, wasabi, egg_nigiri]
+    player = score_wasabi_and_nigiri(player)
+    assert player.score == 3
+    assert len(player.tableau) == 0

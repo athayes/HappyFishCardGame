@@ -20,8 +20,6 @@ class Game:
         self.players = players
         self.deck = deck
 
-    # Play method is now in the Game class, so we always have access to the whole state
-    # Methods to find players and cards in players hands are pure functions
     def play_card(self, player_name, card_index):
         index, player = find_player(player_name, self.players)
         if player.chosen:

@@ -23,6 +23,8 @@ def score_wasabi(arg_tableau):
                 if is_nigiri(other_card):
                     score += get_nigiri_score(other_card) * 3
                     indices.append(other_index)
+                    # mark the card as "played" so it can't be picked up by next wasabi
+                    tableau[other_index] = "played_nigiri"
                     break  # leave the loop, found our match
             wasabi_index = index
             indices.append(wasabi_index)

@@ -8,6 +8,7 @@ def score_all(old_players):
     players = score_players(players)
     return players
 
+
 def score_army_cards(old_players):
     players = old_players
     players = score_maki(players)

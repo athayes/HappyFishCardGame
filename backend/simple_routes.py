@@ -28,7 +28,6 @@ class Lobby:
     @staticmethod
     def start_game():
         Lobby.game = game.Game(Lobby.players, basic_deck(), 3)
-        Lobby.game.start_round()
         Lobby.is_game_started = True
 
 
@@ -49,7 +48,8 @@ def create_game():
 @app.route('/GetGameObject', methods=['POST'])
 def get_game_object():
     return {
-        "players": Lobby.game.player_json()
+        "players": Lobby.game.player_json(),
+        "round": Lobby.game.round
     }
 
 

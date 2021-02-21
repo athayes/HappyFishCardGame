@@ -1,14 +1,5 @@
 import random
-from collections import OrderedDict
-
-
-# cards is an array of tuples (pairs)
-def make_deck(cards):
-    deck = []
-    for card in cards:
-        card_name, card_count = card
-        deck.extend([card_name for i in range(card_count)])
-    return deck
+from copy import deepcopy
 
 
 def shuffle_deck(deck):
@@ -49,6 +40,22 @@ def find_player(player_name, players):
     raise ValueError("player not found in list")
 
 
+def rotate_hands(players):
+    old_hands = list(player.hand for player in players)
+    hands = old_hands  # assignment gets rid of mutability
+
+    for index, hand in enumerate(hands):
+        if index == 0:
+            players[-1].hand = hand
+            print(players[-1].player_name)
+            print(hand)
+        else:
+            print(players[index - 1].player_name)
+            print(hand)
+            players[index - 1].hand = hand
+    return players
+
+
 class Game:
     def __init__(self, player_names, deck, hand_size):
         self.deck = deck
@@ -68,6 +75,8 @@ class Game:
     # Methods to find players and cards in players hands are pure functions
     def play_card(self, player_name, card_index):
         index, player = find_player(player_name, self.players)
+        if player.chosen:
+            return player_name + " has already chosen a card"
 
         card_name = player.hand[card_index]
         if card_name == "Chopsticks":
@@ -79,45 +88,44 @@ class Game:
         player.chosen = True
         self.players[index] = player
 
-    # def to_json(self):
-    #     data = {}
-    #     data['players'] = self.players
-    #     # data['dessert'] = self.dessert
-    #     # data['hand'] = self.hand.to_json()
-    #     return data
+        if not self.check_round_over() and self.all_players_chosen():
+            self.players = rotate_hands(self.players)
 
+    def player_json(self):
+        data = []
+        for player in self.players:
+            data.append(player.to_json())
+        return data
 
-    # def rotate_hands(self):
-    #     new_players = []
-    #     hands = filter((lambda player: player.hands), self.players)
-    #
-    #     for index, value in hands:
-    #         if index !== 0:
-    #             self.players
+    def to_json(self):
+        return {
+            'deck': self.deck,
+            "players": self.player_json()
+        }
 
+    def check_round_over(self):
+        if not self.all_hands_empty():
+            return False
+        # self.score_round() TODO
+        if self.round < 2:
+            self.start_round()
+            return True
+        elif self.round == 2:
+            # self.score_dessert() TODO
+            return True
+        return False
 
-#     def check_round_over(self):
-#         start_new_round = True
-#         for player in self.players:
-#             start_new_round = start_new_round and self.players.get(player).hand_empty
-#         print(start_new_round)
-#         if start_new_round:
-#             self.score_round()
-#             if start_new_round and self.round < 2:
-#                 self.start_round()
-#                 return True
-#             elif start_new_round and self.round == 2:
-#                 self.score_dessert()
-#                 return True
-#             return False
-#
-#     def check_all_players_chosen(self):
-#         all_chosen = True
-#         for player in self.players:
-#             all_chosen = all_chosen and self.players.get(player).chosen
-#         return all_chosen
-#
-#
+    def all_players_chosen(self):
+        for player in self.players:
+            if not player.chosen:
+                return False
+        return True
+
+    def all_hands_empty(self):
+        for player in self.players:
+            if not len(player.hand) == 0:
+                return False
+        return True
 
 
 class Player:
@@ -129,6 +137,14 @@ class Player:
         self.hand = []
         self.chosen = False
 
+    def to_json(self):
+        return {
+            'player_name': self.player_name,
+            'score': self.score,
+            'tableau': self.tableau,
+            'dessert': self.dessert,
+            'hand': self.hand
+        }
 
 ################ Testing code #####################
 # if __name__ == "__main__":

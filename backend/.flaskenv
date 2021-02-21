@@ -1,1 +1,1 @@
-export FLASK_APP=routes.py
+export FLASK_APP=simple_routes.py

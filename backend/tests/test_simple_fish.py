@@ -1,4 +1,5 @@
-from simple_fish import make_deck, shuffle_deck, deal_hand, Game, make_players, find_player
+from decks import make_deck
+from simple_fish import shuffle_deck, deal_hand, Game, make_players, find_player, rotate_hands
 import numpy as np
 
 
@@ -27,6 +28,28 @@ def test_make_players():
     players = make_players(player_names)
     print(players)
 
+def test_rotate_hands():
+    players = make_players(["P_Zero", "P_One", "P_Two", "P_Three"])
+    players[0].hand = make_deck([("H_Zero", 3)])
+    players[1].hand = make_deck([("H_One", 3)])
+    players[2].hand = make_deck([("H_Two", 3)])
+    players[3].hand = make_deck([("H_Three", 3)])
+    players = rotate_hands(players)
+    np.testing.assert_array_equal(players[0].hand, make_deck([("H_One", 3)]))
+    np.testing.assert_array_equal(players[1].hand, make_deck([("H_Two", 3)]))
+    np.testing.assert_array_equal(players[2].hand, make_deck([("H_Three", 3)]))
+    np.testing.assert_array_equal(players[3].hand, make_deck([("H_Zero", 3)]))
+
+# Game class tests
+
+def test_to_json():
+    game = Game(
+        ["reb", "Cool H"],
+        make_deck([("Maki", 6), ("Sashimi", 6), ("Salmon", 6)]),
+        3
+    )
+    json = game.to_json()
+    print(json)
 
 def test_game_init_start_round():
     game = Game(
@@ -50,4 +73,3 @@ def test_game_play_card():
     index, reb = find_player("reb", game.players)
     assert len(reb.hand) == 2
     assert len(reb.tableau) == 1
-

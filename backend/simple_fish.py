@@ -42,16 +42,12 @@ def find_player(player_name, players):
 
 def rotate_hands(players):
     old_hands = list(player.hand for player in players)
-    hands = old_hands  # assignment gets rid of mutability (players.hands would otherwise be updated)
+    hands = old_hands  # assignment gets rid of mutability (player.hand would otherwise be updated)
 
     for index, hand in enumerate(hands):
         if index == 0:
             players[-1].hand = hand
-            print(players[-1].player_name)
-            print(hand)
         else:
-            print(players[index - 1].player_name)
-            print(hand)
             players[index - 1].hand = hand
     return players
 

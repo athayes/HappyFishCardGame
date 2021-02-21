@@ -41,8 +41,8 @@ def test_rotate_hands():
     np.testing.assert_array_equal(players[2].hand, make_deck([("H_Three", 3)]))
     np.testing.assert_array_equal(players[3].hand, make_deck([("H_Zero", 3)]))
 
-# Game class tests
 
+# Game class tests
 def test_to_json():
     game = Game(
         ["reb", "Cool H"],
@@ -51,6 +51,7 @@ def test_to_json():
     )
     json = game.to_json()
     print(json)
+
 
 def test_game_init_start_round():
     game = Game(

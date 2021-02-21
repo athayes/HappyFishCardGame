@@ -72,6 +72,12 @@ def test_game_play_card():
         3
     )
     game.play_card("reb", 0)
-    index, reb = find_player("reb", game.players)
+    game.play_card("Cool H", 0)
+
+    reb_index, reb = find_player("reb", game.players)
+    coolh_index, coolh = find_player("Cool H", game.players)
     assert len(reb.hand) == 2
     assert len(reb.tableau) == 1
+    assert not coolh.chosen
+    assert not reb.chosen
+

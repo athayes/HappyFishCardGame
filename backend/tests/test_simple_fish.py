@@ -42,6 +42,12 @@ def test_rotate_hands():
     np.testing.assert_array_equal(players[3].hand, make_deck([("H_Zero", 3)]))
 
 
+def test_np_delete():
+    hand = ["0", "1", "2", "3", "4", "5"]
+    new_hand = np.delete(hand, [0, 2, 4])
+    np.testing.assert_array_equal(new_hand, [1, 3, 5])
+
+
 # Game class tests
 def test_to_json():
     game = Game(
@@ -80,4 +86,3 @@ def test_game_play_card():
     assert len(reb.tableau) == 1
     assert not coolh.chosen
     assert not reb.chosen
-

@@ -1,9 +1,10 @@
 from flask import Flask, json
+
 from flask import request
-import simple_fish as simple_fish
+from src import fish as simple_fish
 from flask_cors import CORS
 
-from decks import basic_deck
+from src.cards import basic_deck
 
 app = Flask(__name__)
 CORS(app)

@@ -1,5 +1,4 @@
 import random
-from copy import deepcopy
 
 
 def shuffle_deck(deck):

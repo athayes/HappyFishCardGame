@@ -1,6 +1,6 @@
 import numpy as np
 
-from card_names import maki_1, maki_2, maki_3
+from src.cards import maki_1, maki_2, maki_3
 
 
 def score_army_cards(old_players):

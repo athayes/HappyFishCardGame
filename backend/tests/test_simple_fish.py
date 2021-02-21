@@ -28,6 +28,7 @@ def test_make_players():
     players = make_players(player_names)
     print(players)
 
+
 def test_rotate_hands():
     players = make_players(["P_Zero", "P_One", "P_Two", "P_Three"])
     players[0].hand = make_deck([("H_Zero", 3)])

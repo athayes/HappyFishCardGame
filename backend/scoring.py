@@ -11,18 +11,16 @@ def score_army_cards(old_players):
 def score_maki(old_players):
     players = old_players
     players = find_maki_counts(players)
-    first_place = 0
-    second_place = 0
+    counts = []
     for player in players:
-        if player.maki_count > first_place:
-            first_place = player.maki_count
-        elif first_place > player.maki_count > second_place:
-            second_place = player.maki_count
+        counts.append(player.maki_count)
+    unique_counts = np.unique(counts)
+    unique_counts_ordered = list(reversed(unique_counts))
 
     for player in players:
-        if player.maki_count == first_place:
+        if player.maki_count == unique_counts_ordered[0]:
             player.score += 6
-        if player.maki_count == second_place:
+        if player.maki_count == unique_counts_ordered[1]:
             player.score += 3
         # clean up
         player.maki_count = 0

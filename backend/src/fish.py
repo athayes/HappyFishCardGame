@@ -112,6 +112,10 @@ class Game:
     def score_round(self):
         self.players = score_all(self.players)
 
+    def is_player_chosen(self, player):
+        index, player = find_player(player, self.players)
+        return player.chosen
+
     def all_players_chosen(self):
         for player in self.players:
             if not player.chosen:

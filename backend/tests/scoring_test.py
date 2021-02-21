@@ -1,14 +1,14 @@
 from src.cards import maki_2, maki_3
-from src.deck import make_card_list
+from src.deck import make_deck
 from src.scoring import score_maki, find_maki_counts
 from src.fish import make_players
 
 
 def make_test_players():
     players = make_players(["P_Zero", "P_One", "P_Two", "P_Three"])
-    players[0].tableau = make_card_list([(maki_3, 3)])
-    players[1].tableau = make_card_list([(maki_2, 3)])
-    players[2].tableau = make_card_list([("Sashimi", 3)])
+    players[0].tableau = make_deck([(maki_3, 3)])
+    players[1].tableau = make_deck([(maki_2, 3)])
+    players[2].tableau = make_deck([("Sashimi", 3)])
     return players
 
 

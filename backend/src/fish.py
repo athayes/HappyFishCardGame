@@ -1,10 +1,4 @@
-import random
-
-
-def shuffle_deck(deck):
-    new_deck = deck.copy()
-    random.shuffle(new_deck)
-    return new_deck
+from src.deck import shuffle_deck
 
 
 # note this function is mutable
@@ -24,7 +18,7 @@ def deal_hand(deck, hand_size):
     return hand, deck
 
 
-# players is an array now, not a dict
+# players is an array
 def make_players(player_names):
     players = []
     for player_name in player_names:
@@ -134,7 +128,6 @@ class Player:
         self.hand = []
         self.chosen = False
 
-
     def to_json(self):
         return {
             'player_name': self.player_name,
@@ -143,20 +136,3 @@ class Player:
             'dessert': self.dessert,
             'hand': self.hand
         }
-
-################ Testing code #####################
-# if __name__ == "__main__":
-#     p1 = Player('a', 1)
-#     p2 = Player('b', 1)
-#     game = Game([p1, p2])
-#     chopstick = Chopsticks()
-#     dum1 = Dumpling()
-#     dum2 = Dumpling()
-#     dum3 = Dumpling()
-#     m1 = Maki()
-#     m2 = Maki()
-#     scores = [0, 0]
-#     # tableaus = [Tableau([dum1]), Tableau([dum2, dum3])]
-#     # Maki.score(tableaus, scores)
-#     # Dumpling.score(tableaus, scores)
-#     print(scores)

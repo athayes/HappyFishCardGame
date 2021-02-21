@@ -5,6 +5,7 @@ maki_3 = "Maki 3"
 egg_nigiri = "Egg Nigiri"
 salmon_nigiri = "Salmon Nigiri"
 squid_nigiri = "Squid Nigiri"
+wasabi = "Wasabi"
 
 
 def is_maki(card):
@@ -23,3 +24,12 @@ def get_maki_number(maki_card):
 
 def is_nigiri(card):
     return card in (egg_nigiri, salmon_nigiri, squid_nigiri)
+
+def get_nigiri_score(nigiri_card):
+    if nigiri_card == egg_nigiri:
+        return 1
+    if nigiri_card == salmon_nigiri:
+        return 2
+    if nigiri_card == squid_nigiri:
+        return 3
+    raise Exception("Only accepts Nigiri cards!")

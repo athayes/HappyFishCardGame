@@ -1,4 +1,4 @@
-from src.scoring_functions.maki import score_maki
+from src.scoring_functions.army_cards.maki import score_maki
 
 
 def score_army_cards(old_players):

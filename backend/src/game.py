@@ -1,33 +1,8 @@
+from typing import List
+
 from src.deck import shuffle_deck
 from src.scoring import score_all
-from src.player import make_players, find_player
-
-# note this function is mutable
-def deal_hands(players, deck, hand_size):
-    for player in players:
-        new_hand, new_deck = deal_hand(deck, hand_size)
-        deck = new_deck
-        player.hand = new_hand
-        player.chosen = False
-    return players, deck
-
-
-def deal_hand(deck, hand_size):
-    deck = deck.copy()
-    hand = deck[0:hand_size]
-    deck = deck[hand_size:]
-    return hand, deck
-
-def rotate_hands(players):
-    old_hands = list(player.hand for player in players)
-    hands = old_hands  # assignment gets rid of mutability (player.hand would otherwise be updated)
-
-    for index, hand in enumerate(hands):
-        if index == 0:
-            players[-1].hand = hand
-        else:
-            players[index - 1].hand = hand
-    return players
+from src.player import make_players, find_player, Player
 
 
 class Game:
@@ -109,3 +84,31 @@ class Game:
             if not len(player.hand) == 0:
                 return False
         return True
+
+
+# note this function is mutable
+def deal_hands(players, deck, hand_size):
+    for player in players:
+        new_hand, new_deck = deal_hand(deck, hand_size)
+        deck = new_deck
+        player.hand = new_hand
+        player.chosen = False
+    return players, deck
+
+
+def deal_hand(deck, hand_size):
+    deck = deck.copy()
+    hand = deck[0:hand_size]
+    deck = deck[hand_size:]
+    return hand, deck
+
+def rotate_hands(players: List[Player]) -> List[Player]:
+    old_hands = list(player.hand for player in players)
+    hands = old_hands  # assignment gets rid of mutability (player.hand would otherwise be updated)
+
+    for index, hand in enumerate(hands):
+        if index == 0:
+            players[-1].hand = hand
+        else:
+            players[index - 1].hand = hand
+    return players

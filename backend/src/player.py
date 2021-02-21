@@ -24,7 +24,7 @@ def make_players(player_names) -> List[Player]:
         players.append(Player(player_name))
     return players
 
-def find_player(player_name, players):
+def find_player(player_name, players) -> (int, Player):
     for index, player in enumerate(players):
         if player.player_name == player_name:
             return index, player

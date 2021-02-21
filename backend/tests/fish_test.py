@@ -1,4 +1,4 @@
-from src.cards import make_card_list
+from src.deck import make_card_list
 from src.fish import shuffle_deck, deal_hand, Game, make_players, find_player, rotate_hands
 import numpy as np
 

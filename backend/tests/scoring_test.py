@@ -1,5 +1,5 @@
-from src.card_names import maki_2, maki_3
-from src.cards import make_card_list
+from src.cards import maki_2, maki_3
+from src.deck import make_card_list
 from src.scoring import score_maki, find_maki_counts
 from src.fish import make_players
 

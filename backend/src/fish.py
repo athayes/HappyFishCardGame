@@ -51,7 +51,6 @@ def rotate_hands(players):
     return players
 
 
-
 class Game:
     def __init__(self, player_names, deck, hand_size):
         self.deck = deck

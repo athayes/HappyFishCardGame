@@ -4,7 +4,7 @@ from flask import request
 from src import fish as simple_fish
 from flask_cors import CORS
 
-from src.cards import basic_deck
+from src.deck import basic_deck
 
 app = Flask(__name__)
 CORS(app)

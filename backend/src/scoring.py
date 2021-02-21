@@ -4,7 +4,7 @@ from src.scoring_functions.wasabi_and_nigiri import player_score_wasabi_and_nigi
 
 def score_all(old_players):
     players = old_players
-    # players = score_army_cards(players)
+    players = score_army_cards(players)
     players = score_players(players)
     return players
 

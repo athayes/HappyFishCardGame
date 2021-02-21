@@ -3,7 +3,7 @@ from src.deck import make_deck
 from src.scoring_functions.army_cards.maki import score_maki, player_find_maki_totals
 from src.fish import make_players
 
-def test_find_maki_counts():
+def test_player_find_maki_counts():
     players = make_test_players()
     players = player_find_maki_totals(players)
     assert players[0].maki_count == 9

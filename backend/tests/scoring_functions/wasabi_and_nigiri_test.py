@@ -1,7 +1,7 @@
 from src.cards import egg_nigiri, salmon_nigiri, squid_nigiri, wasabi, maki_1
 from src.fish import Player
 from src.scoring_functions.wasabi_and_nigiri import score_nigiri, score_wasabi, \
-    player_score_wasabi_and_nigiri
+    score_wasabi_and_nigiri
 
 
 def test_score_egg_nigiri():
@@ -40,12 +40,12 @@ def test_score_wasabi_squid():
 def test_score_wasabi_and_nigiri():
     player = Player("test_player")
     player.tableau = [wasabi, squid_nigiri, egg_nigiri]
-    player = player_score_wasabi_and_nigiri(player)
+    player = score_wasabi_and_nigiri(player)
     assert player.score == 10
 
 
 def test_score_wasabi_and_nigiri_2():
     player = Player("test_player")
     player.tableau = [wasabi, squid_nigiri, maki_1]
-    player = player_score_wasabi_and_nigiri(player)
+    player = score_wasabi_and_nigiri(player)
     assert player.score == 9

@@ -5,7 +5,7 @@ from src.cards import is_maki, get_maki_number
 
 def score_maki(old_players):
     players = old_players
-    players = player_find_maki_totals(players)
+    players = find_maki_totals(players)
     first_place = 0
     second_place = 0
     for player in players:
@@ -25,7 +25,7 @@ def score_maki(old_players):
     return players
 
 
-def player_find_maki_totals(old_players):
+def find_maki_totals(old_players):
     players = old_players
     for player_ind, player in enumerate(players):
         maki_count = 0

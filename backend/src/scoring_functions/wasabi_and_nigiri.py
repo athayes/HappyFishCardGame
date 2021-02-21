@@ -3,7 +3,7 @@ import numpy as np
 from src.cards import wasabi, is_nigiri, get_nigiri_score
 
 
-def player_score_wasabi_and_nigiri(arg_player):
+def score_wasabi_and_nigiri(arg_player):
     player = arg_player
     tableau, wasabi_score = score_wasabi(player.tableau)
     tableau, nigiri_score = score_nigiri(tableau)

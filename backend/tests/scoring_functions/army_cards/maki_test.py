@@ -1,11 +1,11 @@
 from src.cards import maki_2, maki_3
 from src.deck import make_deck
-from src.scoring_functions.army_cards.maki import score_maki, player_find_maki_totals
+from src.scoring_functions.army_cards.maki import score_maki, find_maki_totals
 from src.fish import make_players
 
-def test_player_find_maki_counts():
+def test_player_find_maki_totals():
     players = make_test_players()
-    players = player_find_maki_totals(players)
+    players = find_maki_totals(players)
     assert players[0].maki_count == 9
     assert len(players[0].tableau) == 0
     assert players[1].maki_count == 6

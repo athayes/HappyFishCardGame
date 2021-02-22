@@ -1,6 +1,6 @@
 from flask import Flask, json
 from flask import request
-import HappySushiFunGame as fish
+from for_reference import HappySushiFunGame as fish
 from flask_cors import CORS
 
 app = Flask(__name__)
@@ -82,8 +82,7 @@ def pick_card():
     player = request.json["playerName"]
     cardIndex = request.json["index"]
     Lobby.game.players.get(player).play(cardIndex)
-    if not Lobby.game.check_round_over() and Lobby.game.check_all_players_chosen():
-        Lobby.game.rotate_hands()
+
     return json.dumps(dict(success=True)), 200, {'ContentType': 'application/json'}
 
 @app.route('/SetUpTestGame', methods=['POST'])

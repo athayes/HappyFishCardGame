@@ -94,29 +94,7 @@
 			"response": []
 		},
 		{
-			"name": "GetGameObject",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": ""
-				},
-				"url": {
-					"raw": "localhost:5000/GetGameObject",
-					"host": [
-						"localhost"
-					],
-					"port": "5000",
-					"path": [
-						"GetGameObject"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "GetPlayersChosen",
+			"name": "GetAllPlayersChosen",
 			"request": {
 				"method": "POST",
 				"header": [],
@@ -167,7 +145,7 @@
 			"response": []
 		},
 		{
-			"name": "PickCard",
+			"name": "PickCardreb",
 			"request": {
 				"method": "POST",
 				"header": [],
@@ -183,6 +161,50 @@
 					"port": "5000",
 					"path": [
 						"PickCard"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PickCardCoolH",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"playerName\": \"Cool H\",\n    \"index\": 1\n}"
+				},
+				"url": {
+					"raw": "localhost:5000/PickCard",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"PickCard"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetGameObject",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "localhost:5000/GetGameObject",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"GetGameObject"
 					]
 				}
 			},

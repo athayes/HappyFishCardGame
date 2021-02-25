@@ -11,7 +11,6 @@ CORS(app)
 
 
 class Lobby:
-    host_name = None
     is_game_started = False
     game = None
     players = []
@@ -34,7 +33,7 @@ class Lobby:
 @app.route('/StartGame', methods=['POST'])
 def start_game():
     Lobby.start_game()
-    return Lobby.game.player_json()
+    return json.dumps(dict(success=True)), 200, {'ContentType': 'application/json'}
 
 
 @app.route('/CreateLobby', methods=['POST'])
@@ -57,7 +56,6 @@ def get_game_object():
 def get_lobby():
     return {
         'players': Lobby.players,
-        'host_name': Lobby.host_name,
         'is_game_started': Lobby.is_game_started
     }
 
@@ -91,7 +89,6 @@ def set_up_test_game():
     Lobby.reset_game()
     Lobby.add_player("reb")
     Lobby.add_player("Cool H")
-    Lobby.host_name = "reb"
     Lobby.start_game()
     return json.dumps(dict(success=True)), 200, {'ContentType': 'application/json'}
 

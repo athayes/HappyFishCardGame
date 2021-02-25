@@ -14,7 +14,7 @@
       <div class="hand">
         <div
           class="card"
-          v-for="(card, index) in hand"
+          v-for="(card, index) in currentPlayer.hand"
           :key="card.index"
           @click.stop="chooseCard(card, index)"
         >
@@ -69,9 +69,9 @@
         </button>
       </div>
 
-      <h3>{{ selectedTableauName }}'s tableau</h3>
+      <h3>{{ tableauPlayer.playerName }}'s tableau</h3>
       <div class="hand">
-        <div class="card" v-for="card in selectedTableau" :key="card.index">
+        <div class="card" v-for="card in tableauPlayer.tableau" :key="card.index">
           <!-- div contents-->
           <img v-bind:src="card.image" />
           <p class="name">{{ card.name }}</p>
@@ -87,9 +87,9 @@
 </template>
 
 <script>
-import { cardFactory } from "../../models/Card";
 import axios from "axios";
 import Cookies from "js-cookie";
+import { findPlayer, formatPlayers } from "@/models/Player";
 
 export const VIEWS = {
   pickACard: 1,
@@ -105,20 +105,24 @@ export default {
       playerName: Cookies.get("HappyFishCardGame"),
       VIEWS: VIEWS,
       pickedCard: {},
-      hand: [],
-      tableauList: [],
-      selectedTableauIndex: 0
+      tableauIndex: 0,
+      playerIndex: 0,
+      players: []
     };
   },
 
   computed: {
-    selectedTableau: function() {
-      console.log(this.tableauList[0].tableau);
-      return this.tableauList[this.selectedTableauIndex].tableau;
+    tableauPlayer: function() {
+      if (this.players.length === 0) {
+        return {};
+      }
+      return this.players[this.tableauIndex];
     },
-
-    selectedTableauName: function() {
-      return this.tableauList[this.selectedTableauIndex].player;
+    currentPlayer: function() {
+      if (this.players.length === 0) {
+        return {};
+      }
+      return this.players[this.playerIndex];
     }
   },
 
@@ -127,6 +131,17 @@ export default {
   },
 
   methods: {
+    refreshData: async function() {
+      let self = this;
+      let response = await axios.post("http://127.0.0.1:5000/GetGameObject");
+      let players = formatPlayers(response.data.players);
+      const { index } = findPlayer(players, self.playerName);
+      console.log(index);
+      this.playerIndex = index;
+      this.tableauIndex = index;
+      this.players = players;
+    },
+
     chooseCard: function(card, index) {
       this.pickedCard = card;
       this.pickedCard.index = index;
@@ -154,56 +169,19 @@ export default {
       }, 5 * 1000);
     },
 
-    refreshData: async function() {
-      let self = this;
-      let response = await axios.post("http://127.0.0.1:5000/GetGameObject");
-      this.players = response.data.players;
-
-      let hand = [];
-      for (let card of this.players[self.playerName].hand) {
-        hand.push(
-          cardFactory(card.name, Object.keys(this.players).length, card.power)
-        );
-      }
-      this.hand = hand;
-
-      let list = [];
-      for (let [key, player] of Object.entries(this.players)) {
-        let tableau = [];
-        let index = 0;
-        for (let card of player.tableau) {
-          tableau.push(
-            cardFactory(card.name, Object.keys(this.players).length, card.power)
-          );
-        }
-
-        list.push({
-          tableau: tableau,
-          player: key,
-          index: index
-        });
-        index++;
-      }
-      this.tableauList = list;
-
-      this.selectedTableauIndex = this.tableauList.findIndex(x => {
-        return x.player === self.playerName;
-      });
-    },
-
     nextTableau: function() {
-      if (this.selectedTableauIndex + 1 >= this.tableauList.length) {
-        this.selectedTableauIndex = 0;
+      if (this.tableauIndex + 1 >= this.players.length) {
+        this.tableauIndex = 0;
       } else {
-        this.selectedTableauIndex++;
+        this.tableauIndex++;
       }
     },
 
     previousTableau: function() {
-      if (this.selectedTableauIndex === 0) {
-        this.selectedTableauIndex = this.tableauList.length - 1;
+      if (this.tableauIndex === 0) {
+        this.tableauIndex = this.players.length - 1;
       } else {
-        this.selectedTableauIndex--;
+        this.tableauIndex--;
       }
     }
   }

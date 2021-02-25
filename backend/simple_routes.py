@@ -1,16 +1,10 @@
 from flask import Flask, json
-
 from flask import request
 from flask_cors import CORS
-
-
+from src.lobby import Lobby
 
 app = Flask(__name__)
 CORS(app)
-
-
-
-
 
 @app.route('/StartGame', methods=['POST'])
 def start_game():

@@ -4,14 +4,10 @@
     <button class="btn btn-secondary" @click="JoinLobby">
       Join Game
     </button>
-    <p>
-      The host of the game should go <router-link to="/Host">here</router-link>
-    </p>
   </div>
 </template>
 
 <script>
-
 export default {
   methods: {
     async JoinLobby() {
@@ -26,5 +22,4 @@ export default {
   text-align: center;
   color: #2c3e50;
 }
-
 </style>

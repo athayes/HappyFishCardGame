@@ -1,30 +1,30 @@
-export function cardFactory(name, numPlayers, power) {
-  if (name === "Egg") {
+export function cardFactory(name, numPlayers) {
+  if (name === "Egg Nigiri") {
     return {
       name: "Egg Nigiri",
       image: "/assets/egg.png",
       description:
-        "Each egg nigiri is worth 1 point. An egg Nigiri on a Wasibi card is worth 3 points.",
+        "Each egg nigiri is worth 1 point. An egg Nigiri on a Wasabi card is worth 3 points.",
       hint: "1"
     };
   }
 
-  if (name === "Salmon") {
+  if (name === "Salmon Nigiri") {
     return {
       name: "Salmon Nigiri",
       image: "/assets/salmon.png",
       description:
-        "Each salmon nigiri is worth 2 points. A salmon Nigiri on a Wasibi card is worth 6 points.",
+        "Each salmon nigiri is worth 2 points. A salmon Nigiri on a Wasabi card is worth 6 points.",
       hint: "2"
     };
   }
 
-  if (name === "Squid") {
+  if (name === "Squid Nigiri") {
     return {
       name: "Squid Nigiri",
       image: "/assets/squid.png",
       description:
-        "Each squid nigiri is worth 3 points. A squid Nigiri on a Wasibi card is worth 9 points.",
+        "Each squid nigiri is worth 3 points. A squid Nigiri on a Wasabi card is worth 9 points.",
       hint: "3"
     };
   }
@@ -70,18 +70,7 @@ export function cardFactory(name, numPlayers, power) {
     };
   }
 
-  if (name === "Maki") {
-    let newName;
-    if (power === 1) {
-      newName = "Maki x1";
-    }
-    if (power === 2) {
-      newName = "Maki x2";
-    }
-    if (power === 3) {
-      newName = "Maki x3";
-    }
-
+  if (["Maki 1", "Maki 2", "Maki 3"].includes(name)) {
     let hint, description;
     if (numPlayers >= 6) {
       description =
@@ -93,7 +82,7 @@ export function cardFactory(name, numPlayers, power) {
       hint = "Most 6 / 3 ";
     }
     return {
-      name: newName,
+      name: name,
       image: "/assets/maki.png",
       description: description,
       hint: hint

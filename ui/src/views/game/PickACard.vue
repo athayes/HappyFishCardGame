@@ -3,14 +3,16 @@
     <div v-if="currentView === VIEWS.pickACard">
       <div class="menu-buttons">
         <button
-          class="btn-secondary"
+          class="btn-secondary btn-small"
           @click.stop="currentView = VIEWS.viewTableau"
         >
           View Tableaus
         </button>
       </div>
 
-      <h3>Pick a card!</h3>
+      <div class="score">My Score = {{ currentPlayer.score }}</div>
+      <h3>Pick a card</h3>
+
       <div class="hand">
         <div
           class="card"
@@ -52,7 +54,7 @@
     <div v-if="currentView === VIEWS.viewTableau">
       <div class="menu-buttons">
         <button
-          class="btn-secondary btn"
+          class="btn-secondary btn-small"
           @click.stop="currentView = VIEWS.pickACard"
         >
           View Hand
@@ -60,16 +62,16 @@
       </div>
 
       <div class="menu-buttons-right">
-        <button class="btn-secondary btn" @click.stop="previousTableau">
+        <button class="btn-secondary btn-small" @click.stop="previousTableau">
           &lt;-
         </button>
 
-        <button class="btn-secondary btn" @click.stop="nextTableau">
+        <button class="btn-secondary btn-small" @click.stop="nextTableau">
           -&gt;
         </button>
       </div>
 
-      <h3>{{ tableauPlayer.playerName }}'s tableau</h3>
+      <h3>{{ tableauPlayerDisplayName }} tableau</h3>
       <div class="hand">
         <div class="card" v-for="card in tableauPlayer.tableau" :key="card.index">
           <!-- div contents-->
@@ -123,6 +125,12 @@ export default {
         return {};
       }
       return this.players[this.playerIndex];
+    },
+    tableauPlayerDisplayName: function () {
+      if (this.tableauPlayer.playerName === this.currentPlayer.playerName) {
+        return "My";
+      }
+      return `${this.players[this.tableauIndex].playerName}'s`;
     }
   },
 
@@ -201,6 +209,13 @@ export default {
   justify-content: center;
 }
 
+.hand {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: center;
+}
+
 .card {
   height: 40%;
   width: 110px;
@@ -209,6 +224,7 @@ export default {
   margin-left: 10px;
   text-align: center;
   font-size: 30px;
+  background-color: white;
 }
 
 .menu-buttons {
@@ -216,6 +232,13 @@ export default {
   display: flex;
   align-items: center;
   justify-content: left;
+}
+
+.score {
+  float: right;
+  right: 3px;
+  padding-right: 10px;
+  padding-top: 10px;
 }
 
 .menu-buttons-right {

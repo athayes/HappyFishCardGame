@@ -1,16 +1,21 @@
-from src.cards import egg_nigiri
+from src.cards import egg_nigiri, salmon_nigiri, squid_nigiri
 from src.deck import make_deck
 from src.game import deal_hand, Game, rotate_hands
 from src.player import make_players, find_player
 import numpy as np
 
 
+def make_test_deck():
+    return make_deck([(egg_nigiri, 6), (salmon_nigiri, 6), (squid_nigiri, 6)])
+
+
 def test_deal_hand():
-    test_deck = make_deck([("Maki", 6), ("Sashimi", 6), ("Salmon", 6)])
+    test_deck = make_test_deck()
     hand, deck = deal_hand(test_deck, 6)
     assert len(hand) == 6
     assert len(deck) == 12
     np.testing.assert_array_equal(test_deck.sort(), (hand + deck).sort())
+
 
 def test_rotate_hands():
     players = make_players(["P_Zero", "P_One", "P_Two", "P_Three"])
@@ -36,7 +41,7 @@ def test_np_delete():
 def test_to_json():
     game = Game(
         ["reb", "Cool H"],
-        make_deck([("Maki", 6), ("Sashimi", 6), ("Salmon", 6)]),
+        make_test_deck(),
         3
     )
     json = game.to_json()
@@ -46,7 +51,7 @@ def test_to_json():
 def test_game_init_start_round():
     game = Game(
         ["reb", "Cool H"],
-        make_deck([("Maki", 6), ("Sashimi", 6), ("Salmon", 6)]),
+        make_test_deck(),
         3
     )
     assert game.round == 1
@@ -58,7 +63,7 @@ def test_game_init_start_round():
 def test_game_play_card():
     game = Game(
         ["reb", "Cool H"],
-        make_deck([("Maki", 6), ("Sashimi", 6), ("Salmon", 6)]),
+        make_test_deck(),
         3
     )
     game.play_card("reb", 0)
@@ -71,10 +76,11 @@ def test_game_play_card():
     assert not coolh.chosen
     assert not reb.chosen
 
+
 def test_score_round():
     game = Game(
         ["reb", "Cool H"],
-        make_deck([("Maki", 6), ("Sashimi", 6), ("Salmon", 6)]),
+        make_test_deck(),
         3
     )
     game.players[0].tableau = make_deck([(egg_nigiri, 3)])
@@ -83,6 +89,32 @@ def test_score_round():
 
     reb_index, reb = find_player("reb", game.players)
     coolh_index, coolh = find_player("Cool H", game.players)
-    print(game.to_json())
     assert reb.score == 3
     assert coolh.score == 3
+
+
+def test_round_increment():
+    game = Game(
+        ["reb", "Cool H"],
+        make_test_deck(),
+        3
+    )
+
+    while game.round == 1:
+        game.play_card("reb", 0)
+        game.play_card("Cool H", 0)
+
+    assert game.round == 2
+
+
+def test_game_completed_status():
+    game = Game(
+        ["reb", "Cool H"],
+        make_test_deck(),
+        3
+    )
+    while game.game_state != "COMPLETED":
+        game.play_card("reb", 0)
+        game.play_card("Cool H", 0)
+
+    assert game.game_state == "COMPLETED"

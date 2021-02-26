@@ -24,7 +24,5 @@ def score_players(old_players):
 def score_dessert(players):
     return players
 
-def score_player(old_player):
-    player = old_player
-    player = score_wasabi_and_nigiri(player)
-    return player
+def score_player(player):
+    return score_wasabi_and_nigiri(player)

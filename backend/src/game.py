@@ -1,7 +1,7 @@
 from typing import List
 
 from src.deck import shuffle_deck
-from src.scoring import score_all
+from src.scoring import score_all, score_dessert
 from src.player import make_players, find_player, Player
 
 
@@ -12,6 +12,7 @@ class Game:
         self.round = 0
         self.hand_size = hand_size
         self.start_round()
+        self.game_state = "ACTIVE"
 
     def start_round(self):
         self.round += 1
@@ -48,6 +49,7 @@ class Game:
 
     def to_json(self):
         return {
+            'game_state': self.game_state,
             'deck': self.deck,
             "players": self.player_json()
         }
@@ -60,12 +62,19 @@ class Game:
             self.start_round()
             return True
         elif self.round == 2:
-            # self.score_dessert() TODO
+            self.score_dessert()
+            self.end_game()
             return True
         return False
 
     def score_round(self):
         self.players = score_all(self.players)
+
+    def score_dessert(self):
+        self.players = score_dessert(self.players)
+
+    def end_game(self):
+        self.game_state = "GAME_COMPLETED"
 
     def is_player_chosen(self, player):
         index, player = find_player(player, self.players)
@@ -99,6 +108,7 @@ def deal_hand(deck, hand_size):
     hand = deck[0:hand_size]
     deck = deck[hand_size:]
     return hand, deck
+
 
 def rotate_hands(players: List[Player]) -> List[Player]:
     old_hands = list(player.hand for player in players)

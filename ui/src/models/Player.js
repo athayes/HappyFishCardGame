@@ -10,7 +10,8 @@ export function formatPlayers(players) {
     return {
       playerName: player.player_name,
       tableau: formatCards(player.tableau),
-      hand: formatCards(player.hand)
+      hand: formatCards(player.hand),
+      score: player.score
     };
   });
   return players;

@@ -17,5 +17,5 @@ class Lobby:
 
     @staticmethod
     def start_game():
-        Lobby.game = game.Game(Lobby.players, basic_deck(), 10)
+        Lobby.game = game.Game(Lobby.players, basic_deck(), 1)
         Lobby.is_game_started = True

@@ -23,6 +23,7 @@ def create_game():
 @app.route('/GetGameObject', methods=['POST'])
 def get_game_object():
     return {
+        "game_state": Lobby.game.game_state,
         "players": Lobby.game.player_json(),
         "round": Lobby.game.round
     }

@@ -80,10 +80,18 @@
           <p class="hint">{{ card.hint }}</p>
         </div>
       </div>
-    </div>
 
-    <div v-if="currentView === VIEWS.waiting" class="waiting">
-      <h2>Waiting for other players to pick cards...</h2>
+      <div v-if="currentView === VIEWS.waiting" class="waiting">
+        <h2>Waiting for other players to pick cards...</h2>
+      </div>
+
+      <div v-if="currentView === VIEWS.gameCompleted">
+        <h3>Game completed</h3>
+        <p>Scores:</p>
+        <li v-for="player in players" :key="player.playerName">
+          {{ player.playerName }}: {{ player.score }}
+        </li>
+      </div>
     </div>
   </div>
 </template>
@@ -97,7 +105,8 @@ export const VIEWS = {
   pickACard: 1,
   confirmCard: 2,
   viewTableau: 3,
-  waiting: 4
+  waiting: 4,
+  gameCompleted: 5
 };
 
 export default {
@@ -109,7 +118,8 @@ export default {
       pickedCard: {},
       tableauIndex: 0,
       playerIndex: 0,
-      players: []
+      players: [],
+      gameState: ""
     };
   },
 
@@ -142,9 +152,10 @@ export default {
     refreshData: async function() {
       let self = this;
       let response = await axios.post("http://127.0.0.1:5000/GetGameObject");
+      this.gameState = response.data.game_state;
+      console.log(this.gameState);
       let players = formatPlayers(response.data.players);
       const { index } = findPlayer(players, self.playerName);
-      console.log(index);
       this.playerIndex = index;
       this.tableauIndex = index;
       this.players = players;
@@ -172,7 +183,11 @@ export default {
         if (canPlay) {
           clearInterval(self.interval);
           await self.refreshData();
-          this.currentView = VIEWS.pickACard;
+          if (this.gameState === "COMPLETED") {
+            this.currentView = VIEWS.gameCompleted;
+          } else {
+            this.currentView = VIEWS.pickACard;
+          }
         }
       }, 5 * 1000);
     },

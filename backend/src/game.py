@@ -50,6 +50,7 @@ class Game:
     def to_json(self):
         return {
             'game_state': self.game_state,
+            'round': self.round,
             'deck': self.deck,
             "players": self.player_json()
         }
@@ -62,6 +63,7 @@ class Game:
             self.start_round()
             return True
         elif self.round == 2:
+            self.score_round()
             self.score_dessert()
             self.end_game()
             return True
@@ -74,7 +76,7 @@ class Game:
         self.players = score_dessert(self.players)
 
     def end_game(self):
-        self.game_state = "GAME_COMPLETED"
+        self.game_state = "COMPLETED"
 
     def is_player_chosen(self, player):
         index, player = find_player(player, self.players)

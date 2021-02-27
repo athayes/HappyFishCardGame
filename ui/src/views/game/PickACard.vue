@@ -73,7 +73,11 @@
 
       <h3>{{ tableauPlayerDisplayName }} tableau</h3>
       <div class="hand">
-        <div class="card" v-for="card in tableauPlayer.tableau" :key="card.index">
+        <div
+          class="card"
+          v-for="card in tableauPlayer.tableau"
+          :key="card.index"
+        >
           <!-- div contents-->
           <img v-bind:src="card.image" />
           <p class="name">{{ card.name }}</p>
@@ -83,7 +87,18 @@
     </div>
 
     <div v-if="currentView === VIEWS.waiting" class="waiting">
-      <h2>Waiting for other players to pick cards...</h2>
+      <h3>Waiting for other players to pick cards...</h3>
+    </div>
+
+    <div v-if="currentView === VIEWS.gameCompleted">
+      <h3>Game Completed!</h3>
+      <p>Final Scores:</p>
+      <p v-for="player in players" :key="player.playerName">
+        {{ player.playerName }}: {{ player.score }}
+      </p>
+      <button class="btn btn-secondary" @click="goHome">
+        Exit Game
+      </button>
     </div>
   </div>
 </template>
@@ -97,7 +112,8 @@ export const VIEWS = {
   pickACard: 1,
   confirmCard: 2,
   viewTableau: 3,
-  waiting: 4
+  waiting: 4,
+  gameCompleted: 5
 };
 
 export default {
@@ -109,7 +125,8 @@ export default {
       pickedCard: {},
       tableauIndex: 0,
       playerIndex: 0,
-      players: []
+      players: [],
+      gameState: ""
     };
   },
 
@@ -126,7 +143,7 @@ export default {
       }
       return this.players[this.playerIndex];
     },
-    tableauPlayerDisplayName: function () {
+    tableauPlayerDisplayName: function() {
       if (this.tableauPlayer.playerName === this.currentPlayer.playerName) {
         return "My";
       }
@@ -142,9 +159,12 @@ export default {
     refreshData: async function() {
       let self = this;
       let response = await axios.post("http://127.0.0.1:5000/GetGameObject");
+      this.gameState = response.data.game_state;
+      if (this.gameState === "COMPLETED") {
+        await this.handleGameCompleted();
+      }
       let players = formatPlayers(response.data.players);
       const { index } = findPlayer(players, self.playerName);
-      console.log(index);
       this.playerIndex = index;
       this.tableauIndex = index;
       this.players = players;
@@ -168,13 +188,20 @@ export default {
         let response = await axios.post("http://127.0.0.1:5000/CanPlayCard", {
           playerName: self.playerName
         });
-        let canPlay = response.data["canPlayCard"];
-        if (canPlay) {
+        let canPlay = response.data["can_play_card"];
+        this.gameState = response.data["game_state"];
+        if (this.gameState === "COMPLETED") {
+          await this.handleGameCompleted();
+        } else if (canPlay) {
           clearInterval(self.interval);
           await self.refreshData();
           this.currentView = VIEWS.pickACard;
         }
       }, 5 * 1000);
+    },
+
+    handleGameCompleted: function() {
+      this.currentView = VIEWS.gameCompleted;
     },
 
     nextTableau: function() {
@@ -191,6 +218,10 @@ export default {
       } else {
         this.tableauIndex--;
       }
+    },
+
+    goHome: async function() {
+      await this.$router.push("/");
     }
   }
 };

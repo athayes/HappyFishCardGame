@@ -2,7 +2,6 @@ from src import game
 from src.deck import basic_deck
 
 class Lobby:
-    is_game_started = False
     game = None
     players = []
 
@@ -17,5 +16,10 @@ class Lobby:
 
     @staticmethod
     def start_game():
-        Lobby.game = game.Game(Lobby.players, basic_deck(), 10)
-        Lobby.is_game_started = True
+        Lobby.game = game.Game(Lobby.players, basic_deck(), 1)
+
+    @staticmethod
+    def get_game_state():
+        if Lobby.game:
+            return Lobby.game.game_state
+        return "NOT_STARTED"

@@ -33,7 +33,7 @@ def get_game_object():
 def get_lobby():
     return {
         'players': Lobby.players,
-        'is_game_started': Lobby.is_game_started
+        'game_state': Lobby.get_game_state()
     }
 
 
@@ -74,5 +74,6 @@ def set_up_test_game():
 def can_play_card():
     player = request.json["playerName"]
     return {
-        "canPlayCard": not Lobby.game.is_player_chosen(player)
+        "game_state": Lobby.game.game_state,
+        "can_play_card": not Lobby.game.is_player_chosen(player)
     }

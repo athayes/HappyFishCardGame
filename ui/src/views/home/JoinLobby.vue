@@ -32,7 +32,8 @@ export default {
       }
 
       await axios.post("http://127.0.0.1:5000/JoinLobby", {
-        playerName: this.playerName
+        playerName: this.playerName,
+        is_ai: false
       });
       Cookies.set("HappyFishCardGame", this.playerName);
       await this.$router.push("Lobby");

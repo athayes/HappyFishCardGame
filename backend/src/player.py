@@ -8,6 +8,7 @@ class Player:
         self.dessert = []
         self.hand = []
         self.chosen = False
+        self.is_ai = False
 
     def to_json(self):
         return {
@@ -15,7 +16,8 @@ class Player:
             'score': self.score,
             'tableau': self.tableau,
             'dessert': self.dessert,
-            'hand': self.hand
+            'hand': self.hand,
+            'is_ai': self.is_ai
         }
 
 def make_players(player_names) -> List[Player]:

@@ -11,12 +11,16 @@ def start_game():
     Lobby.start_game()
     return json.dumps(dict(success=True)), 200, {'ContentType': 'application/json'}
 
+@app.route('/ResetLobbyAndGame', methods=['POST'])
+def reset_lobby_and_game():
+    Lobby.reset_game()
+    return json.dumps(dict(success=True)), 200, {'ContentType': 'application/json'}
 
 @app.route('/CreateLobby', methods=['POST'])
 def create_game():
     player_name = request.json['hostName']
     Lobby.reset_game()
-    Lobby.add_player(player_name)
+    Lobby.add_player(player_name, False)
     return json.dumps(dict(success=True)), 200, {'ContentType': 'application/json'}
 
 
@@ -32,7 +36,7 @@ def get_game_object():
 @app.route('/GetLobby', methods=['POST'])
 def get_lobby():
     return {
-        'players': Lobby.players,
+        'players': Lobby.player_json(),
         'game_state': Lobby.get_game_state()
     }
 
@@ -40,10 +44,12 @@ def get_lobby():
 @app.route('/JoinLobby', methods=['POST'])
 def join_lobby():
     player_name = request.json['playerName']
+    is_ai = request.json['is_ai']
+
     if player_name in Lobby.players:
         return 'Name taken; pick a new name!'
     if Lobby.game is None:
-        Lobby.add_player(player_name)
+        Lobby.add_player(player_name, is_ai)
         return json.dumps(dict(success=True)), 200, {'ContentType': 'application/json'}
     return 'You have to create a game first!'
 
@@ -57,6 +63,7 @@ def get_state():
 def pick_card():
     player = request.json["playerName"]
     card_index = request.json["index"]
+    Lobby.game.handle_ai()
     Lobby.game.play_card(player, card_index)
     return json.dumps(dict(success=True)), 200, {'ContentType': 'application/json'}
 
@@ -64,8 +71,8 @@ def pick_card():
 @app.route('/SetUpTestGame', methods=['POST'])
 def set_up_test_game():
     Lobby.reset_game()
-    Lobby.add_player("reb")
-    Lobby.add_player("Cool H")
+    Lobby.add_player("reb", False)
+    Lobby.add_player("Cool H", False)
     Lobby.start_game()
     return json.dumps(dict(success=True)), 200, {'ContentType': 'application/json'}
 

@@ -1,13 +1,17 @@
 from src import game
 from src.deck import basic_deck
+from src.player import Player
+
 
 class Lobby:
     game = None
     players = []
 
     @staticmethod
-    def add_player(player_name):
-        Lobby.players.append(player_name)
+    def add_player(player_name, is_ai):
+        player = Player(player_name)
+        player.is_ai = is_ai
+        Lobby.players.append(player)
 
     @staticmethod
     def reset_game():
@@ -23,3 +27,10 @@ class Lobby:
         if Lobby.game:
             return Lobby.game.game_state
         return "NOT_STARTED"
+
+    @staticmethod
+    def player_json():
+        data = []
+        for player in Lobby.players:
+            data.append(player.to_json())
+        return data

@@ -191,6 +191,7 @@ export default {
         let canPlay = response.data["can_play_card"];
         this.gameState = response.data["game_state"];
         if (this.gameState === "COMPLETED") {
+          clearInterval(self.interval);
           await this.handleGameCompleted();
         } else if (canPlay) {
           clearInterval(self.interval);

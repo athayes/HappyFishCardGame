@@ -2,13 +2,13 @@ from typing import List
 
 from src.deck import shuffle_deck
 from src.scoring import score_all, score_dessert
-from src.player import make_players, find_player, Player
+from src.player import find_player, Player
 
 
 class Game:
-    def __init__(self, player_names, deck, hand_size):
+    def __init__(self, players, deck, hand_size):
         self.deck = deck
-        self.players = make_players(player_names)
+        self.players = players
         self.round = 0
         self.hand_size = hand_size
         self.start_round()
@@ -93,6 +93,11 @@ class Game:
             if not len(player.hand) == 0:
                 return False
         return True
+
+    def handle_ai(self):
+        for player in self.players:
+            if player.is_ai:
+                self.play_card(player.player_name, 0)
 
 
 # note this function is mutable

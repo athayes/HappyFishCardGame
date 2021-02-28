@@ -59,10 +59,10 @@ class Game:
         if not self.all_hands_empty():
             return False
         self.score_round()
-        if self.round < 2:
+        if self.round < 3:
             self.start_round()
             return True
-        elif self.round == 2:
+        elif self.round == 3:
             self.score_round()
             self.score_dessert()
             self.end_game()

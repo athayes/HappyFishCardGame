@@ -20,7 +20,7 @@ class Lobby:
 
     @staticmethod
     def start_game():
-        Lobby.game = game.Game(Lobby.players, basic_deck(), 1)
+        Lobby.game = game.Game(Lobby.players, basic_deck(), 2)
 
     @staticmethod
     def get_game_state():

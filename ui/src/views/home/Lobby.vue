@@ -7,14 +7,18 @@
     </button>
     <div v-if="gameState === 'ACTIVE'">
       <p>Game is in progress..</p>
-      <button v-if="gameState !== 'COMPLETED'" @click="joinGame" class="btn">
-        Join Game
-      </button>
     </div>
-    <button @click="resetGame" class="btn">
+    <button v-if="playerCount > 1"
+      @click="resetGame"
+      class="btn-warning"
+    >
       Reset Lobby and Game
     </button>
-    <button v-if="gameState === 'NOT_STARTED'" @click="StartGame" class="btn">
+    <button
+      v-if="gameState === 'NOT_STARTED' && playerCount > 1"
+      @click="StartGame"
+      class="btn-secondary"
+    >
       Start Game
     </button>
   </div>
@@ -23,6 +27,7 @@
 <script>
 import axios from "axios";
 import Cookies from "js-cookie";
+import socket from "@/socket";
 
 export default {
   data: function() {
@@ -39,6 +44,12 @@ export default {
         return this.players.map(player => player.player_name).join(", ");
       }
       return [];
+    },
+    playerCount: function() {
+      if (this.players) {
+        return this.players.length;
+      }
+      return 0;
     }
   },
   methods: {
@@ -64,20 +75,22 @@ export default {
     }
   },
   async created() {
-    let self = this;
     let response = await axios.post("http://127.0.0.1:5000/GetLobby");
-    self.gameState = response.data.game_state;
-    self.players = response.data.players;
-
-    self.interval = setInterval(async () => {
-      let response = await axios.post(
-        "http://127.0.0.1:5000/GetLobby"
-      );
-      self.players = response.data.players;
-    }, 5 * 1000);
+    this.gameState = response.data.game_state;
+    this.players = response.data.players;
   },
+
+  beforeCreate() {
+    socket.on("lobbyUpdates", payload => {
+      console.log("beforeCreate!");
+      console.log(JSON.stringify(payload));
+      this.players = payload.players;
+      this.gameState = payload.game_state;
+    });
+  },
+
   beforeDestroy() {
-    clearInterval(this.interval);
+    socket.removeAllListeners("lobbyUpdates");
   }
 };
 </script>

@@ -1,20 +1,31 @@
+import random
+
+from eventlet import sleep
 from flask import Flask, json
 from flask import request
 from flask_cors import CORS
+from flask_socketio import SocketIO, emit
+
 from src.lobby import Lobby
 
 app = Flask(__name__)
 CORS(app)
+socketio = SocketIO(app, cors_allowed_origins="*", async_handlers=True)
+
+if __name__ == '__main__':
+    socketio.run(app)
 
 @app.route('/StartGame', methods=['POST'])
 def start_game():
     Lobby.start_game()
     return json.dumps(dict(success=True)), 200, {'ContentType': 'application/json'}
 
+
 @app.route('/ResetLobbyAndGame', methods=['POST'])
 def reset_lobby_and_game():
     Lobby.reset_game()
     return json.dumps(dict(success=True)), 200, {'ContentType': 'application/json'}
+
 
 @app.route('/CreateLobby', methods=['POST'])
 def create_game():
@@ -45,13 +56,11 @@ def get_lobby():
 def join_lobby():
     player_name = request.json['playerName']
     is_ai = request.json['is_ai']
-
     if player_name in Lobby.players:
         return 'Name taken; pick a new name!'
-    if Lobby.game is None:
-        Lobby.add_player(player_name, is_ai)
-        return json.dumps(dict(success=True)), 200, {'ContentType': 'application/json'}
-    return 'You have to create a game first!'
+    Lobby.add_player(player_name, is_ai)
+    push_lobby_data()
+    return json.dumps(dict(success=True)), 200, {'ContentType': 'application/json'}
 
 
 @app.route('/GetPlayers', methods=['POST'])
@@ -65,6 +74,9 @@ def pick_card():
     card_index = request.json["index"]
     Lobby.game.handle_ai()
     Lobby.game.play_card(player, card_index)
+    push_game_data()
+    if Lobby.game.game_state == "COMPLETED":
+        Lobby.reset_game()
     return json.dumps(dict(success=True)), 200, {'ContentType': 'application/json'}
 
 
@@ -84,3 +96,15 @@ def can_play_card():
         "game_state": Lobby.game.game_state,
         "can_play_card": not Lobby.game.is_player_chosen(player)
     }
+
+def push_lobby_data():
+    socketio.emit("lobbyUpdates", {
+        "players": Lobby.player_json(),
+        "game_state": Lobby.get_game_state()
+    })
+
+def push_game_data():
+    socketio.emit("gameUpdates", {
+        "players": Lobby.game.player_json(),
+        "game_state": Lobby.game.game_state
+    })

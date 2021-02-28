@@ -15,12 +15,6 @@ socketio = SocketIO(app, cors_allowed_origins="*", async_handlers=True)
 if __name__ == '__main__':
     socketio.run(app)
 
-
-@socketio.on('connect')
-def connect():
-    socketio.emit('timer', {"timer": 1})
-
-
 @app.route('/StartGame', methods=['POST'])
 def start_game():
     Lobby.start_game()

@@ -44,7 +44,6 @@
 
       <div class="confirm-buttons">
         <button class="btn" @click.stop="confirmCard()">Yeah!</button>
-        <br />
         <button class="btn" @click.stop="currentView = VIEWS.pickACard">
           No
         </button>

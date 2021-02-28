@@ -2,7 +2,7 @@
   <div class="Lobby">
     <h3>Lobby 1</h3>
     <p>Players: {{ playerNames }}</p>
-    <button v-if="gameState === 'NOT_STARTED'" @click="addAiPlayer" class="btn-secondary">
+    <button v-if="gameState === 'NOT_STARTED'" @click="addAiPlayer" class="btn">
       Add AI Player
     </button>
     <div v-if="gameState === 'ACTIVE'">
@@ -17,7 +17,7 @@
     <button
       v-if="gameState === 'NOT_STARTED' && playerCount > 1"
       @click="StartGame"
-      class="btn-success"
+      class="btn-secondary"
     >
       Start Game
     </button>

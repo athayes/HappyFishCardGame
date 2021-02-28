@@ -19,7 +19,6 @@ export default {
     timer1: async function() {
       socket.on("timer", payload => {
         this.data = payload.timer;
-        console.log(payload.timer);
       });
     }
   }

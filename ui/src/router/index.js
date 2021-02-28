@@ -4,6 +4,7 @@ import Lobby from "../views/home/Lobby";
 import JoinLobby from "../views/home/JoinLobby";
 import PickACard from "../views/game/PickACard";
 import Home from "../views/home/Home";
+import Socket from "../views/Socket";
 
 Vue.use(VueRouter);
 
@@ -23,6 +24,10 @@ const routes = [
   {
     path: "/PickACard",
     component: PickACard
+  },
+  {
+    path: "/Socket",
+    component: Socket
   }
 ];
 

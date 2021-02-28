@@ -1,10 +1,24 @@
+import random
+
+from eventlet import sleep
 from flask import Flask, json
 from flask import request
 from flask_cors import CORS
+from flask_socketio import SocketIO, emit
+
 from src.lobby import Lobby
 
 app = Flask(__name__)
 CORS(app)
+socketio = SocketIO(app, cors_allowed_origins="*", async_handlers=True)
+
+if __name__ == '__main__':
+    socketio.run(app)
+
+@socketio.on('connect')
+def connect():
+    socketio.emit('timer', {"timer": 1})
+
 
 @app.route('/StartGame', methods=['POST'])
 def start_game():

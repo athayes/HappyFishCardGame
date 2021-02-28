@@ -82,8 +82,6 @@ export default {
 
   beforeCreate() {
     socket.on("lobbyUpdates", payload => {
-      console.log("beforeCreate!");
-      console.log(JSON.stringify(payload));
       this.players = payload.players;
       this.gameState = payload.game_state;
     });

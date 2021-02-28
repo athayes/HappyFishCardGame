@@ -106,5 +106,6 @@ def push_lobby_data():
 def push_game_data():
     socketio.emit("gameUpdates", {
         "players": Lobby.game.player_json(),
-        "game_state": Lobby.game.game_state
+        "game_state": Lobby.game.game_state,
+        "round": Lobby.game.round
     })

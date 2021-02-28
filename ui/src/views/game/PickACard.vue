@@ -89,6 +89,16 @@
       <h3>Waiting for other players to pick cards...</h3>
     </div>
 
+    <div v-if="currentView === VIEWS.newRound">
+      <h4>Round {{ round - 1 }} scores:</h4>
+      <p v-for="player in players" :key="player.playerName">
+        {{ player.playerName }}: {{ player.score }}
+      </p>
+      <button class="btn btn-secondary" @click="currentView = VIEWS.pickACard">
+        Start next round
+      </button>
+    </div>
+
     <div v-if="currentView === VIEWS.gameCompleted">
       <h3>Game Completed!</h3>
       <p>Final Scores:</p>
@@ -105,7 +115,7 @@
 <script>
 import axios from "axios";
 import Cookies from "js-cookie";
-import { findPlayer, formatPlayers } from "@/models/Player";
+import {findPlayer, findPlayerUnderscore, formatPlayers} from "@/models/Player";
 import socket from "@/socket";
 
 export const VIEWS = {
@@ -113,7 +123,8 @@ export const VIEWS = {
   confirmCard: 2,
   viewTableau: 3,
   waiting: 4,
-  gameCompleted: 5
+  gameCompleted: 5,
+  newRound: 6
 };
 
 export default {
@@ -126,6 +137,7 @@ export default {
       tableauIndex: 0,
       playerIndex: 0,
       players: [],
+      round: 0,
       gameState: ""
     };
   },
@@ -160,6 +172,7 @@ export default {
       let self = this;
       let response = await axios.post("http://127.0.0.1:5000/GetGameObject");
       this.gameState = response.data.game_state;
+      this.round = response.data.round;
       if (this.gameState === "COMPLETED") {
         await this.handleGameCompleted();
       }
@@ -186,20 +199,26 @@ export default {
       self.currentView = VIEWS.waiting;
       socket.on("gameUpdates", payload => {
         const gameUpdates = payload;
-        const canPlay = !findPlayer(gameUpdates.players, this.playerName).chosen;
-        const gameState = gameUpdates.game_state;
-        if (gameState === "COMPLETED") {
-          this.handleGameCompleted();
+        const { player } = findPlayerUnderscore(
+          gameUpdates.players,
+          this.playerName
+        );
+        const canPlay = !player.chosen;
+        const isNewRound = player.is_new_round;
+        this.gameState = gameUpdates.game_state;
+        this.round = gameUpdates.round;
+        if (this.gameState === "COMPLETED") {
+          this.currentView = VIEWS.gameCompleted;
         } else if (canPlay) {
           self.refreshData();
-          this.currentView = VIEWS.pickACard;
+          if (isNewRound) {
+            this.currentView = VIEWS.newRound;
+          } else {
+            this.currentView = VIEWS.pickACard;
+          }
         }
         socket.removeAllListeners("gameUpdates");
       });
-    },
-
-    handleGameCompleted: function() {
-      this.currentView = VIEWS.gameCompleted;
     },
 
     nextTableau: function() {

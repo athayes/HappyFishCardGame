@@ -5,6 +5,11 @@ export function findPlayer(players, playerName) {
   return { index, player: players[index] };
 }
 
+export function findPlayerUnderscore(players, playerName) {
+  const index = players.findIndex(player => player.player_name === playerName);
+  return { index, player: players[index] };
+}
+
 export function formatPlayers(players) {
   players = players.map(player => {
     return {

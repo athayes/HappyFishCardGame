@@ -107,6 +107,7 @@
 import axios from "axios";
 import Cookies from "js-cookie";
 import { findPlayer, formatPlayers } from "@/models/Player";
+import socket from "@/socket";
 
 export const VIEWS = {
   pickACard: 1,
@@ -176,29 +177,26 @@ export default {
       this.currentView = VIEWS.confirmCard;
     },
 
-    confirmCard: async function() {
+    confirmCard: function() {
       let self = this;
-      await axios.post("http://127.0.0.1:5000/PickCard", {
+      axios.post("http://127.0.0.1:5000/PickCard", {
         playerName: self.playerName,
         index: self.pickedCard.index
       });
 
       self.currentView = VIEWS.waiting;
-      self.interval = setInterval(async () => {
-        let response = await axios.post("http://127.0.0.1:5000/CanPlayCard", {
-          playerName: self.playerName
-        });
-        let canPlay = response.data["can_play_card"];
-        this.gameState = response.data["game_state"];
-        if (this.gameState === "COMPLETED") {
-          clearInterval(self.interval);
-          await this.handleGameCompleted();
+      socket.on("gameUpdates", payload => {
+        const gameUpdates = payload;
+        const canPlay = !findPlayer(gameUpdates.players, this.playerName).chosen;
+        const gameState = gameUpdates.game_state;
+        if (gameState === "COMPLETED") {
+          this.handleGameCompleted();
         } else if (canPlay) {
-          clearInterval(self.interval);
-          await self.refreshData();
+          self.refreshData();
           this.currentView = VIEWS.pickACard;
         }
-      }, 5 * 1000);
+        socket.removeAllListeners("gameUpdates");
+      });
     },
 
     handleGameCompleted: function() {

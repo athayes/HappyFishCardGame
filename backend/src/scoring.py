@@ -1,4 +1,5 @@
 from src.scoring_functions.army_cards.maki import score_maki
+from src.scoring_functions.dumplings import score_dumplings
 from src.scoring_functions.wasabi_and_nigiri import score_wasabi_and_nigiri
 
 
@@ -25,4 +26,6 @@ def score_dessert(players):
     return players
 
 def score_player(player):
-    return score_wasabi_and_nigiri(player)
+    player = score_dumplings(player)
+    player = score_wasabi_and_nigiri(player)
+    return player

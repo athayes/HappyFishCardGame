@@ -2,7 +2,7 @@ from typing import List
 
 from src.deck import shuffle_deck
 from src.scoring import score_all, score_dessert
-from src.player import find_player, Player
+from src.player import find_player, Player, mark_new_round
 
 
 class Game:
@@ -35,6 +35,7 @@ class Game:
         player.tableau.append(player.hand.pop(card_index))
         player.chosen = True
         self.players[index] = player
+        self.players = mark_new_round(self.players, False)
 
         if not self.check_round_over() and self.all_players_chosen():
             self.players = rotate_hands(self.players)
@@ -63,7 +64,6 @@ class Game:
             self.start_round()
             return True
         elif self.round == 3:
-            self.score_round()
             self.score_dessert()
             self.end_game()
             return True
@@ -71,6 +71,7 @@ class Game:
 
     def score_round(self):
         self.players = score_all(self.players)
+        self.players = mark_new_round(self.players, True)
 
     def score_dessert(self):
         self.players = score_dessert(self.players)

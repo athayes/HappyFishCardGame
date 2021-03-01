@@ -75,8 +75,6 @@ def pick_card():
     Lobby.game.handle_ai()
     Lobby.game.play_card(player, card_index)
     push_game_data()
-    if Lobby.game.game_state == "COMPLETED":
-        Lobby.reset_game()
     return json.dumps(dict(success=True)), 200, {'ContentType': 'application/json'}
 
 

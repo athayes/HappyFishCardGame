@@ -7,6 +7,7 @@ salmon_nigiri = "Salmon Nigiri"
 squid_nigiri = "Squid Nigiri"
 wasabi = "Wasabi"
 dumpling = "Dumpling"
+tempura = "Tempura"
 
 
 def is_maki(card):

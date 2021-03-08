@@ -77,6 +77,16 @@ def pick_card():
     push_game_data()
     return json.dumps(dict(success=True)), 200, {'ContentType': 'application/json'}
 
+@app.route('/Pick2CardsWithChopsticks', methods=['POST'])
+def pick_2_cards_with_chopsticks():
+    player = request.json["playerName"]
+    card_1_index = request.json["card1Index"]
+    card_2_index = request.json["card2Index"]
+    Lobby.game.handle_ai()
+    Lobby.game.play_card_with_chopsticks(player, card_1_index, card_2_index, chopsticks_index)
+    push_game_data()
+    return json.dumps(dict(success=True)), 200, {'ContentType': 'application/json'}
+
 
 @app.route('/SetUpTestGame', methods=['POST'])
 def set_up_test_game():

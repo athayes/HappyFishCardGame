@@ -47,6 +47,9 @@
         <button class="btn" @click.stop="currentView = VIEWS.pickACard">
           No
         </button>
+        <button v-if="tableauContainsChopsticks && !extraCard" class="btn" @click.stop="chooseExtraCardChopsticks">
+          Pick this and another, using chopsticks
+        </button>
       </div>
     </div>
 
@@ -134,6 +137,7 @@ export default {
       playerName: Cookies.get("HappyFishCardGame"),
       VIEWS: VIEWS,
       pickedCard: {},
+      extraCard: null, // for chopsticks play
       tableauIndex: 0,
       playerIndex: 0,
       players: [],
@@ -160,6 +164,10 @@ export default {
         return "My";
       }
       return `${this.players[this.tableauIndex].playerName}'s`;
+    },
+    tableauContainsChopsticks: function() {
+      const cards = this.currentPlayer.tableau.map(card => card.name);
+      return !!cards.includes("Chopsticks");
     }
   },
 
@@ -174,13 +182,20 @@ export default {
       this.gameState = response.data.game_state;
       this.round = response.data.round;
       if (this.gameState === "COMPLETED") {
-        await this.handleGameCompleted();
+        this.currentView = VIEWS.gameCompleted;
       }
       let players = formatPlayers(response.data.players);
       const { index } = findPlayer(players, self.playerName);
       this.playerIndex = index;
       this.tableauIndex = index;
       this.players = players;
+    },
+
+    chooseExtraCardChopsticks: function() {
+      this.extraCard = this.pickedCard;
+      this.extraCard.index = this.pickedCard.index;
+      this.pickCard = {};
+      this.currentView = VIEWS.pickACard;
     },
 
     chooseCard: function(card, index) {
@@ -191,10 +206,20 @@ export default {
 
     confirmCard: function() {
       let self = this;
-      axios.post("http://127.0.0.1:5000/PickCard", {
-        playerName: self.playerName,
-        index: self.pickedCard.index
-      });
+      if (this.extraCard) {
+        console.log(JSON.stringify(self.extraCard));
+        axios.post("http://127.0.0.1:5000/Pick2CardsWithChopsticks", {
+          playerName: self.playerName,
+          card1Index: self.extraCard.index,
+          card2Index: self.pickedCard.index
+        });
+        self.extraCard = null;
+      } else {
+        axios.post("http://127.0.0.1:5000/PickCard", {
+          playerName: self.playerName,
+          index: self.pickedCard.index
+        });
+      }
 
       self.currentView = VIEWS.waiting;
       socket.on("gameUpdates", payload => {

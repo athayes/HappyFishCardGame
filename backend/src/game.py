@@ -1,6 +1,11 @@
+from copy import deepcopy
 from typing import List
 
+import numpy as np
+
+from src.cards import chopsticks
 from src.deck import shuffle_deck
+from src.misc_functions.handle_chopsticks import handle_chopsticks
 from src.scoring import score_all, score_dessert
 from src.player import find_player, Player, mark_new_round
 
@@ -21,15 +26,30 @@ class Game:
         self.players = players
         self.deck = deck
 
+    def play_cards_using_chopsticks(self, player_name, card_1_index, card_2_index):
+        index, player = find_player(player_name, self.players)
+        if player.chosen:
+            return player_name + " has already chosen a card"
+
+        player = handle_chopsticks(player, card_1_index, card_2_index)
+
+        player.chosen = True
+        self.players[index] = player
+        self.players = mark_new_round(self.players, False)
+
+        if not self.check_round_over() and self.all_players_chosen():
+            self.players = rotate_hands(self.players)
+            for player in self.players:
+                player.chosen = False
+
     def play_card(self, player_name, card_index):
         index, player = find_player(player_name, self.players)
         if player.chosen:
             return player_name + " has already chosen a card"
 
         card_name = player.hand[card_index]
-        if card_name == "Chopsticks":
-            # handle chopsticks case here
-            # probably return a different json
+        if card_name == "Uramaki":
+            # handle uaramaki case here
             return
 
         player.tableau.append(player.hand.pop(card_index))
@@ -41,6 +61,7 @@ class Game:
             self.players = rotate_hands(self.players)
             for player in self.players:
                 player.chosen = False
+
 
     def player_json(self):
         data = []

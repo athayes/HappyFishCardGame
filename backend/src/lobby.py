@@ -1,5 +1,5 @@
 from src import game
-from src.deck import basic_deck
+from src.deck import basic_deck, chopsticks_deck
 from src.player import Player
 
 
@@ -20,7 +20,7 @@ class Lobby:
 
     @staticmethod
     def start_game():
-        Lobby.game = game.Game(Lobby.players, basic_deck(), 2)
+        Lobby.game = game.Game(Lobby.players, chopsticks_deck(), 5)
 
     @staticmethod
     def get_game_state():

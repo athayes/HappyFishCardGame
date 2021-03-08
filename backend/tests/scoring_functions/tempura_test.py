@@ -1,7 +1,6 @@
-from src.cards import dumpling, tempura
+from src.cards import tempura
 from src.deck import make_deck
 from src.player import Player
-from src.scoring_functions.dumplings import score_dumplings
 from src.scoring_functions.tempura import score_tempura
 
 

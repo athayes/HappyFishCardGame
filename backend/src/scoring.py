@@ -1,3 +1,4 @@
+from src.misc_functions.handle_chopsticks import remove_chopsticks
 from src.scoring_functions.army_cards.maki import score_maki
 from src.scoring_functions.dumplings import score_dumplings
 from src.scoring_functions.sashimi import score_sashimi
@@ -32,4 +33,5 @@ def score_player(player):
     player = score_tempura(player)
     player = score_sashimi(player)
     player = score_wasabi_and_nigiri(player)
+    player = remove_chopsticks(player)
     return player

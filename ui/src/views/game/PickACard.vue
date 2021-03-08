@@ -50,7 +50,7 @@
         <button
           v-if="tableauContainsChopsticks"
           class="btn"
-          @click.stop="chooseExtraCardChopsticks"
+          @click.stop="confirmCardUseChopsticks"
         >
           Pick this and another, using chopsticks
         </button>
@@ -205,16 +205,17 @@ export default {
     },
 
     confirmCardUseChopsticks: async function() {
-      this.gameState = await axios.post(
-        "http://127.0.0.1:5000/PickCardWithChopsticks",
-        {
-          playerName: self.playerName,
-          index: self.pickedCard.index
-        }
-      );
+      let self = this;
+      await axios.post("http://127.0.0.1:5000/PickCardUsingChopsticks", {
+        playerName: self.playerName,
+        index: self.pickedCard.index
+      });
+      await this.refreshData();
+      this.currentView = VIEWS.pickACard;
     },
 
     confirmCard: function() {
+      let self = this;
       axios.post("http://127.0.0.1:5000/PickCard", {
         playerName: self.playerName,
         index: self.pickedCard.index

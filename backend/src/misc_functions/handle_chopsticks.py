@@ -11,3 +11,11 @@ def handle_chopsticks(player, card_1_index):
     player.tableau.append(chosen_card)
     player.hand.append(chopsticks)
     return player
+
+def remove_chopsticks(player):
+    indices = []
+    for index, card in enumerate(player.tableau):
+        if card == chopsticks:
+            indices.append(index)
+    player.tableau = list(np.delete(player.tableau, indices))
+    return player

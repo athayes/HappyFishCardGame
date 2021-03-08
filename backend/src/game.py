@@ -1,9 +1,5 @@
-from copy import deepcopy
 from typing import List
 
-import numpy as np
-
-from src.cards import chopsticks
 from src.deck import shuffle_deck
 from src.misc_functions.handle_chopsticks import handle_chopsticks
 from src.scoring import score_all, score_dessert
@@ -30,7 +26,7 @@ class Game:
         index, player = find_player(player_name, self.players)
         if player.chosen:
             return player_name + " has already chosen a card"
-
+        # Todo prevent multiple chopsticks in one turn
         player = handle_chopsticks(player, card_index)
         self.players[index] = player
 

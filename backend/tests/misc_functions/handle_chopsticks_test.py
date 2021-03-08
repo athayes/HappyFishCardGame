@@ -5,12 +5,11 @@ from src.player import Player
 
 def test_handle_chopsticks():
     player = make_test_player()
-    player = handle_chopsticks(player, 0, 1)
-    assert len(player.hand) == 1
-    assert player.hand[0] == chopsticks
-    assert len(player.tableau) == 2
+    player = handle_chopsticks(player, 0)
+    assert len(player.hand) == 2
+    assert player.hand[1] == chopsticks
+    assert len(player.tableau) == 1
     assert player.tableau[0] == egg_nigiri
-    assert player.tableau[1] == salmon_nigiri
 
 def make_test_player():
     player = Player("Jen")

@@ -47,7 +47,11 @@
         <button class="btn" @click.stop="currentView = VIEWS.pickACard">
           No
         </button>
-        <button v-if="tableauContainsChopsticks && !extraCard" class="btn" @click.stop="chooseExtraCardChopsticks">
+        <button
+          v-if="tableauContainsChopsticks"
+          class="btn"
+          @click.stop="chooseExtraCardChopsticks"
+        >
           Pick this and another, using chopsticks
         </button>
       </div>
@@ -118,7 +122,11 @@
 <script>
 import axios from "axios";
 import Cookies from "js-cookie";
-import {findPlayer, findPlayerUnderscore, formatPlayers} from "@/models/Player";
+import {
+  findPlayer,
+  findPlayerUnderscore,
+  formatPlayers
+} from "@/models/Player";
 import socket from "@/socket";
 
 export const VIEWS = {
@@ -137,7 +145,6 @@ export default {
       playerName: Cookies.get("HappyFishCardGame"),
       VIEWS: VIEWS,
       pickedCard: {},
-      extraCard: null, // for chopsticks play
       tableauIndex: 0,
       playerIndex: 0,
       players: [],
@@ -191,36 +198,27 @@ export default {
       this.players = players;
     },
 
-    chooseExtraCardChopsticks: function() {
-      this.extraCard = this.pickedCard;
-      this.extraCard.index = this.pickedCard.index;
-      this.pickCard = {};
-      this.currentView = VIEWS.pickACard;
-    },
-
     chooseCard: function(card, index) {
       this.pickedCard = card;
       this.pickedCard.index = index;
       this.currentView = VIEWS.confirmCard;
     },
 
-    confirmCard: function() {
-      let self = this;
-      if (this.extraCard) {
-        console.log(JSON.stringify(self.extraCard));
-        axios.post("http://127.0.0.1:5000/Pick2CardsWithChopsticks", {
-          playerName: self.playerName,
-          card1Index: self.extraCard.index,
-          card2Index: self.pickedCard.index
-        });
-        self.extraCard = null;
-      } else {
-        axios.post("http://127.0.0.1:5000/PickCard", {
+    confirmCardUseChopsticks: async function() {
+      this.gameState = await axios.post(
+        "http://127.0.0.1:5000/PickCardWithChopsticks",
+        {
           playerName: self.playerName,
           index: self.pickedCard.index
-        });
-      }
+        }
+      );
+    },
 
+    confirmCard: function() {
+      axios.post("http://127.0.0.1:5000/PickCard", {
+        playerName: self.playerName,
+        index: self.pickedCard.index
+      });
       self.currentView = VIEWS.waiting;
       socket.on("gameUpdates", payload => {
         const gameUpdates = payload;

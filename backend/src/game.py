@@ -26,21 +26,13 @@ class Game:
         self.players = players
         self.deck = deck
 
-    def play_cards_using_chopsticks(self, player_name, card_1_index, card_2_index):
+    def play_card_using_chopsticks(self, player_name, card_index):
         index, player = find_player(player_name, self.players)
         if player.chosen:
             return player_name + " has already chosen a card"
 
-        player = handle_chopsticks(player, card_1_index, card_2_index)
-
-        player.chosen = True
+        player = handle_chopsticks(player, card_index)
         self.players[index] = player
-        self.players = mark_new_round(self.players, False)
-
-        if not self.check_round_over() and self.all_players_chosen():
-            self.players = rotate_hands(self.players)
-            for player in self.players:
-                player.chosen = False
 
     def play_card(self, player_name, card_index):
         index, player = find_player(player_name, self.players)
@@ -61,7 +53,6 @@ class Game:
             self.players = rotate_hands(self.players)
             for player in self.players:
                 player.chosen = False
-
 
     def player_json(self):
         data = []

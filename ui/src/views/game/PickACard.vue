@@ -1,5 +1,6 @@
 <template>
-  <div class="pickACard">
+  <div class="pickACard"
+  style="margin-top:15px;">
     <div v-if="currentView === VIEWS.pickACard">
       <div class="menu-buttons">
         <button
@@ -11,7 +12,7 @@
       </div>
 
       <div class="score">My Score = {{ currentPlayer.score }}</div>
-      <h3>Pick a card</h3>
+      <h3 style="padding-top:-20px;">Pick a card</h3>
 
       <div class="hand">
         <div
@@ -333,7 +334,7 @@ export default {
 .name {
   font-family: "Patrick Hand SC", sans-serif;
   font-size: 20px;
-  margin: 5px;
+  margin: 0px;
 }
 
 .hint {

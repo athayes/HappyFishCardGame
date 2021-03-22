@@ -1,17 +1,18 @@
 <template>
-  <div class="pickACard">
+  <div class="pickACard"
+  style="margin-top:15px;">
     <div v-if="currentView === VIEWS.pickACard">
       <div class="menu-buttons">
         <button
           class="btn-secondary btn-small"
-          @click.stop="currentView = VIEWS.viewTableau"
+          @click.stop="currentView = VIEWS.menu"
         >
-          View Tableaus
+          Menu
         </button>
       </div>
 
       <div class="score">My Score = {{ currentPlayer.score }}</div>
-      <h3>Pick a card</h3>
+      <h3 style="padding-top:-20px;">Pick a card</h3>
 
       <div class="hand">
         <div
@@ -56,7 +57,7 @@
           class="btn-secondary btn-small"
           @click.stop="currentView = VIEWS.pickACard"
         >
-          View Hand
+          Hand
         </button>
       </div>
 
@@ -109,6 +110,31 @@
         Exit Game
       </button>
     </div>
+
+    <div v-if="currentView === VIEWS.menu">
+      <h3 style="margin-top: 15px">Menu</h3>
+      <div style="margin-top: 100px">
+        <button
+            class="btn-secondary btn"
+            @click.stop="currentView = VIEWS.viewTableau"
+        >
+          Tableaus
+        </button>
+        <button
+            class="btn-secondary btn"
+            style="margin-left: 20px;"
+        >
+          Desserts
+        </button>
+        <button
+            class="btn back-to-hand"
+            style="margin-left: 40px;"
+            @click.stop="currentView = VIEWS.pickACard"
+        >
+          Back to Hand
+        </button>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -124,7 +150,8 @@ export const VIEWS = {
   viewTableau: 3,
   waiting: 4,
   gameCompleted: 5,
-  newRound: 6
+  newRound: 6,
+  menu: 7
 };
 
 export default {
@@ -307,7 +334,7 @@ export default {
 .name {
   font-family: "Patrick Hand SC", sans-serif;
   font-size: 20px;
-  margin: 5px;
+  margin: 0px;
 }
 
 .hint {

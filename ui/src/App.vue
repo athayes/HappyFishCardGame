@@ -15,6 +15,6 @@
 
 #app {
   width: 667px;
-  height: 377px;
+  height: 375px;
 }
 </style>

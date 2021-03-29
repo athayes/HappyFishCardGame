@@ -1,4 +1,5 @@
 from src.scoring_functions.army_cards.maki import score_maki
+from src.scoring_functions.dessert.pudding import score_pudding
 from src.scoring_functions.dumplings import score_dumplings
 from src.scoring_functions.sashimi import score_sashimi
 from src.scoring_functions.tempura import score_tempura
@@ -25,6 +26,7 @@ def score_players(old_players):
 
 
 def score_dessert(players):
+    players = score_pudding(players)
     return players
 
 def score_player(player):

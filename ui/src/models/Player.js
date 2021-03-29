@@ -15,6 +15,7 @@ export function formatPlayers(players) {
     return {
       playerName: player.player_name,
       tableau: formatCards(player.tableau),
+      dessert: formatCards(player.dessert),
       hand: formatCards(player.hand),
       score: player.score
     };

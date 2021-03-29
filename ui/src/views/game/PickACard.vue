@@ -3,7 +3,7 @@
     <div v-if="currentView === VIEWS.pickACard">
       <div class="menu-buttons">
         <button
-          class="btn-secondary btn-small"
+          class="blue-button btn-small"
           @click.stop="currentView = VIEWS.menu"
         >
           Menu
@@ -21,8 +21,10 @@
           @click.stop="chooseCard(card, index)"
         >
           <img v-bind:src="card.image" />
-          <p class="name">{{ card.name }}</p>
-          <p class="hint">{{ card.hint }}</p>
+          <div>
+            <p class="name">{{ card.name }}</p>
+            <p class="hint">{{ card.hint }}</p>
+          </div>
         </div>
       </div>
     </div>
@@ -149,20 +151,20 @@
       <h3 style="margin-top: 15px">Menu</h3>
       <div style="margin-top: 100px">
         <button
-          class="btn-secondary btn"
+          class= "btn purple-button"
           @click.stop="currentView = VIEWS.viewTableau"
         >
           Tableaus
         </button>
         <button
-          class="btn-secondary btn"
+          class="btn yellow-button"
           style="margin-left: 20px;"
           @click.stop="currentView = VIEWS.desserts"
         >
           Desserts
         </button>
         <button
-          class="btn back-to-hand"
+          class="btn pink-button back-to-hand"
           style="margin-left: 40px;"
           @click.stop="currentView = VIEWS.pickACard"
         >
@@ -397,5 +399,11 @@ img {
 
 h3 {
   margin: 0px;
+}
+
+/* cool style do not steal anthony*/
+.dumpling-text {
+  /*background-color: #fffefe;*/
+  /*border-top: lightgray 1px solid;*/
 }
 </style>

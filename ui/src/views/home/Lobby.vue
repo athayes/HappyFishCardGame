@@ -15,7 +15,7 @@
     <button
       v-if="playerCount > 1"
       @click="resetGame"
-      class="btn yellow-button"
+      class="btn purple-button"
       style="margin-left:20px;"
     >
       Reset Lobby and Game

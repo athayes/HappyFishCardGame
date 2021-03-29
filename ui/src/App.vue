@@ -24,8 +24,32 @@
 }
 
 .green-button {
-  background-color: #cea;
-  border-color: #390;
+  background-color: #de8;
+  border-color: #6c0;
+  /*background-color: #cea;*/
+  /*border-color: #390;*/
+}
+
+.purple-button {
+  border-color: #eaf;
+  background-color: #ddf;
+}
+
+.blue-button {
+  background-color: #deefff;
+  border-color: #6ab;
+  /*background-color: #cff;*/
+  /*border-color: #0071de;*/
+}
+
+.pink-button {
+  background-color: #fdd;
+  border-color: #f99;
+}
+
+.pinkish-button {
+  background-color: #edc;
+  border-color: #f99;
 }
 
 /* Look into using default for focus*/

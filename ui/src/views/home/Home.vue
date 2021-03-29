@@ -1,14 +1,17 @@
 <template>
   <div class="Home">
     <h2>{{ sillyName }}</h2>
-    <button class="btn btn-secondary" @click="JoinLobby">
+    <button
+      class="btn green-button"
+      @click="JoinLobby"
+    >
       Join Game
     </button>
   </div>
 </template>
 
 <script>
-import {getRandomItem, sillyWords} from "@/models/SillyWords";
+import { getRandomItem, sillyWords } from "@/models/SillyWords";
 
 export default {
   data: function() {

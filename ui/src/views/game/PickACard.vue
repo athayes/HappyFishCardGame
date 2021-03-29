@@ -54,9 +54,9 @@
       <div class="menu-buttons">
         <button
           class="btn-secondary btn-small"
-          @click.stop="currentView = VIEWS.pickACard"
+          @click.stop="currentView = VIEWS.menu"
         >
-          Hand
+          Menu
         </button>
       </div>
 
@@ -89,9 +89,9 @@
       <div class="menu-buttons">
         <button
           class="btn-secondary btn-small"
-          @click.stop="currentView = VIEWS.pickACard"
+          @click.stop="currentView = VIEWS.menu"
         >
-          Hand
+          Menu
         </button>
       </div>
 

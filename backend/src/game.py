@@ -3,6 +3,7 @@ from typing import List
 from src.deck import shuffle_deck
 from src.scoring import score_all, score_dessert
 from src.player import find_player, Player, mark_new_round
+from src.scoring_functions.dessert.is_dessert import is_dessert
 
 
 class Game:
@@ -32,7 +33,11 @@ class Game:
             # probably return a different json
             return
 
-        player.tableau.append(player.hand.pop(card_index))
+        if is_dessert(card_name):
+            player.dessert.append(player.hand.pop(card_index))
+        else:
+            player.tableau.append(player.hand.pop(card_index))
+
         player.chosen = True
         self.players[index] = player
         self.players = mark_new_round(self.players, False)

@@ -1,6 +1,5 @@
 <template>
-  <div class="pickACard"
-  style="margin-top:15px;">
+  <div class="pickACard" style="margin-top:15px;">
     <div v-if="currentView === VIEWS.pickACard">
       <div class="menu-buttons">
         <button
@@ -55,9 +54,9 @@
       <div class="menu-buttons">
         <button
           class="btn-secondary btn-small"
-          @click.stop="currentView = VIEWS.pickACard"
+          @click.stop="currentView = VIEWS.menu"
         >
-          Hand
+          Menu
         </button>
       </div>
 
@@ -76,6 +75,41 @@
         <div
           class="card"
           v-for="card in tableauPlayer.tableau"
+          :key="card.index"
+        >
+          <!-- div contents-->
+          <img v-bind:src="card.image" />
+          <p class="name">{{ card.name }}</p>
+          <p class="hint">{{ card.hint }}</p>
+        </div>
+      </div>
+    </div>
+
+    <div v-if="currentView === VIEWS.desserts">
+      <div class="menu-buttons">
+        <button
+          class="btn-secondary btn-small"
+          @click.stop="currentView = VIEWS.menu"
+        >
+          Menu
+        </button>
+      </div>
+
+      <div class="menu-buttons-right">
+        <button class="btn-secondary btn-small" @click.stop="previousTableau">
+          &lt;-
+        </button>
+
+        <button class="btn-secondary btn-small" @click.stop="nextTableau">
+          -&gt;
+        </button>
+      </div>
+
+      <h3>{{ tableauPlayerDisplayName }} desserts</h3>
+      <div class="hand">
+        <div
+          class="card"
+          v-for="card in tableauPlayer.dessert"
           :key="card.index"
         >
           <!-- div contents-->
@@ -115,21 +149,22 @@
       <h3 style="margin-top: 15px">Menu</h3>
       <div style="margin-top: 100px">
         <button
-            class="btn-secondary btn"
-            @click.stop="currentView = VIEWS.viewTableau"
+          class="btn-secondary btn"
+          @click.stop="currentView = VIEWS.viewTableau"
         >
           Tableaus
         </button>
         <button
-            class="btn-secondary btn"
-            style="margin-left: 20px;"
+          class="btn-secondary btn"
+          style="margin-left: 20px;"
+          @click.stop="currentView = VIEWS.desserts"
         >
           Desserts
         </button>
         <button
-            class="btn back-to-hand"
-            style="margin-left: 40px;"
-            @click.stop="currentView = VIEWS.pickACard"
+          class="btn back-to-hand"
+          style="margin-left: 40px;"
+          @click.stop="currentView = VIEWS.pickACard"
         >
           Back to Hand
         </button>
@@ -141,7 +176,11 @@
 <script>
 import axios from "axios";
 import Cookies from "js-cookie";
-import {findPlayer, findPlayerUnderscore, formatPlayers} from "@/models/Player";
+import {
+  findPlayer,
+  findPlayerUnderscore,
+  formatPlayers
+} from "@/models/Player";
 import socket from "@/socket";
 
 export const VIEWS = {
@@ -151,7 +190,8 @@ export const VIEWS = {
   waiting: 4,
   gameCompleted: 5,
   newRound: 6,
-  menu: 7
+  menu: 7,
+  desserts: 8
 };
 
 export default {

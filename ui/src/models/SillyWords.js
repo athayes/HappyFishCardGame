@@ -1,6 +1,6 @@
 export const sillyWords = {
-  nouns: ["Sushi", "Restaurant", "Chef", "Dinner"],
-  adjectives: ["Happy", "Exciting", "Delicious", "Good Taste"]
+  nouns: ["Sushi", "Fish", "Restaurant", "Chef", "Dinner"],
+  adjectives: ["Happy", "Exciting", "Excellent", "Delicious", "Good Taste"]
 };
 
 export function getRandomItem(array) {

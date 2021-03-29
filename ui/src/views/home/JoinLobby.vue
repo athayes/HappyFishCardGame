@@ -8,7 +8,11 @@
       type="text"
       id="playerName"
     />
-    <button class="btn btn-secondary" @click="JoinLobby">
+    <button
+      class="btn green-button"
+      @click="JoinLobby"
+      style="margin-top:20px;"
+    >
       Join Game
     </button>
   </div>

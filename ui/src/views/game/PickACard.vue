@@ -149,13 +149,13 @@
       <h3 style="margin-top: 15px">Menu</h3>
       <div style="margin-top: 100px">
         <button
-          class="btn-secondary btn"
+          class= "btn purple-button"
           @click.stop="currentView = VIEWS.viewTableau"
         >
           Tableaus
         </button>
         <button
-          class="btn-secondary btn"
+          class="btn yellow-button"
           style="margin-left: 20px;"
           @click.stop="currentView = VIEWS.desserts"
         >

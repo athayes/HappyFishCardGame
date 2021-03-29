@@ -24,8 +24,15 @@
 }
 
 .green-button {
-  background-color: #cea;
-  border-color: #390;
+  background-color: #de8;
+  border-color: #6c0;
+  /*background-color: #cea;*/
+  /*border-color: #390;*/
+}
+
+.purple-button {
+  border-color: #eaf;
+  background-color: #ddf;
 }
 
 /* Look into using default for focus*/

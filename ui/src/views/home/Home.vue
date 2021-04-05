@@ -2,7 +2,7 @@
   <div class="Home">
     <h2>{{ sillyName }}</h2>
     <button
-      class="btn green-button"
+      class="btn pink-button"
       @click="JoinLobby"
     >
       Join Game

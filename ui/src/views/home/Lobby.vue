@@ -23,7 +23,7 @@
     <button
       v-if="gameState === 'NOT_STARTED' && playerCount > 1"
       @click="StartGame"
-      class="btn green-button"
+      class="btn pink-button"
       style="margin-left:20px;"
     >
       Start Game

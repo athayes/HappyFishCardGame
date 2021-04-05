@@ -9,7 +9,7 @@
       id="playerName"
     />
     <button
-      class="btn green-button"
+      class="btn pink-button"
       @click="JoinLobby"
       style="margin-top:20px;"
     >

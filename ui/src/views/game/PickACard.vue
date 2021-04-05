@@ -55,7 +55,7 @@
     <div v-if="currentView === VIEWS.viewTableau">
       <div class="menu-buttons">
         <button
-          class="btn-secondary btn-small"
+          class="purple-button btn-small"
           @click.stop="currentView = VIEWS.menu"
         >
           Menu
@@ -63,11 +63,11 @@
       </div>
 
       <div class="menu-buttons-right">
-        <button class="btn-secondary btn-small" @click.stop="previousTableau">
+        <button class="purple-button btn-small" @click.stop="previousTableau">
           &lt;-
         </button>
 
-        <button class="btn-secondary btn-small" @click.stop="nextTableau">
+        <button class="purple-button btn-small" @click.stop="nextTableau">
           -&gt;
         </button>
       </div>
@@ -90,7 +90,7 @@
     <div v-if="currentView === VIEWS.desserts">
       <div class="menu-buttons">
         <button
-          class="btn-secondary btn-small"
+          class="btn-small yellow-button"
           @click.stop="currentView = VIEWS.menu"
         >
           Menu
@@ -98,11 +98,11 @@
       </div>
 
       <div class="menu-buttons-right">
-        <button class="btn-secondary btn-small" @click.stop="previousTableau">
+        <button class="yellow-button btn-small" @click.stop="previousTableau">
           &lt;-
         </button>
 
-        <button class="btn-secondary btn-small" @click.stop="nextTableau">
+        <button class="yellow-button btn-small" @click.stop="nextTableau">
           -&gt;
         </button>
       </div>
@@ -164,7 +164,7 @@
           Desserts
         </button>
         <button
-          class="btn pink-button back-to-hand"
+          class="btn blue-button back-to-hand"
           style="margin-left: 40px;"
           @click.stop="currentView = VIEWS.pickACard"
         >

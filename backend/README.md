@@ -1,4 +1,6 @@
-Install Flask: https://flask.palletsprojects.com/en/1.1.x/quickstart/
+Install Flask: 
+1. https://flask.palletsprojects.com/en/1.1.x/installation/#create-an-environment
+2. https://flask.palletsprojects.com/en/1.1.x/quickstart/
 
 Install dependencies:
 pip install -r requirements.txt
@@ -8,7 +10,7 @@ pip freeze > requirements.txt
 
 To run app
 * source venv/bin/activate
-* flask run
+* python -m flask run
 
 To run tests
 python -m pytest

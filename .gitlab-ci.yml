@@ -5,7 +5,7 @@ backend:
   image: alpine:3.13.4
   stage: production
   script:
-    - apk add ruby-dev python3
+    - apk add ruby-dev python3 py3-pip
     - gem install dpl
     - cd backend && pip3 install -r requirements.txt
     - dpl --provider=heroku --app=happyfishcardgame --api-key=$HEROKU_API_KEY

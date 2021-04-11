@@ -1,6 +1,3 @@
-import random
-
-from eventlet import sleep
 from flask import Flask, json
 from flask import request
 from flask_cors import CORS
@@ -17,7 +14,7 @@ if __name__ == '__main__':
 
 
 @app.route('/', methods=['GET'])
-def start_game():
+def root():
     return json.dumps(dict(success=True)), 200, {'ContentType': 'application/json'}
 
 @app.route('/StartGame', methods=['POST'])

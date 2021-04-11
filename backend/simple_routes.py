@@ -15,6 +15,10 @@ socketio = SocketIO(app, cors_allowed_origins="*", async_handlers=True)
 if __name__ == '__main__':
     socketio.run(app)
 
+@app.route('/', methods=['GET'])
+def start_game():
+    return json.dumps(dict(success=True)), 200, {'ContentType': 'application/json'}
+
 @app.route('/StartGame', methods=['POST'])
 def start_game():
     Lobby.start_game()

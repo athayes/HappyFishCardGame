@@ -13,7 +13,8 @@ CORS(app)
 socketio = SocketIO(app, cors_allowed_origins="*", async_handlers=True)
 
 if __name__ == '__main__':
-    socketio.run(app)
+    socketio.run(app, port=int(os.environ.get('PORT', '5000')))
+
 
 @app.route('/', methods=['GET'])
 def start_game():

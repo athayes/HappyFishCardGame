@@ -5,7 +5,6 @@ backend:
   image: alpine:3.13.4
   stage: production
   script:
-    - apt-get update -qy
     - apk add ruby-dev python3
     - gem install dpl
     - cd backend && pip3 install -r requirements.txt

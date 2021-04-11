@@ -1,0 +1,16 @@
+stages:
+  - production
+
+backend:
+  image: starefossen/ruby-node:latest
+  stage: production
+  script:
+    - apt-get update -qy
+    - apt-get install -y ruby-dev python-dev python-pip
+    - gem install dpl
+    - cd backend && pip install -r requirements.txt
+    - dpl --provider=heroku --app=happyfishcardgame --api-key=$HEROKU_API_KEY
+  only:
+    - master
+
+# Frontend deployed automatically on merge with master with Netlify

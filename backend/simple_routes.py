@@ -2,7 +2,7 @@ import os
 from flask import Flask, json
 from flask import request
 from flask_cors import CORS
-from flask_socketio import SocketIO, emit
+from flask_socketio import SocketIO
 
 from src.lobby import Lobby
 
@@ -10,8 +10,8 @@ app = Flask(__name__)
 CORS(app)
 socketio = SocketIO(app, cors_allowed_origins="*", async_handlers=True)
 
-if __name__ == '__main__':
-    socketio.run(app, port=int(os.environ.get('PORT', '5000')))
+# if __name__ == '__main__':
+#     socketio.run(app, host='0.0.0.0', port=int(os.environ.get('PORT', 5000)))
 
 
 @app.route('/', methods=['GET'])

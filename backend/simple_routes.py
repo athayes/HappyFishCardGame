@@ -10,9 +10,6 @@ app = Flask(__name__)
 CORS(app)
 socketio = SocketIO(app, cors_allowed_origins="*", async_handlers=True)
 
-# if __name__ == '__main__':
-#     socketio.run(app, host='0.0.0.0', port=int(os.environ.get('PORT', 5000)))
-
 
 @app.route('/', methods=['GET'])
 def root():

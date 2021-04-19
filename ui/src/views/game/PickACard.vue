@@ -272,6 +272,8 @@ export default {
           gameUpdates.players,
           this.playerName
         );
+        console.log(JSON.stringify(player));
+        console.log(JSON.stringify(gameUpdates.players));
         const canPlay = !player.chosen;
         const isNewRound = player.is_new_round;
         this.gameState = gameUpdates.game_state;

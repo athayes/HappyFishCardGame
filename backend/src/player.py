@@ -19,7 +19,8 @@ class Player:
             'dessert': self.dessert,
             'hand': self.hand,
             'is_ai': self.is_ai,
-            'is_new_round': self.is_new_round
+            'is_new_round': self.is_new_round,
+            'chosen': self.chosen
         }
 
 def make_players(player_names) -> List[Player]:

@@ -272,8 +272,6 @@ export default {
           gameUpdates.players,
           this.playerName
         );
-        console.log(JSON.stringify(player));
-        console.log(JSON.stringify(gameUpdates.players));
         const canPlay = !player.chosen;
         const isNewRound = player.is_new_round;
         this.gameState = gameUpdates.game_state;
@@ -284,11 +282,12 @@ export default {
           self.refreshData();
           if (isNewRound) {
             this.currentView = VIEWS.newRound;
+            socket.removeAllListeners("gameUpdates");
           } else {
             this.currentView = VIEWS.pickACard;
+            socket.removeAllListeners("gameUpdates");
           }
         }
-        socket.removeAllListeners("gameUpdates");
       });
     },
 

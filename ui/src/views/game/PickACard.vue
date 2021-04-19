@@ -284,8 +284,6 @@ export default {
             this.currentView = VIEWS.newRound;
             socket.removeAllListeners("gameUpdates");
           } else {
-            console.log("missed new round");
-            console.log(JSON.stringify(gameUpdates));
             this.currentView = VIEWS.pickACard;
             socket.removeAllListeners("gameUpdates");
           }

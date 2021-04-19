@@ -17,7 +17,8 @@ export function formatPlayers(players) {
       tableau: formatCards(player.tableau),
       dessert: formatCards(player.dessert),
       hand: formatCards(player.hand),
-      score: player.score
+      score: player.score,
+      chosen: player.chosen
     };
   });
   return players;

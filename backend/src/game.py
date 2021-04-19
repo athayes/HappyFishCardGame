@@ -4,6 +4,7 @@ from src.deck import shuffle_deck
 from src.scoring import score_all, score_dessert
 from src.player import find_player, Player, mark_new_round
 from src.scoring_functions.dessert.is_dessert import is_dessert
+import copy
 
 
 class Game:
@@ -125,7 +126,7 @@ def deal_hand(deck, hand_size):
 
 def rotate_hands(players: List[Player]) -> List[Player]:
     old_hands = list(player.hand for player in players)
-    hands = old_hands  # assignment gets rid of mutability (player.hand would otherwise be updated)
+    hands = copy.deepcopy(old_hands)
 
     for index, hand in enumerate(hands):
         if index == 0:

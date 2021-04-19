@@ -61,12 +61,12 @@ export default {
   },
   methods: {
     StartGame: async function() {
-      await axios.post("http://127.0.0.1:5000/StartGame");
+      await axios.post(`${process.env.VUE_APP_BACKEND_URL}/StartGame`);
       await this.$router.push("PickACard");
     },
     resetGame: async function() {
-      await axios.post("http://127.0.0.1:5000/ResetLobbyAndGame");
-      await axios.post("http://127.0.0.1:5000/JoinLobby", {
+      await axios.post(`${process.env.VUE_APP_BACKEND_URL}/ResetLobbyAndGame`);
+      await axios.post(`${process.env.VUE_APP_BACKEND_URL}/JoinLobby`, {
         playerName: this.playerName,
         is_ai: false
       });
@@ -75,14 +75,14 @@ export default {
       await this.$router.push("PickACard");
     },
     addAiPlayer: async function() {
-      await axios.post("http://127.0.0.1:5000/JoinLobby", {
+      await axios.post(`${process.env.VUE_APP_BACKEND_URL}/JoinLobby`, {
         playerName: Math.random().toString(),
         is_ai: true
       });
     }
   },
   async created() {
-    let response = await axios.post("http://127.0.0.1:5000/GetLobby");
+    let response = await axios.post(`${process.env.VUE_APP_BACKEND_URL}/GetLobby`);
     this.gameState = response.data.game_state;
     this.players = response.data.players;
   },

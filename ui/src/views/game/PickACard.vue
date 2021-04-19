@@ -239,7 +239,7 @@ export default {
   methods: {
     refreshData: async function() {
       let self = this;
-      let response = await axios.post("http://127.0.0.1:5000/GetGameObject");
+      let response = await axios.post(`${process.env.VUE_APP_BACKEND_URL}/GetGameObject`);
       this.gameState = response.data.game_state;
       this.round = response.data.round;
       if (this.gameState === "COMPLETED") {
@@ -260,7 +260,7 @@ export default {
 
     confirmCard: function() {
       let self = this;
-      axios.post("http://127.0.0.1:5000/PickCard", {
+      axios.post(`${process.env.VUE_APP_BACKEND_URL}/PickCard`, {
         playerName: self.playerName,
         index: self.pickedCard.index
       });

@@ -35,7 +35,7 @@ export default {
         return;
       }
 
-      await axios.post("http://127.0.0.1:5000/JoinLobby", {
+      await axios.post(`${process.env.VUE_APP_BACKEND_URL}/JoinLobby`, {
         playerName: this.playerName,
         is_ai: false
       });

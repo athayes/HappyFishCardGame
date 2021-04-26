@@ -5,6 +5,7 @@ from src.player import Player
 
 class Lobby:
     game = None
+    last_finished_game = None
     players = []
 
     @staticmethod

@@ -3,6 +3,7 @@ from flask import Flask, json
 from flask import request
 from flask_cors import CORS
 from flask_socketio import SocketIO
+from copy import deepcopy
 
 from src.lobby import Lobby
 
@@ -74,7 +75,12 @@ def pick_card():
     card_index = request.json["index"]
     Lobby.game.handle_ai()
     Lobby.game.play_card(player, card_index)
-    push_game_data()
+    if Lobby.game.game_state == "COMPLETED":
+        Lobby.last_finished_game = deepcopy(Lobby.game)
+        Lobby.game = None
+        push_game_end()
+    else:
+        push_game_data()
     return json.dumps(dict(success=True)), 200, {'ContentType': 'application/json'}
 
 
@@ -95,15 +101,25 @@ def can_play_card():
         "can_play_card": not Lobby.game.is_player_chosen(player)
     }
 
+
 def push_lobby_data():
     socketio.emit("lobbyUpdates", {
         "players": Lobby.player_json(),
         "game_state": Lobby.get_game_state()
     })
 
+
 def push_game_data():
     socketio.emit("gameUpdates", {
         "players": Lobby.game.player_json(),
         "game_state": Lobby.game.game_state,
         "round": Lobby.game.round
+    })
+
+
+def push_game_end():
+    socketio.emit("gameUpdates", {
+        "players": Lobby.last_finished_game.player_json(),
+        "game_state": Lobby.last_finished_game.game_state,
+        "round": Lobby.last_finished_game.round
     })

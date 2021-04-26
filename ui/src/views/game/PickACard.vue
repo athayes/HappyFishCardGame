@@ -266,7 +266,7 @@ export default {
       });
 
       self.currentView = VIEWS.waiting;
-      socket.on("gameUpdates", payload => {
+      socket.on("gameUpdates", async (payload) => {
         const gameUpdates = payload;
         const { player } = findPlayerUnderscore(
           gameUpdates.players,
@@ -279,7 +279,7 @@ export default {
         if (this.gameState === "COMPLETED") {
           this.currentView = VIEWS.gameCompleted;
         } else if (canPlay) {
-          self.refreshData();
+          await self.refreshData();
           if (isNewRound) {
             this.currentView = VIEWS.newRound;
             socket.removeAllListeners("gameUpdates");

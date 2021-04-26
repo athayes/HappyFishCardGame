@@ -32,6 +32,15 @@ def test_rotate_hands():
     np.testing.assert_array_equal(players[3].hand, make_deck([("H_Zero", 3)]))
 
 
+def test_rotate_hands():
+    players = make_players(["P_Zero", "P_One"])
+    players[0].hand = make_deck([("H_Zero", 3)])
+    players[1].hand = make_deck([("H_One", 3)])
+    players = rotate_hands(players)
+    np.testing.assert_array_equal(players[0].hand, make_deck([("H_One", 3)]))
+    np.testing.assert_array_equal(players[1].hand, make_deck([("H_Zero", 3)]))
+
+
 # Just to confirm numpy.delete works as expected
 def test_np_delete():
     hand = ["0", "1", "2", "3", "4", "5"]

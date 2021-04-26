@@ -78,7 +78,7 @@ def pick_card():
     if Lobby.game.game_state == "COMPLETED":
         Lobby.last_finished_game = deepcopy(Lobby.game)
         Lobby.game = None
-        Lobby.players = None
+        Lobby.players = []
         push_game_end()
     else:
         push_game_data()

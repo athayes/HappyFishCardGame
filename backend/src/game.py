@@ -1,6 +1,6 @@
 from typing import List
 
-from src.deck import shuffle_deck
+from src.deck import shuffle_deck, basic_deck
 from src.scoring import score_all, score_dessert
 from src.player import find_player, Player, mark_new_round
 from src.scoring_functions.dessert.is_dessert import is_dessert
@@ -66,6 +66,7 @@ class Game:
         if not self.all_hands_empty():
             return False
         self.score_round()
+        self.deck = basic_deck()
         if self.round < 3:
             self.start_round()
             return True

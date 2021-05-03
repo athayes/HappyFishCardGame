@@ -1,10 +1,11 @@
 import random
-from src.cards import egg_nigiri, salmon_nigiri, squid_nigiri, dumpling, tempura, sashimi, pudding
+from src.cards import egg_nigiri, salmon_nigiri, squid_nigiri, dumpling, \
+    tempura, sashimi, pudding, wasabi, maki_1, maki_2
 
 
-# Deck factory functions
 def basic_deck():
-    return make_deck([(egg_nigiri, 15), (salmon_nigiri, 15), (squid_nigiri, 15), (dumpling, 15), (tempura, 15), (sashimi, 15), (pudding, 15)])
+    return make_deck([(egg_nigiri, 4), (salmon_nigiri, 4), (squid_nigiri, 4), (maki_1, 4), (maki_2, 4), (maki_1, 3), (tempura, 8),
+                      (sashimi, 8), (dumpling, 8), (wasabi, 3), (pudding, 8)])  # todo, dessert distribution each round
 
 
 def shuffle_deck(deck):

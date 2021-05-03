@@ -24,3 +24,5 @@ yarn-error.log*
 venv/
 **/htmlcov/
 .coverage
+
+**/__pycache__

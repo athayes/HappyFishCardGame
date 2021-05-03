@@ -1,5 +1,6 @@
 from typing import List
 
+
 class Player:
     def __init__(self, player_name):
         self.player_name = player_name
@@ -23,11 +24,13 @@ class Player:
             'chosen': self.chosen
         }
 
+
 def make_players(player_names) -> List[Player]:
     players = []
     for player_name in player_names:
         players.append(Player(player_name))
     return players
+
 
 def find_player(player_name, players) -> (int, Player):
     for index, player in enumerate(players):

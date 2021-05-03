@@ -66,7 +66,7 @@ class Game:
         if not self.all_hands_empty():
             return False
         self.score_round()
-        self.deck = basic_deck()
+        self.deck = basic_deck()  # todo support multiple deck types
         if self.round < 3:
             self.start_round()
             return True

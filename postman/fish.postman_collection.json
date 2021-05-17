@@ -6,66 +6,28 @@
 	},
 	"item": [
 		{
-			"name": "CreateLobby",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n    \"hostName\": \"reb\"\n}"
-				},
-				"url": {
-					"raw": "localhost:5000/CreateGame",
-					"host": [
-						"localhost"
-					],
-					"port": "5000",
-					"path": [
-						"CreateGame"
-					]
-				}
-			},
-			"response": []
-		},
-		{
 			"name": "JoinLobby",
 			"request": {
 				"method": "POST",
-				"header": [],
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"playerName\": \"Cool H\"\n}"
+					"raw": "{\n    \"playerName\": \"Postman\",\n    \"is_ai\": false\n}"
 				},
 				"url": {
-					"raw": "localhost:5000/JoinGame",
+					"raw": "{{host}}/JoinLobby",
 					"host": [
-						"localhost"
+						"{{host}}"
 					],
-					"port": "5000",
 					"path": [
-						"JoinGame"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "GetLobby",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": ""
-				},
-				"url": {
-					"raw": "localhost:5000/GetGameObject",
-					"host": [
-						"localhost"
-					],
-					"port": "5000",
-					"path": [
-						"GetGameObject"
+						"JoinLobby"
 					]
 				}
 			},
@@ -81,11 +43,10 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "localhost:5000/StartGame",
+					"raw": "{{host}}/StartGame",
 					"host": [
-						"localhost"
+						"{{host}}"
 					],
-					"port": "5000",
 					"path": [
 						"StartGame"
 					]
@@ -103,13 +64,12 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "localhost:5000/GetPlayersChosen",
+					"raw": "{{host}}/GetAllPlayersChosen",
 					"host": [
-						"localhost"
+						"{{host}}"
 					],
-					"port": "5000",
 					"path": [
-						"GetPlayersChosen"
+						"GetAllPlayersChosen"
 					]
 				}
 			},
@@ -132,11 +92,10 @@
 					"raw": "{\n    \"playerName\": \"Cool H\"\n}"
 				},
 				"url": {
-					"raw": "localhost:5000/CanPlayCard",
+					"raw": "{{host}}/CanPlayCard",
 					"host": [
-						"localhost"
+						"{{host}}"
 					],
-					"port": "5000",
 					"path": [
 						"CanPlayCard"
 					]
@@ -145,42 +104,26 @@
 			"response": []
 		},
 		{
-			"name": "PickCardreb",
+			"name": "PickCard",
 			"request": {
 				"method": "POST",
-				"header": [],
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"playerName\": \"Cool H\",\n    \"index\": 1\n}"
+					"raw": "{\n    \"playerName\": \"Postman\",\n    \"index\": 0\n}"
 				},
 				"url": {
-					"raw": "localhost:5000/PickCard",
+					"raw": "{{host}}/PickCard",
 					"host": [
-						"localhost"
+						"{{host}}"
 					],
-					"port": "5000",
-					"path": [
-						"PickCard"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "PickCardCoolH",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n    \"playerName\": \"Cool H\",\n    \"index\": 1\n}"
-				},
-				"url": {
-					"raw": "localhost:5000/PickCard",
-					"host": [
-						"localhost"
-					],
-					"port": "5000",
 					"path": [
 						"PickCard"
 					]
@@ -192,41 +135,25 @@
 			"name": "GetGameObject",
 			"request": {
 				"method": "POST",
-				"header": [],
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
 				"body": {
 					"mode": "raw",
 					"raw": ""
 				},
 				"url": {
-					"raw": "localhost:5000/GetGameObject",
+					"raw": "{{host}}/GetGameObject",
 					"host": [
-						"localhost"
+						"{{host}}"
 					],
-					"port": "5000",
 					"path": [
 						"GetGameObject"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "SetUpTestGame",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": ""
-				},
-				"url": {
-					"raw": "localhost:5000/SetUpTestGame",
-					"host": [
-						"localhost"
-					],
-					"port": "5000",
-					"path": [
-						"SetUpTestGame"
 					]
 				}
 			},

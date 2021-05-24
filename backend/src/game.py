@@ -45,7 +45,7 @@ class Game:
         self.players[index] = player
         self.players = mark_new_round(self.players, False)
 
-        if not self.check_round_over() and self.all_players_chosen():
+        if (not self.check_round_over()) and self.all_players_chosen():
             self.players = rotate_hands(self.players)
             for player in self.players:
                 player.chosen = False

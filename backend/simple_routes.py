@@ -59,8 +59,7 @@ def get_last_finished_game_object():
 def get_lobby():
     return {
         'players': Lobby.player_json(),
-        'game_state': Lobby.get_game_state(),
-        'last_finished_game': Lobby.last_finished_game_to_json()
+        'game_state': Lobby.get_game_state()
     }
 
 

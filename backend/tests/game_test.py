@@ -1,14 +1,20 @@
-from src.cards import egg_nigiri, salmon_nigiri, squid_nigiri
+from src.cards import egg_nigiri, salmon_nigiri, squid_nigiri, dumpling
 from src.deck import make_deck
 from src.game import deal_hand, Game, rotate_hands
 from src.player import make_players, find_player, Player
 import numpy as np
 
+
 def make_test_players():
     return [Player("reb"), Player("Cool H")]
 
+
 def make_test_deck():
     return make_deck([(egg_nigiri, 6), (salmon_nigiri, 6), (squid_nigiri, 6)])
+
+
+def make_test_desserts():
+    return make_deck([(dumpling, 6)])
 
 
 def test_deal_hand():
@@ -53,6 +59,7 @@ def test_to_json():
     game = Game(
         make_test_players(),
         make_test_deck(),
+        [],
         3
     )
     json = game.to_json()
@@ -63,6 +70,7 @@ def test_game_init_start_round():
     game = Game(
         make_test_players(),
         make_test_deck(),
+        [],
         3
     )
     assert game.round == 1
@@ -75,6 +83,7 @@ def test_game_play_card():
     game = Game(
         make_test_players(),
         make_test_deck(),
+        [],
         3
     )
     game.play_card("reb", 0)
@@ -92,6 +101,7 @@ def test_score_round():
     game = Game(
         make_test_players(),
         make_test_deck(),
+        [],
         3
     )
     game.players[0].tableau = make_deck([(egg_nigiri, 3)])
@@ -108,6 +118,7 @@ def test_round_increment():
     game = Game(
         make_test_players(),
         make_test_deck(),
+        [],
         3
     )
 
@@ -122,6 +133,7 @@ def test_game_completed_status():
     game = Game(
         make_test_players(),
         make_test_deck(),
+        [],
         3
     )
     while game.game_state != "COMPLETED":

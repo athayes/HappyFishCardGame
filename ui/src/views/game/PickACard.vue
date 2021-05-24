@@ -131,7 +131,7 @@
       <p v-for="player in players" :key="player.playerName">
         {{ player.playerName }}: {{ player.score }}
       </p>
-      <button class="btn btn-secondary" @click="currentView = VIEWS.pickACard">
+      <button class="btn blue-button" @click="currentView = VIEWS.pickACard">
         Start next round
       </button>
     </div>
@@ -142,7 +142,7 @@
       <p v-for="player in players" :key="player.playerName">
         {{ player.playerName }}: {{ player.score }}
       </p>
-      <button class="btn btn-secondary" @click="goHome">
+      <button class="btn blue-button" @click="goHome">
         Exit Game
       </button>
     </div>

@@ -252,6 +252,12 @@ export default {
       this.players = players;
     },
 
+    refreshDataGameEnd: async function() {
+      let response = await axios.post(`${process.env.VUE_APP_BACKEND_URL}/GetLastFinishedGameObject`);
+      let players = formatPlayers(response.data.players);
+      this.players = players;
+    },
+
     chooseCard: function(card, index) {
       this.pickedCard = card;
       this.pickedCard.index = index;
@@ -277,6 +283,7 @@ export default {
         this.gameState = gameUpdates.game_state;
         this.round = gameUpdates.round;
         if (this.gameState === "COMPLETED") {
+          await self.refreshDataGameEnd();
           this.currentView = VIEWS.gameCompleted;
         } else if (canPlay) {
           await self.refreshData();

@@ -45,11 +45,21 @@ def get_game_object():
     }
 
 
+@app.route('/GetLastFinishedGameObject', methods=['POST'])
+def get_last_finished_game_object():
+    return {
+        "game_state": Lobby.last_finished_game.game_state,
+        "players": Lobby.last_finished_game.player_json(),
+        "round": Lobby.last_finished_game.round
+    }
+
+
 @app.route('/GetLobby', methods=['POST'])
 def get_lobby():
     return {
         'players': Lobby.player_json(),
-        'game_state': Lobby.get_game_state()
+        'game_state': Lobby.get_game_state(),
+        'last_finished_game': Lobby.last_finished_game_to_json()
     }
 
 

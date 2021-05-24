@@ -39,3 +39,12 @@ class Lobby:
         for player in Lobby.players:
             data.append(player.to_json())
         return data
+
+    @staticmethod
+    def last_finished_game_to_json():
+        return {
+            'game_state': Lobby.last_finished_game.game_state,
+            'round': Lobby.last_finished_game.round,
+            'deck': Lobby.last_finished_game.deck,
+            "players": Lobby.last_finished_game.player_json()
+        }

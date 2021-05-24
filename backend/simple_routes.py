@@ -16,6 +16,7 @@ socketio = SocketIO(app, cors_allowed_origins="*", async_handlers=True)
 def root():
     return json.dumps(dict(success=True)), 200, {'ContentType': 'application/json'}
 
+
 @app.route('/StartGame', methods=['POST'])
 def start_game():
     Lobby.start_game()

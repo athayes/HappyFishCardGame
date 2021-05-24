@@ -1,6 +1,6 @@
 from typing import List
 
-from src.deck import shuffle_deck, basic_deck
+from src.deck import shuffle_deck, basic_deck, add_desserts_into_deck
 from src.scoring import score_all, score_dessert
 from src.player import find_player, Player, mark_new_round
 from src.scoring_functions.dessert.is_dessert import is_dessert
@@ -8,8 +8,9 @@ import copy
 
 
 class Game:
-    def __init__(self, players, deck, hand_size):
+    def __init__(self, players, deck, desserts, hand_size):
         self.deck = deck
+        self.desserts = desserts
         self.players = players
         self.round = 0
         self.hand_size = hand_size
@@ -18,6 +19,7 @@ class Game:
 
     def start_round(self):
         self.round += 1
+        self.deck, self.desserts = add_desserts_into_deck(self.deck, self.desserts, len(self.players), self.round)
         self.deck = shuffle_deck(self.deck)
         players, deck = deal_hands(self.players, self.deck, self.hand_size)
         self.players = players

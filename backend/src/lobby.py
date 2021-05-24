@@ -1,7 +1,7 @@
 from copy import deepcopy
 
 from src import game
-from src.deck import basic_deck
+from src.deck import basic_deck, basic_desserts
 from src.player import Player
 
 
@@ -23,7 +23,9 @@ class Lobby:
 
     @staticmethod
     def start_game():
-        Lobby.game = game.Game(deepcopy(Lobby.players), basic_deck(), 10)
+        deck = basic_deck()
+        desserts = basic_desserts()
+        Lobby.game = game.Game(deepcopy(Lobby.players), deck, desserts, 10)
 
     @staticmethod
     def get_game_state():

@@ -19,7 +19,7 @@
 
     <div v-if="currentView === VIEWS.confirmCard">
       <h3>You want this card?</h3>
-      <div class="hand">
+      <div class="you-want">
         <div class="card-and-description">
           <div class="card">
             <img v-bind:src="pickedCard.image" />
@@ -258,10 +258,10 @@ export default {
   display: flex;
   flex-wrap: wrap;
   align-items: flex-start;
-  justify-content: center;
+  justify-content: flex-start;
 }
 
-.hand {
+.you-want {
   display: flex;
   flex-wrap: wrap;
   align-items: flex-start;

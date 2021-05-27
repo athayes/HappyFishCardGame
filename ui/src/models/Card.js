@@ -31,8 +31,7 @@ export function cardFactory(name, numPlayers) {
       name: name,
       image: "/assets/wasabi.png",
       description:
-        "When you play a wasabi card, it has no effect. However, the next nigiri card that you play must be placed on top of the wasabi card. " +
-        "This means that the nigiri will be worth triple points at the end of the round!",
+        "When you pick a wasabi card it has no effect. However, the next nigiri card you pick (in the same round) will be worth triple its usual points.",
       hint: "Next Nigiri x3"
     };
   }
@@ -71,11 +70,11 @@ export function cardFactory(name, numPlayers) {
     let hint, description;
     if (numPlayers >= 6) {
       description =
-        "6 or more player game: Whoever has the most Maki scores 6 points. Whoever has second most scores 4 and whoever has the third most scores 2. If multiple players tie, all players receive the full points.";
+        "6 or more player game: At the end of the round, whoever has the most Maki scores 6 points. Whoever has second most scores 4 and whoever has the third most scores 2. If multiple players tie, all players receive the full points.";
       hint = "Most 6 / 4 / 2";
     } else {
       description =
-        "Whoever has the most Maki scores 6 points. Whoever has second most scores 3. If multiple players tie for most or second most, all players receive the full points.";
+        "At the end of the round, whoever has the most Maki scores 6 points. Whoever has second most scores 3. If multiple players tie for most or second most, all players receive the full points.";
       hint = "Most 6 / 3 ";
     }
     return {

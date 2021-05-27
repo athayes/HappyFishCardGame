@@ -8,7 +8,7 @@ from src.lobby import Lobby
 
 app = Flask(__name__)
 CORS(app)
-socketio = SocketIO(app, cors_allowed_origins="*", async_handlers=True)
+socketio = SocketIO(app, cors_allowed_origins="*")
 
 
 @app.after_request

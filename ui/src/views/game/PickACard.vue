@@ -62,11 +62,13 @@
       <div class="menu-buttons">
         <button class="btn-small flex-right" @click.stop="currentView = VIEWS.menu">Back to Menu</button>
       </div>
+      <h3>Desserts</h3>
+      <br/>
 
-      <button class="yellow-button btn-small" @click.stop="previousTableau">&lt;-</button>
-      <button class="yellow-button btn-small" @click.stop="nextTableau">-&gt;</button>
+      <button class="yellow-button btn-small" @click.stop="previousTableau">&lt;- Previous</button>
+      <button class="yellow-button btn-small" @click.stop="nextTableau">Next -&gt;</button>
+      <p>{{ tableauPlayerDisplayName }} desserts</p>
 
-      <h3>{{ tableauPlayerDisplayName }} desserts</h3>
       <div class="hand">
         <div class="card" v-for="card in tableauPlayer.dessert" :key="card.index">
           <img v-bind:src="card.image" />

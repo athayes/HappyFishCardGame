@@ -46,6 +46,9 @@
     },
     "rules": {}
   },
+  "prettier": {
+    "printWidth": 150
+  },
   "browserslist": [
     "> 1%",
     "last 2 versions",

@@ -2,24 +2,12 @@
   <div class="pickACard" style="margin-top:15px;">
     <div v-if="currentView === VIEWS.pickACard">
       <div class="menu-buttons">
-        <button
-          class="blue-button btn-small"
-          @click.stop="currentView = VIEWS.menu"
-        >
-          Menu
-        </button>
+        <button class="blue-button btn-small" @click.stop="currentView = VIEWS.menu">Menu</button>
       </div>
-
       <div class="score">My Score = {{ currentPlayer.score }}</div>
       <h3 style="padding-top:-20px;">Pick a card</h3>
-
       <div class="hand">
-        <div
-          class="card"
-          v-for="(card, index) in currentPlayer.hand"
-          :key="card.index"
-          @click.stop="chooseCard(card, index)"
-        >
+        <div class="card" v-for="(card, index) in currentPlayer.hand" :key="card.index" @click.stop="chooseCard(card, index)">
           <img v-bind:src="card.image" />
           <div>
             <p class="name">{{ card.name }}</p>
@@ -46,40 +34,23 @@
 
       <div class="confirm-buttons">
         <button class="btn" @click.stop="confirmCard()">Yeah!</button>
-        <button class="btn" @click.stop="currentView = VIEWS.pickACard">
-          No
-        </button>
+        <button class="btn" @click.stop="currentView = VIEWS.pickACard">No</button>
       </div>
     </div>
 
     <div v-if="currentView === VIEWS.viewTableau">
       <div class="menu-buttons">
-        <button
-          class="purple-button btn-small"
-          @click.stop="currentView = VIEWS.menu"
-        >
-          Menu
-        </button>
+        <button class="purple-button btn-small" @click.stop="currentView = VIEWS.menu">Menu</button>
       </div>
 
       <div class="menu-buttons-right">
-        <button class="purple-button btn-small" @click.stop="previousTableau">
-          &lt;-
-        </button>
-
-        <button class="purple-button btn-small" @click.stop="nextTableau">
-          -&gt;
-        </button>
+        <button class="purple-button btn-small" @click.stop="previousTableau">&lt;-</button>
+        <button class="purple-button btn-small" @click.stop="nextTableau">-&gt;</button>
       </div>
 
       <h3>{{ tableauPlayerDisplayName }} tableau</h3>
       <div class="hand">
-        <div
-          class="card"
-          v-for="card in tableauPlayer.tableau"
-          :key="card.index"
-        >
-          <!-- div contents-->
+        <div class="card" v-for="card in tableauPlayer.tableau" :key="card.index">
           <img v-bind:src="card.image" />
           <p class="name">{{ card.name }}</p>
           <p class="hint">{{ card.hint }}</p>
@@ -89,32 +60,17 @@
 
     <div v-if="currentView === VIEWS.desserts">
       <div class="menu-buttons">
-        <button
-          class="btn-small yellow-button"
-          @click.stop="currentView = VIEWS.menu"
-        >
-          Menu
-        </button>
+        <button class="btn-small yellow-button" @click.stop="currentView = VIEWS.menu">Menu</button>
       </div>
 
       <div class="menu-buttons-right">
-        <button class="yellow-button btn-small" @click.stop="previousTableau">
-          &lt;-
-        </button>
-
-        <button class="yellow-button btn-small" @click.stop="nextTableau">
-          -&gt;
-        </button>
+        <button class="yellow-button btn-small" @click.stop="previousTableau">&lt;-</button>
+        <button class="yellow-button btn-small" @click.stop="nextTableau">-&gt;</button>
       </div>
 
       <h3>{{ tableauPlayerDisplayName }} desserts</h3>
       <div class="hand">
-        <div
-          class="card"
-          v-for="card in tableauPlayer.dessert"
-          :key="card.index"
-        >
-          <!-- div contents-->
+        <div class="card" v-for="card in tableauPlayer.dessert" :key="card.index">
           <img v-bind:src="card.image" />
           <p class="name">{{ card.name }}</p>
           <p class="hint">{{ card.hint }}</p>
@@ -128,48 +84,23 @@
 
     <div v-if="currentView === VIEWS.newRound">
       <h4>Round {{ round - 1 }} scores:</h4>
-      <p v-for="player in players" :key="player.playerName">
-        {{ player.playerName }}: {{ player.score }}
-      </p>
-      <button class="btn blue-button" @click="currentView = VIEWS.pickACard">
-        Start next round
-      </button>
+      <p v-for="player in players" :key="player.playerName">{{ player.playerName }}: {{ player.score }}</p>
+      <button class="btn blue-button" @click="currentView = VIEWS.pickACard">Start next round</button>
     </div>
 
     <div v-if="currentView === VIEWS.gameCompleted">
       <h3>Game Completed!</h3>
       <p>Final Scores:</p>
-      <p v-for="player in players" :key="player.playerName">
-        {{ player.playerName }}: {{ player.score }}
-      </p>
-      <button class="btn blue-button" @click="goHome">
-        Exit Game
-      </button>
+      <p v-for="player in players" :key="player.playerName">{{ player.playerName }}: {{ player.score }}</p>
+      <button class="btn blue-button" @click="goHome">Exit Game</button>
     </div>
 
     <div v-if="currentView === VIEWS.menu">
       <h3 style="margin-top: 15px">Menu</h3>
       <div style="margin-top: 100px">
-        <button
-          class= "btn purple-button"
-          @click.stop="currentView = VIEWS.viewTableau"
-        >
-          Tableaus
-        </button>
-        <button
-          class="btn yellow-button"
-          style="margin-left: 20px;"
-          @click.stop="currentView = VIEWS.desserts"
-        >
-          Desserts
-        </button>
-        <button
-          class="btn blue-button back-to-hand"
-          style="margin-left: 40px;"
-          @click.stop="currentView = VIEWS.pickACard"
-        >
-          Back to Hand
-        </button>
+        <button class="btn purple-button" @click.stop="currentView = VIEWS.viewTableau">Tableaus</button>
+        <button class="btn yellow-button" style="margin-left: 20px;" @click.stop="currentView = VIEWS.desserts">Desserts</button>
+        <button class="btn blue-button back-to-hand" style="margin-left: 40px;" @click.stop="currentView = VIEWS.pickACard">Back to Hand</button>
       </div>
     </div>
   </div>
@@ -178,11 +109,7 @@
 <script>
 import axios from "axios";
 import Cookies from "js-cookie";
-import {
-  findPlayer,
-  findPlayerUnderscore,
-  formatPlayers
-} from "@/models/Player";
+import { findPlayer, findPlayerUnderscore, formatPlayers } from "@/models/Player";
 import socket from "@/socket";
 
 export const VIEWS = {
@@ -199,12 +126,14 @@ export const VIEWS = {
 export default {
   data() {
     return {
+      // Frontend state
       currentView: VIEWS.pickACard,
       playerName: Cookies.get("HappyFishCardGame"),
       VIEWS: VIEWS,
       pickedCard: {},
       tableauIndex: 0,
       playerIndex: 0,
+      // Backend state - game object
       players: [],
       round: 0,
       gameState: ""
@@ -243,7 +172,8 @@ export default {
       this.gameState = response.data.game_state;
       this.round = response.data.round;
       if (this.gameState === "COMPLETED") {
-        await this.handleGameCompleted();
+        await self.refreshDataGameEnd();
+        this.currentView = VIEWS.gameCompleted;
       }
       let players = formatPlayers(response.data.players);
       const { index } = findPlayer(players, self.playerName);
@@ -272,12 +202,9 @@ export default {
       });
 
       self.currentView = VIEWS.waiting;
-      socket.on("gameUpdates", async (payload) => {
+      socket.on("gameUpdates", async payload => {
         const gameUpdates = payload;
-        const { player } = findPlayerUnderscore(
-          gameUpdates.players,
-          this.playerName
-        );
+        const { player } = findPlayerUnderscore(gameUpdates.players, this.playerName);
         const canPlay = !player.chosen;
         const isNewRound = player.is_new_round;
         this.gameState = gameUpdates.game_state;

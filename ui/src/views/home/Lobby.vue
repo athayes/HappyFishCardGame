@@ -2,30 +2,16 @@
   <div class="Lobby">
     <h2>Game Lobby</h2>
     <p style="font-weight: bold">Players: {{ playerNames }}</p>
-    <button
-      class="btn"
-      v-if="gameState === 'NOT_STARTED'"
-      @click="addAiPlayer"
-    >
+    <button class="btn" v-if="gameState === 'NOT_STARTED'" @click="addAiPlayer">
       Add AI Player
     </button>
     <div v-if="gameState === 'ACTIVE'">
       <p>Game is in progress..</p>
     </div>
-    <button
-      v-if="playerCount > 1"
-      @click="resetGame"
-      class="btn purple-button"
-      style="margin-left:20px;"
-    >
+    <button v-if="playerCount > 1" @click="resetGame" class="btn purple-button" style="margin-left:20px;">
       Reset Lobby and Game
     </button>
-    <button
-      v-if="gameState === 'NOT_STARTED' && playerCount > 1"
-      @click="StartGame"
-      class="btn pink-button"
-      style="margin-left:20px;"
-    >
+    <button v-if="gameState === 'NOT_STARTED' && playerCount > 1" @click="StartGame" class="btn pink-button" style="margin-left:20px;">
       Start Game
     </button>
   </div>

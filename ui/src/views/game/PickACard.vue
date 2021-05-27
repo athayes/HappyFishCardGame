@@ -20,16 +20,14 @@
     <div v-if="currentView === VIEWS.confirmCard">
       <h3>You want this card?</h3>
       <div class="you-want">
-        <div class="card-and-description">
-          <div class="card">
-            <img v-bind:src="pickedCard.image" />
-            <p class="name">{{ pickedCard.name }}</p>
-            <p class="hint">{{ pickedCard.hint }}</p>
-          </div>
-          <p class="description">
-            {{ pickedCard.description }}
-          </p>
+        <div class="card">
+          <img v-bind:src="pickedCard.image" />
+          <p class="name">{{ pickedCard.name }}</p>
+          <p class="hint">{{ pickedCard.hint }}</p>
         </div>
+        <p class="description">
+          {{ pickedCard.description }}
+        </p>
       </div>
 
       <div class="confirm-buttons">
@@ -264,7 +262,7 @@ export default {
 .you-want {
   display: flex;
   flex-wrap: wrap;
-  align-items: flex-start;
+  align-items: center;
   justify-content: center;
 }
 
@@ -303,11 +301,6 @@ export default {
   justify-content: center;
 }
 
-.card-and-description {
-  display: flex;
-  align-items: center;
-}
-
 .name {
   font-family: "Patrick Hand SC", sans-serif;
   font-size: 20px;
@@ -322,8 +315,6 @@ export default {
 
 .description {
   font-family: "Patrick Hand SC", sans-serif;
-  margin: 25px;
-  width: 300px;
   font-size: 22px;
 }
 

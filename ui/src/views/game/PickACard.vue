@@ -2,10 +2,9 @@
   <div class="pickACard" style="margin-top:15px;">
     <div v-if="currentView === VIEWS.pickACard">
       <div class="menu-buttons">
-        <button class="blue-button btn-small" @click.stop="currentView = VIEWS.menu">Menu</button>
+        <button class="blue-button btn-small flex-right" @click.stop="currentView = VIEWS.menu">Menu</button>
       </div>
-      <div class="score">My Score = {{ currentPlayer.score }}</div>
-      <h3 style="padding-top:-20px;">Pick a card</h3>
+      <h3>Pick a card</h3>
       <div class="hand">
         <div class="card" v-for="(card, index) in currentPlayer.hand" :key="card.index" @click.stop="chooseCard(card, index)">
           <img v-bind:src="card.image" />
@@ -18,7 +17,10 @@
     </div>
 
     <div v-if="currentView === VIEWS.confirmCard">
-      <h3>You want this card?</h3>
+      <div class="menu-buttons">
+        <button class="blue-button btn-small flex-right invisible" @click.stop="currentView = VIEWS.menu">Menu</button>
+      </div>
+      <h3>{{ pickedCard.name }}</h3>
       <div class="you-want">
         <div class="card">
           <img v-bind:src="pickedCard.image" />
@@ -30,23 +32,23 @@
         </p>
       </div>
 
+      <p>Pick this card?</p>
       <div class="confirm-buttons">
-        <button class="btn" @click.stop="confirmCard()">Yeah!</button>
-        <button class="btn" @click.stop="currentView = VIEWS.pickACard">No</button>
+        <button class="btn" @click.stop="confirmCard()">OK</button>
+        <button class="btn" @click.stop="currentView = VIEWS.pickACard">Go back</button>
       </div>
     </div>
 
     <div v-if="currentView === VIEWS.viewTableau">
       <div class="menu-buttons">
-        <button class="purple-button btn-small" @click.stop="currentView = VIEWS.menu">Menu</button>
+        <button class="btn-small flex-right" @click.stop="currentView = VIEWS.menu">Back to Menu</button>
       </div>
+      <h3>Tableaus</h3>
+      <br/>
+      <button class="purple-button btn-small" @click.stop="previousTableau">&lt;- Previous</button>
+      <button class="purple-button btn-small" @click.stop="nextTableau">Next -&gt;</button>
+      <p>{{ tableauPlayerDisplayName }} tableau</p>
 
-      <div class="menu-buttons-right">
-        <button class="purple-button btn-small" @click.stop="previousTableau">&lt;-</button>
-        <button class="purple-button btn-small" @click.stop="nextTableau">-&gt;</button>
-      </div>
-
-      <h3>{{ tableauPlayerDisplayName }} tableau</h3>
       <div class="hand">
         <div class="card" v-for="card in tableauPlayer.tableau" :key="card.index">
           <img v-bind:src="card.image" />
@@ -58,13 +60,11 @@
 
     <div v-if="currentView === VIEWS.desserts">
       <div class="menu-buttons">
-        <button class="btn-small yellow-button" @click.stop="currentView = VIEWS.menu">Menu</button>
+        <button class="btn-small flex-right" @click.stop="currentView = VIEWS.menu">Back to Menu</button>
       </div>
 
-      <div class="menu-buttons-right">
-        <button class="yellow-button btn-small" @click.stop="previousTableau">&lt;-</button>
-        <button class="yellow-button btn-small" @click.stop="nextTableau">-&gt;</button>
-      </div>
+      <button class="yellow-button btn-small" @click.stop="previousTableau">&lt;-</button>
+      <button class="yellow-button btn-small" @click.stop="nextTableau">-&gt;</button>
 
       <h3>{{ tableauPlayerDisplayName }} desserts</h3>
       <div class="hand">
@@ -96,9 +96,12 @@
     <div v-if="currentView === VIEWS.menu">
       <h3 style="margin-top: 15px">Menu</h3>
       <div style="margin-top: 100px">
+        <p>My Score = {{ currentPlayer.score }}</p>
         <button class="btn purple-button" @click.stop="currentView = VIEWS.viewTableau">Tableaus</button>
-        <button class="btn yellow-button" style="margin-left: 20px;" @click.stop="currentView = VIEWS.desserts">Desserts</button>
-        <button class="btn blue-button back-to-hand" style="margin-left: 40px;" @click.stop="currentView = VIEWS.pickACard">Back to Hand</button>
+        <br />
+        <button class="btn yellow-button" @click.stop="currentView = VIEWS.desserts">Desserts</button>
+        <br />
+        <button class="btn back-to-hand" @click.stop="currentView = VIEWS.pickACard">Exit menu</button>
       </div>
     </div>
   </div>
@@ -255,8 +258,8 @@ export default {
 .hand {
   display: flex;
   flex-wrap: wrap;
-  align-items: flex-start;
-  justify-content: flex-start;
+  justify-content: center;
+  padding-bottom: 20px;
 }
 
 .you-want {
@@ -278,10 +281,11 @@ export default {
 }
 
 .menu-buttons {
-  position: absolute;
+  text-align: center;
   display: flex;
-  align-items: center;
-  justify-content: left;
+  justify-content: right;
+  padding-right: 30px;
+  padding-bottom: 10px;
 }
 
 .score {
@@ -297,8 +301,7 @@ export default {
 }
 
 .confirm-buttons {
-  display: flex;
-  justify-content: center;
+  display: block;
 }
 
 .name {
@@ -314,13 +317,31 @@ export default {
 }
 
 .description {
-  font-family: "Patrick Hand SC", sans-serif;
-  font-size: 22px;
+  padding-top: 20px;
+  padding-left: 40px;
+  padding-right: 40px;
+  text-align: left;
+}
+
+.flex-right {
+  text-align: right;
+  align-self: flex-end;
+  margin: unset;
+}
+
+.flex-right {
+  align-self: flex-end;
+  margin: initial;
+  padding-right: 10px;
 }
 
 img {
   height: 80px;
   width: 100px;
+}
+
+.invisible {
+  visibility: hidden;
 }
 
 h3 {

@@ -84,6 +84,9 @@
           <p class="hint">{{ card.hint }}</p>
         </div>
       </div>
+      <button class="blue-button btn-small" @click.stop="previousTableau">&lt;- Previous</button>
+      <button class="blue-button btn-small" @click.stop="nextTableau">Next -&gt;</button>
+      <br/>
       <button class="btn back-to-hand" @click.stop="currentView = VIEWS.pickACard">Back to Game</button>
     </div>
   </div>

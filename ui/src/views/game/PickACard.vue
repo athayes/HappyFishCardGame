@@ -18,7 +18,7 @@
 
     <div v-if="currentView === VIEWS.confirmCard">
       <div class="menu-buttons">
-        <button class="blue-button btn-small flex-right invisible" @click.stop="currentView = VIEWS.menu">Players</button>
+        <button class="blue-button btn-small flex-right invisible" @click.stop="currentView = VIEWS.menu">Not a real buttton</button>
       </div>
       <h3>{{ pickedCard.name }}</h3>
       <div class="you-want">

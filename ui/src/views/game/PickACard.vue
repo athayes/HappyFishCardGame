@@ -2,7 +2,7 @@
   <div class="pickACard" style="margin-top:15px;">
     <div v-if="currentView === VIEWS.pickACard">
       <div class="menu-buttons">
-        <button class="blue-button btn-small flex-right" @click.stop="currentView = VIEWS.menu">Players</button>
+        <button style="margin-right:30px;" class="purple-button btn-small flex-right" @click.stop="currentView = VIEWS.menu">Players</button>
       </div>
       <h3>Pick a card</h3>
       <div class="hand">
@@ -18,7 +18,7 @@
 
     <div v-if="currentView === VIEWS.confirmCard">
       <div class="menu-buttons">
-        <button class="blue-button btn-small flex-right invisible" @click.stop="currentView = VIEWS.menu">Not a real buttton</button>
+        <button style="margin-right:30px;" class="purple-button btn-small flex-right invisible" @click.stop="currentView = VIEWS.menu">Players</button>
       </div>
       <h3>{{ pickedCard.name }}</h3>
       <div class="you-want">
@@ -34,8 +34,8 @@
 
       <p>Pick this card?</p>
       <div class="confirm-buttons">
-        <button class="btn" @click.stop="confirmCard()">OK</button>
-        <button class="btn" @click.stop="currentView = VIEWS.pickACard">Go back</button>
+        <button class="pinkish-button btn" @click.stop="confirmCard()">OK</button>
+        <button class="blue-button btn" @click.stop="currentView = VIEWS.pickACard">Go back</button>
       </div>
     </div>
 
@@ -46,14 +46,14 @@
     <div v-if="currentView === VIEWS.newRound">
       <h4>Round {{ round - 1 }} scores:</h4>
       <p v-for="player in players" :key="player.playerName">{{ player.playerName }}: {{ player.score }}</p>
-      <button class="btn blue-button" @click="currentView = VIEWS.pickACard">Start next round</button>
+      <button class="btn pink-button" @click="currentView = VIEWS.pickACard">Start next round</button>
     </div>
 
     <div v-if="currentView === VIEWS.gameCompleted">
       <h3>Game Completed!</h3>
       <p>Final Scores:</p>
       <p v-for="player in players" :key="player.playerName">{{ player.playerName }}: {{ player.score }}</p>
-      <button class="btn blue-button" @click="goHome">Exit Game</button>
+      <button class="btn green-button" @click="goHome">Exit Game</button>
     </div>
 
     <div v-if="currentView === VIEWS.menu">
@@ -62,8 +62,8 @@
       </div>
       <h3>Players</h3>
       <br/>
-      <button class="blue-button btn-small" @click.stop="previousTableau">&lt;- Previous</button>
-      <button class="blue-button btn-small" @click.stop="nextTableau">Next -&gt;</button>
+      <button class="yellow-button btn-small" @click.stop="previousTableau">&lt;- Previous</button>
+      <button class="yellow-button btn-small" @click.stop="nextTableau">Next -&gt;</button>
 
       <p>{{ tableauPlayerDisplayName }} score: {{ tableauPlayer.score }}</p>
       <p>{{ tableauPlayerDisplayName }} tableau</p>
@@ -84,8 +84,8 @@
           <p class="hint">{{ card.hint }}</p>
         </div>
       </div>
-      <button class="blue-button btn-small" @click.stop="previousTableau">&lt;- Previous</button>
-      <button class="blue-button btn-small" @click.stop="nextTableau">Next -&gt;</button>
+      <button class="yellow-button btn-small" @click.stop="previousTableau">&lt;- Previous</button>
+      <button class="yellow-button btn-small" @click.stop="nextTableau">Next -&gt;</button>
       <br/>
       <button class="btn back-to-hand" @click.stop="currentView = VIEWS.pickACard">Back to Game</button>
     </div>
@@ -316,6 +316,10 @@ img {
 
 h3 {
   margin: 0px;
+}
+
+button {
+  margin: 10px;
 }
 
 /* cool style do not steal anthony*/

@@ -63,7 +63,14 @@
     <div v-if="currentView === VIEWS.gameCompleted">
       <h3>Game Completed!</h3>
       <p>Final Scores:</p>
-      <p v-for="player in players" :key="player.playerName">{{ player.playerName }}: {{ player.score }}</p>
+      <table style="padding:0px 25%;">
+        <tbody>
+          <tr v-for="player in players" :key="player.playerName">
+            <td style="text-align:left;font-style:italic;">{{ player.playerName }}</td>
+            <td style="text-align:left;">{{ player.score }}</td>
+          </tr>
+        </tbody>
+      </table>
       <button class="btn green-button" @click="goHome">Exit Game</button>
     </div>
 

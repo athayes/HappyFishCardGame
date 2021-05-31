@@ -40,7 +40,10 @@
     </div>
 
     <div v-if="currentView === VIEWS.waiting" class="waiting">
-      <h3>Waiting for other players to pick cards...</h3>
+      <div v-if="showWaitingMessage">
+        <button class="btn-small flex-right invisible" @click.stop="currentView = VIEWS.menu">Not a real buttton</button>
+        <h3>Waiting for other players to pick cards...</h3>
+      </div>
     </div>
 
     <div v-if="currentView === VIEWS.newRound">
@@ -122,7 +125,8 @@ export default {
       // Backend state - game object
       players: [],
       round: 0,
-      gameState: ""
+      gameState: "",
+      showWaitingMessage: false
     };
   },
 
@@ -184,6 +188,7 @@ export default {
         index: self.pickedCard.index
       });
 
+      self.startWaitCountDown();
       self.currentView = VIEWS.waiting;
       socket.on("gameUpdates", async payload => {
         const gameUpdates = payload;
@@ -226,6 +231,14 @@ export default {
 
     goHome: async function() {
       await this.$router.push("/");
+    },
+
+    startWaitCountDown() {
+      const self = this;
+      self.showWaitingMessage = false;
+      setTimeout(() => {
+        self.showWaitingMessage = true;
+      }, 2000);
     }
   }
 };

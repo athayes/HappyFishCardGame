@@ -2,7 +2,7 @@
   <div class="pickACard" style="margin-top:15px;">
     <div v-if="currentView === VIEWS.pickACard">
       <div class="menu-buttons">
-        <button style="margin-right:30px;" class="purple-button btn-small flex-right" @click.stop="currentView = VIEWS.menu">Players</button>
+        <button class="purple-button btn-small right-side" @click.stop="currentView = VIEWS.menu">Players</button>
       </div>
       <h3>Pick a card</h3>
       <div class="hand">
@@ -18,7 +18,7 @@
 
     <div v-if="currentView === VIEWS.confirmCard">
       <div class="menu-buttons">
-        <button style="margin-right:30px;" class="purple-button btn-small flex-right invisible" @click.stop="currentView = VIEWS.menu">Players</button>
+        <button class="purple-button btn-small right-side invisible" @click.stop="currentView = VIEWS.menu">Players</button>
       </div>
       <h3>{{ pickedCard.name }}</h3>
       <div class="you-want">
@@ -58,7 +58,7 @@
 
     <div v-if="currentView === VIEWS.menu">
       <div class="menu-buttons">
-        <button class="btn-small flex-right" @click.stop="currentView = VIEWS.pickACard">Back to Game</button>
+        <button class="btn-small right-side" @click.stop="currentView = VIEWS.pickACard">Back to Game</button>
       </div>
       <h3>Players</h3>
       <br/>
@@ -320,6 +320,10 @@ h3 {
 
 button {
   margin: 10px;
+}
+
+.right-side {
+  margin-left: auto;
 }
 
 /* cool style do not steal anthony*/

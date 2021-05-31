@@ -48,7 +48,15 @@
 
     <div v-if="currentView === VIEWS.newRound">
       <h4>Round {{ round - 1 }} scores:</h4>
-      <p v-for="player in players" :key="player.playerName">{{ player.playerName }}: {{ player.score }}</p>
+      <table style="padding:0px 25%;">
+        <tbody>
+          <tr v-for="player in players" :key="player.playerName">
+            <td style="text-align:left;font-style:italic;">{{ player.playerName }}</td>
+            <td style="text-align:left;">{{ player.score }}</td>
+          </tr>
+        </tbody>
+      </table>
+      <br />
       <button class="btn pink-button" @click="currentView = VIEWS.pickACard">Start next round</button>
     </div>
 
@@ -64,7 +72,7 @@
         <button class="btn-small right-side" @click.stop="currentView = VIEWS.pickACard">Back to Game</button>
       </div>
       <h3>Players</h3>
-      <br/>
+      <br />
       <button class="yellow-button btn-small" @click.stop="previousTableau">&lt;- Previous</button>
       <button class="yellow-button btn-small" @click.stop="nextTableau">Next -&gt;</button>
 
@@ -89,7 +97,7 @@
       </div>
       <button class="yellow-button btn-small" @click.stop="previousTableau">&lt;- Previous</button>
       <button class="yellow-button btn-small" @click.stop="nextTableau">Next -&gt;</button>
-      <br/>
+      <br />
       <button class="btn back-to-hand" @click.stop="currentView = VIEWS.pickACard">Back to Game</button>
     </div>
   </div>

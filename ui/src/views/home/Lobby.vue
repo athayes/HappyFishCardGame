@@ -19,8 +19,8 @@
 
 <script>
 import axios from "axios";
+import Cookies from "js-cookie";
 import socket from "@/socket";
-import store from "../../store/index";
 
 export default {
   data: function() {
@@ -28,7 +28,7 @@ export default {
       players: [],
       interval: null,
       gameState: "",
-      playerName: store.state.name
+      playerName: Cookies.get("HappyFishCardGame")
     };
   },
   computed: {

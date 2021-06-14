@@ -6,7 +6,7 @@
       </div>
       <h3>Pick a card</h3>
       <div class="hand">
-        <div class="card" v-for="(card, index) in currentPlayer.hand" :key="card.index" @click.stop="chooseCard(card, index)">
+        <div class="card" v-for="(card, index) in currentPlayer.hand" :key="card.index + card.name" @click.stop="chooseCard(card, index)">
           <img v-bind:src="card.image" />
           <div>
             <p class="name">{{ card.name }}</p>
@@ -164,6 +164,10 @@ export default {
   },
 
   async mounted() {
+    await this.refreshData();
+  },
+
+  async activated() {
     await this.refreshData();
   },
 

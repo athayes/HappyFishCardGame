@@ -26,12 +26,17 @@ export default {
         return;
       }
 
-      await axios.post(`${process.env.VUE_APP_BACKEND_URL}/JoinLobby`, {
+      const response = await axios.post(`${process.env.VUE_APP_BACKEND_URL}/JoinLobby`, {
         playerName: this.playerName,
         is_ai: false
       });
-      Cookies.set("HappyFishCardGame", this.playerName);
-      await this.$router.push("Lobby");
+      console.log(JSON.stringify(response.data));
+      if (response.data === "Name taken; pick a new name!") {
+        alert(response.data);
+      } else {
+        Cookies.set("HappyFishCardGame", this.playerName);
+        await this.$router.push("Lobby");
+      }
     }
   }
 };

@@ -112,9 +112,9 @@
 
 <script>
 import axios from "axios";
-import Cookies from "js-cookie";
 import { findPlayer, findPlayerUnderscore, formatPlayers } from "@/models/Player";
 import socket from "@/socket";
+import store from "../../store/index";
 
 export const VIEWS = {
   pickACard: 1,
@@ -132,7 +132,7 @@ export default {
     return {
       // Frontend state
       currentView: VIEWS.pickACard,
-      playerName: Cookies.get("HappyFishCardGame"),
+      playerName: store.state.name,
       VIEWS: VIEWS,
       pickedCard: {},
       tableauIndex: 0,

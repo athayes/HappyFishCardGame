@@ -11,7 +11,7 @@
 
 <script>
 import axios from "axios";
-import store from "../../store/index";
+import Cookies from "js-cookie";
 
 export default {
   data: function() {
@@ -30,10 +30,11 @@ export default {
         playerName: this.playerName,
         is_ai: false
       });
+      console.log(JSON.stringify(response.data));
       if (response.data === "Name taken; pick a new name!") {
         alert(response.data);
       } else {
-        store.commit("setName", this.playerName);
+        Cookies.set("HappyFishCardGame", this.playerName);
         await this.$router.push("Lobby");
       }
     }

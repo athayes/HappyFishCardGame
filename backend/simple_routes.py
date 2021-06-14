@@ -74,8 +74,9 @@ def get_lobby():
 def join_lobby():
     player_name = request.json['playerName']
     is_ai = request.json['is_ai']
-    if player_name in Lobby.players:
-        return 'Name taken; pick a new name!'
+    for player in Lobby.players:
+        if player_name == player.player_name:
+            return 'Name taken; pick a new name!', 200
     Lobby.add_player(player_name, is_ai)
     push_lobby_data()
     return json.dumps(dict(success=True)), 200, {'ContentType': 'application/json'}

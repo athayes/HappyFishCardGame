@@ -25,8 +25,8 @@ class Lobby:
 
     @staticmethod
     def start_game():
-        Lobby.game_starting = True
         if not Lobby.game_starting:
+            Lobby.game_starting = True
             deck = basic_deck()
             desserts = basic_desserts()
             Lobby.game = game.Game(deepcopy(Lobby.players), deck, desserts, 10)

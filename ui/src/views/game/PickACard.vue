@@ -177,7 +177,7 @@ export default {
   methods: {
     refreshData: async function() {
       let self = this;
-      let response = await axios.post(`${process.env.VUE_APP_BACKEND_URL}/GetGameObject`);
+      let response = await axios.post(`${process.env.VUE_APP_BACKEND_URL}/GetGameObject&timestamp=${new Date().getUTCMilliseconds()}`);
       this.gameState = response.data.game_state;
       this.round = response.data.round;
       if (this.gameState === "COMPLETED") {

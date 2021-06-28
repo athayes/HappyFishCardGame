@@ -165,10 +165,12 @@ export default {
   },
 
   async mounted() {
+    console.log("mounted");
     await this.refreshData();
   },
 
   async activated() {
+    console.log("activated");
     await this.refreshData();
   },
 

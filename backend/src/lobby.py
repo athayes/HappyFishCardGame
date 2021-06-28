@@ -19,6 +19,7 @@ class Lobby:
 
     @staticmethod
     def reset_game():
+        Lobby.game_starting = False
         Lobby.game = None
         Lobby.players = []
 

@@ -1,5 +1,5 @@
 <template>
-  <div class="pickACard" style="margin-top:15px;">
+  <div key="randomKey" class="pickACard" style="margin-top:15px;">
     <div v-if="currentView === VIEWS.pickACard">
       <div class="menu-buttons">
         <button class="purple-button btn-small right-side" @click.stop="currentView = VIEWS.menu">Players</button>
@@ -141,7 +141,8 @@ export default {
       players: [],
       round: 0,
       gameState: "",
-      showWaitingMessage: false
+      showWaitingMessage: false,
+      randomKey: 0
     };
   },
 
@@ -186,7 +187,8 @@ export default {
       this.playerIndex = index;
       this.tableauIndex = index;
       this.players = players;
-      this.$forceUpdate();
+      this.randomKey = new Date().getUTCMilliseconds();
+      // this.$forceUpdate();
     },
 
     refreshDataGameEnd: async function() {

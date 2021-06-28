@@ -177,7 +177,7 @@ export default {
   methods: {
     refreshData: async function() {
       let self = this;
-      let response = await axios.post(`${process.env.VUE_APP_BACKEND_URL}/GetGameObject?timestamp=${new Date().getUTCMilliseconds()}`);
+      let response = await axios.post(`${process.env.VUE_APP_BACKEND_URL}/GetGameObject?timestamp=${new Date().getTime()}`);
       this.gameState = response.data.game_state;
       this.round = response.data.round;
       if (this.gameState === "COMPLETED") {
@@ -189,7 +189,7 @@ export default {
       this.playerIndex = index;
       this.tableauIndex = index;
       this.players = players;
-      this.randomKey = new Date().getUTCMilliseconds();
+      this.randomKey = new Date().getTime();
       // this.$forceUpdate();
     },
 

@@ -6,6 +6,7 @@ from src.player import Player
 
 
 class Lobby:
+    game_starting = False
     game = None
     last_finished_game = None
     players = []
@@ -23,9 +24,11 @@ class Lobby:
 
     @staticmethod
     def start_game():
-        deck = basic_deck()
-        desserts = basic_desserts()
-        Lobby.game = game.Game(deepcopy(Lobby.players), deck, desserts, 10)
+        Lobby.game_starting = True
+        if not Lobby.game_starting:
+            deck = basic_deck()
+            desserts = basic_desserts()
+            Lobby.game = game.Game(deepcopy(Lobby.players), deck, desserts, 10)
 
     @staticmethod
     def get_game_state():

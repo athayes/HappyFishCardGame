@@ -6,7 +6,7 @@
       </div>
       <h3>Pick a card</h3>
       <div class="hand">
-        <div class="card" v-for="(card, index) in currentPlayer.hand" :key="card.index + card.name" @click.stop="chooseCard(card, index)">
+        <div class="card" v-for="(card, index) in currentPlayer.hand" :key="index + card.name" @click.stop="chooseCard(card, index)">
           <img v-bind:src="card.image" />
           <div>
             <p class="name">{{ card.name }}</p>
@@ -35,6 +35,7 @@
       <p>Pick this card?</p>
       <div class="confirm-buttons">
         <button class="pinkish-button btn" @click.stop="confirmCard()">OK</button>
+        <button v-if="containsChopsticks" class="pinkish-button btn" @click.stop="useChopsticks()">Pick with Chopsticks</button>
         <button class="blue-button btn" @click.stop="currentView = VIEWS.pickACard">Go back</button>
       </div>
     </div>
@@ -87,7 +88,7 @@
       <p>{{ tableauPlayerDisplayName }} tableau</p>
 
       <div class="hand">
-        <div class="card" v-for="card in tableauPlayer.tableau" :key="card.index">
+        <div class="card" v-for="(card, index) in tableauPlayer.tableau" :key="index + card.name">
           <img v-bind:src="card.image" />
           <p class="name">{{ card.name }}</p>
           <p class="hint">{{ card.hint }}</p>
@@ -96,7 +97,7 @@
 
       <p>{{ tableauPlayerDisplayName }} desserts</p>
       <div class="hand">
-        <div class="card" v-for="card in tableauPlayer.dessert" :key="card.index">
+        <div class="card" v-for="(card, index) in tableauPlayer.dessert" :key="index + card.name">
           <img v-bind:src="card.image" />
           <p class="name">{{ card.name }}</p>
           <p class="hint">{{ card.hint }}</p>
@@ -106,6 +107,45 @@
       <button class="yellow-button btn-small" @click.stop="nextTableau">Next -&gt;</button>
       <br />
       <button class="btn back-to-hand" @click.stop="currentView = VIEWS.pickACard">Back to Game</button>
+    </div>
+
+    <div v-if="currentView === VIEWS.chopsticksPick">
+      <h3>Pick another card</h3>
+      <div class="hand">
+        <div
+          class="card"
+          v-for="(card, index) in currentPlayer.hand"
+          :key="index + card.name"
+          :class="{ inactive: index === chopsticksCard1Index }"
+          @click.stop="chopsticksChooseCard(card, index)"
+        >
+          <img v-bind:src="card.image" />
+          <div>
+            <p class="name">{{ card.name }}</p>
+            <p class="hint">{{ card.hint }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div v-if="currentView === VIEWS.chopsticksConfirm">
+      <h3>{{ pickedCard.name }}</h3>
+      <div class="you-want">
+        <div class="card">
+          <img v-bind:src="pickedCard.image" />
+          <p class="name">{{ pickedCard.name }}</p>
+          <p class="hint">{{ pickedCard.hint }}</p>
+        </div>
+        <p class="description">
+          {{ pickedCard.description }}
+        </p>
+      </div>
+
+      <p>Chopsticks: Pick this card as well?</p>
+      <div class="confirm-buttons">
+        <button class="pinkish-button btn" @click.stop="chopsticksConfirm()">OK</button>
+        <button class="blue-button btn" @click.stop="currentView = VIEWS.chopsticksPick">Go back</button>
+      </div>
     </div>
   </div>
 </template>
@@ -124,7 +164,9 @@ export const VIEWS = {
   gameCompleted: 5,
   newRound: 6,
   menu: 7,
-  desserts: 8
+  desserts: 8,
+  chopsticksPick: 9,
+  chopsticksConfirm: 10
 };
 
 export default {
@@ -142,7 +184,9 @@ export default {
       round: 0,
       gameState: "",
       showWaitingMessage: false,
-      randomKey: 0
+      randomKey: 0,
+      chopsticksCard1Index: undefined,
+      chopsticksCard2Index: undefined
     };
   },
 
@@ -161,6 +205,11 @@ export default {
     },
     tableauPlayerDisplayName: function() {
       return `${this.players[this.tableauIndex].playerName}'s`;
+    },
+    containsChopsticks: function() {
+      const cardNames = this.currentPlayer.tableau.map(card => card.name);
+      return !!cardNames.includes("Chopsticks");
+
     }
   },
 
@@ -190,13 +239,11 @@ export default {
       this.tableauIndex = index;
       this.players = players;
       this.randomKey = new Date().getTime();
-      // this.$forceUpdate();
     },
 
     refreshDataGameEnd: async function() {
       let response = await axios.post(`${process.env.VUE_APP_BACKEND_URL}/GetLastFinishedGameObject`);
-      let players = formatPlayers(response.data.players);
-      this.players = players;
+      this.players = formatPlayers(response.data.players);
     },
 
     chooseCard: function(card, index) {
@@ -210,6 +257,53 @@ export default {
       axios.post(`${process.env.VUE_APP_BACKEND_URL}/PickCard`, {
         playerName: self.playerName,
         index: self.pickedCard.index
+      });
+
+      self.startWaitCountDown();
+      self.currentView = VIEWS.waiting;
+      socket.on("gameUpdates", async payload => {
+        const gameUpdates = payload;
+        const { player } = findPlayerUnderscore(gameUpdates.players, this.playerName);
+        const canPlay = !player.chosen;
+        const isNewRound = player.is_new_round;
+        this.gameState = gameUpdates.game_state;
+        this.round = gameUpdates.round;
+        if (this.gameState === "COMPLETED") {
+          await self.refreshDataGameEnd();
+          this.currentView = VIEWS.gameCompleted;
+        } else if (canPlay) {
+          await self.refreshData();
+          if (isNewRound) {
+            this.currentView = VIEWS.newRound;
+            socket.removeAllListeners("gameUpdates");
+          } else {
+            this.currentView = VIEWS.pickACard;
+            socket.removeAllListeners("gameUpdates");
+          }
+        }
+      });
+    },
+
+    useChopsticks: function() {
+      this.chopsticksCard1Index = this.pickedCard.index;
+      this.currentView = VIEWS.chopsticksPick;
+    },
+
+    chopsticksChooseCard: function(card, index) {
+      console.log(this.chopsticksCard1Index);
+      if (this.chopsticksCard1Index !== index) {
+        this.pickedCard = card;
+        this.pickedCard.index = index;
+        this.currentView = VIEWS.chopsticksConfirm;
+      }
+    },
+
+    chopsticksConfirm: function() {
+      let self = this;
+      axios.post(`${process.env.VUE_APP_BACKEND_URL}/PickCardChopsticks`, {
+        playerName: self.playerName,
+        index1: self.chopsticksCard1Index,
+        index2: this.pickedCard.index
       });
 
       self.startWaitCountDown();
@@ -361,6 +455,10 @@ button {
 
 .right-side {
   margin-left: auto;
+}
+
+.inactive {
+  background-color: gray;
 }
 
 /* cool style do not steal anthony*/

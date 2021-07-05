@@ -34,4 +34,5 @@ def score_player(player):
     player = score_tempura(player)
     player = score_sashimi(player)
     player = score_wasabi_and_nigiri(player)
+    player.hand = []
     return player

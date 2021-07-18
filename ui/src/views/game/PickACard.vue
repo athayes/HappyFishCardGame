@@ -95,7 +95,7 @@
         </div>
       </div>
 
-      <p v-if="tableauPlayer.desserts.length">{{ tableauPlayerDisplayName }} desserts</p>
+      <p v-if="tableauPlayer.dessert.length > 0">{{ tableauPlayerDisplayName }} desserts</p>
       <div class="hand">
         <div class="card" v-for="(card, index) in tableauPlayer.dessert" :key="index + card.name">
           <img v-bind:src="card.image" />

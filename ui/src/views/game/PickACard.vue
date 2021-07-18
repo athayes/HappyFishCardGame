@@ -85,7 +85,7 @@
       <button class="yellow-button btn-small" @click.stop="nextTableau">Next -&gt;</button>
 
       <p>{{ tableauPlayerDisplayName }} score: {{ tableauPlayer.score }}</p>
-      <p>{{ tableauPlayerDisplayName }} tableau</p>
+      <p v-if="tableauPlayer.tableau.length > 0">{{ tableauPlayerDisplayName }} tableau</p>
 
       <div class="hand">
         <div class="card" v-for="(card, index) in tableauPlayer.tableau" :key="index + card.name">
@@ -95,7 +95,7 @@
         </div>
       </div>
 
-      <p>{{ tableauPlayerDisplayName }} desserts</p>
+      <p v-if="tableauPlayer.desserts.length">{{ tableauPlayerDisplayName }} desserts</p>
       <div class="hand">
         <div class="card" v-for="(card, index) in tableauPlayer.dessert" :key="index + card.name">
           <img v-bind:src="card.image" />
@@ -209,7 +209,6 @@ export default {
     containsChopsticks: function() {
       const cardNames = this.currentPlayer.tableau.map(card => card.name);
       return !!cardNames.includes("Chopsticks");
-
     }
   },
 

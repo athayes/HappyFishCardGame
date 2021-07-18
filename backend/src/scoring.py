@@ -1,6 +1,7 @@
 from src.scoring_functions.army_cards.maki import score_maki
 from src.scoring_functions.dessert.pudding import score_pudding
 from src.scoring_functions.dumplings import score_dumplings
+from src.scoring_functions.no_score_cards.chopsticks import remove_chopsticks
 from src.scoring_functions.sashimi import score_sashimi
 from src.scoring_functions.tempura import score_tempura
 from src.scoring_functions.wasabi_and_nigiri import score_wasabi_and_nigiri
@@ -34,5 +35,5 @@ def score_player(player):
     player = score_tempura(player)
     player = score_sashimi(player)
     player = score_wasabi_and_nigiri(player)
-    player.hand = []
+    player = remove_chopsticks(player)
     return player

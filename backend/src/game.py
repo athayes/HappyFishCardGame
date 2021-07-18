@@ -1,5 +1,8 @@
 from typing import List
 
+import numpy as np
+
+from src.cards import chopsticks
 from src.deck import shuffle_deck, basic_deck, add_desserts_into_deck
 from src.scoring import score_all, score_dessert
 from src.player import find_player, Player, mark_new_round
@@ -31,15 +34,42 @@ class Game:
             return player_name + " has already chosen a card"
 
         card_name = player.hand[card_index]
-        if card_name == "Chopsticks":
-            # handle chopsticks case here
-            # probably return a different json
-            return
-
         if is_dessert(card_name):
             player.dessert.append(player.hand.pop(card_index))
         else:
             player.tableau.append(player.hand.pop(card_index))
+
+        player.chosen = True
+        self.players[index] = player
+        self.players = mark_new_round(self.players, False)
+
+        if (not self.check_round_over()) and self.all_players_chosen():
+            self.players = rotate_hands(self.players)
+            for player in self.players:
+                player.chosen = False
+
+    def play_card_chopsticks(self, player_name, card_1_index, card_2_index):
+        index, player = find_player(player_name, self.players)
+        if player.chosen:
+            return player_name + " has already chosen a card"
+
+        cs_index = player.tableau.index(chopsticks)
+        print(cs_index, card_1_index, card_2_index)
+        card_1 = player.hand[card_1_index]
+        card_2 = player.hand[card_2_index]
+        if is_dessert(card_1):
+            player.dessert.append(card_1)
+        else:
+            player.tableau.append(card_1)
+
+        if is_dessert(card_2):
+            player.dessert.append(card_2)
+        else:
+            player.tableau.append(card_2)
+
+        player.hand = list(np.delete(player.hand, [card_1_index, card_2_index]))
+        player.tableau = list(np.delete(player.tableau, cs_index))
+        player.hand.append(chopsticks)
 
         player.chosen = True
         self.players[index] = player

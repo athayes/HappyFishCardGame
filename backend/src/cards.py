@@ -10,6 +10,7 @@ dumpling = "Dumpling"
 tempura = "Tempura"
 sashimi = "Sashimi"
 pudding = "Pudding"
+chopsticks = "Chopsticks"
 
 
 def is_maki(card):

@@ -103,6 +103,23 @@ def pick_card():
     return json.dumps(dict(success=True)), 200, {'ContentType': 'application/json'}
 
 
+@app.route('/PickCardChopsticks', methods=['POST'])
+def pick_card_chopsticks():
+    player = request.json["playerName"]
+    card_1_index = request.json["index1"]
+    card_2_index = request.json["index2"]
+    Lobby.game.handle_ai()
+    Lobby.game.play_card_chopsticks(player, card_1_index, card_2_index)
+    if Lobby.game.game_state == "COMPLETED":
+        Lobby.last_finished_game = deepcopy(Lobby.game)
+        Lobby.game = None
+        Lobby.players = []
+        push_game_end()
+    else:
+        push_game_data()
+    return json.dumps(dict(success=True)), 200, {'ContentType': 'application/json'}
+
+
 @app.route('/SetUpTestGame', methods=['POST'])
 def set_up_test_game():
     Lobby.reset_game()

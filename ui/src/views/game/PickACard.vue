@@ -79,17 +79,16 @@
       <div class="menu-buttons">
         <button class="btn-small" @click.stop="currentView = VIEWS.pickACard">Back to Game</button>
       </div>
-      <h3>Players</h3>
+      <h3>{{ tableauPlayer.playerName }}</h3>
       <button class="yellow-button btn-small" @click.stop="previousTableau">&lt;- Previous</button>
       <button class="yellow-button btn-small" @click.stop="nextTableau">Next -&gt;</button>
       <p>
-        <b>{{ tableauPlayer.playerName }}</b>
+        <b></b>
       </p>
       <div>
-
         <div class="collapsible">
-          <input id="collapsible1" type="checkbox" checked name="collapsible">
-          <label for="collapsible1">Tableau</label>
+          <input id="collapsible1" type="checkbox" checked disabled name="collapsible" />
+          <label for="collapsible1">Food</label>
           <div v-if="tableauPlayer.tableau.length > 0" class="hand collapsible-body">
             <div class="card" v-for="(card, index) in tableauPlayer.tableau" :key="index + card.name">
               <img v-bind:src="card.image" />
@@ -100,7 +99,7 @@
         </div>
 
         <div class="collapsible">
-          <input id="collapsible2" type="checkbox" checked name="collapsible" />
+          <input id="collapsible2" type="checkbox" checked disabled name="collapsible" />
           <label for="collapsible2">Desserts</label>
           <div v-if="tableauPlayer.dessert.length > 0" class="hand collapsible-body">
             <div class="card" v-for="(card, index) in tableauPlayer.dessert" :key="index + card.name">
@@ -372,7 +371,7 @@ export default {
 .hand {
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
+  justify-content: left;
   padding-bottom: 20px;
 }
 

@@ -87,7 +87,7 @@
       </p>
       <div>
 
-        <div v-if="tableauPlayer.tableau.length > 0" class="collapsible">
+        <div class="collapsible">
           <input id="collapsible1" type="checkbox" checked name="collapsible">
           <label for="collapsible1">Tableau</label>
           <div v-if="tableauPlayer.tableau.length > 0" class="hand collapsible-body">
@@ -99,7 +99,7 @@
           </div>
         </div>
 
-        <div v-if="tableauPlayer.dessert.length > 0" class="collapsible">
+        <div class="collapsible">
           <input id="collapsible2" type="checkbox" checked name="collapsible" />
           <label for="collapsible2">Desserts</label>
           <div v-if="tableauPlayer.dessert.length > 0" class="hand collapsible-body">

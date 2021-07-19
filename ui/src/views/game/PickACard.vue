@@ -42,7 +42,7 @@
 
     <div v-if="currentView === VIEWS.waiting" class="waiting">
       <div v-if="showWaitingMessage">
-        <button class="btn-small flex-right invisible" @click.stop="currentView = VIEWS.menu">Not a real buttton</button>
+        <button class="btn-small invisible" @click.stop="currentView = VIEWS.menu">Not a real buttton</button>
         <h3>Waiting for other players to pick cards...</h3>
       </div>
     </div>
@@ -77,17 +77,16 @@
 
     <div v-if="currentView === VIEWS.menu">
       <div class="menu-buttons">
-        <button class="btn-small right-side" @click.stop="currentView = VIEWS.pickACard">Back to Game</button>
+        <button class="btn-small" @click.stop="currentView = VIEWS.pickACard">Back to Game</button>
       </div>
       <h3>Players</h3>
-      <br />
       <button class="yellow-button btn-small" @click.stop="previousTableau">&lt;- Previous</button>
       <button class="yellow-button btn-small" @click.stop="nextTableau">Next -&gt;</button>
-
-      <p>{{ tableauPlayerDisplayName }} score: {{ tableauPlayer.score }}</p>
-      <p v-if="tableauPlayer.tableau.length > 0">{{ tableauPlayerDisplayName }} tableau</p>
-
-      <div class="hand">
+      <p>
+        <b>{{ tableauPlayer.playerName }}</b>
+      </p>
+      <p v-if="tableauPlayer.tableau.length > 0">Tableau</p>
+      <div v-if="tableauPlayer.tableau.length > 0" class="hand">
         <div class="card" v-for="(card, index) in tableauPlayer.tableau" :key="index + card.name">
           <img v-bind:src="card.image" />
           <p class="name">{{ card.name }}</p>
@@ -95,18 +94,15 @@
         </div>
       </div>
 
-      <p v-if="tableauPlayer.dessert.length > 0">{{ tableauPlayerDisplayName }} desserts</p>
-      <div class="hand">
+      <p v-if="tableauPlayer.dessert.length > 0">Desserts</p>
+      <div v-if="tableauPlayer.dessert.length > 0" class="hand">
         <div class="card" v-for="(card, index) in tableauPlayer.dessert" :key="index + card.name">
           <img v-bind:src="card.image" />
           <p class="name">{{ card.name }}</p>
           <p class="hint">{{ card.hint }}</p>
         </div>
       </div>
-      <button class="yellow-button btn-small" @click.stop="previousTableau">&lt;- Previous</button>
-      <button class="yellow-button btn-small" @click.stop="nextTableau">Next -&gt;</button>
       <br />
-      <button class="btn back-to-hand" @click.stop="currentView = VIEWS.pickACard">Back to Game</button>
     </div>
 
     <div v-if="currentView === VIEWS.chopsticksPick">
@@ -202,9 +198,6 @@ export default {
         return {};
       }
       return this.players[this.playerIndex];
-    },
-    tableauPlayerDisplayName: function() {
-      return `${this.players[this.tableauIndex].playerName}'s`;
     },
     containsChopsticks: function() {
       const cardNames = this.currentPlayer.tableau.map(card => card.name);
@@ -395,7 +388,7 @@ export default {
 .menu-buttons {
   text-align: center;
   display: flex;
-  justify-content: right;
+  justify-content: left;
   padding-right: 30px;
   padding-bottom: 10px;
 }
@@ -423,18 +416,6 @@ export default {
   text-align: left;
 }
 
-.flex-right {
-  text-align: right;
-  align-self: flex-end;
-  margin: unset;
-}
-
-.flex-right {
-  align-self: flex-end;
-  margin: initial;
-  padding-right: 10px;
-}
-
 img {
   height: 80px;
   width: 100px;
@@ -452,17 +433,7 @@ button {
   margin: 10px;
 }
 
-.right-side {
-  margin-left: auto;
-}
-
 .inactive {
   background-color: gray;
-}
-
-/* cool style do not steal anthony*/
-.dumpling-text {
-  /*background-color: #fffefe;*/
-  /*border-top: lightgray 1px solid;*/
 }
 </style>

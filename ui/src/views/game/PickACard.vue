@@ -85,21 +85,30 @@
       <p>
         <b>{{ tableauPlayer.playerName }}</b>
       </p>
-      <p v-if="tableauPlayer.tableau.length > 0">Tableau</p>
-      <div v-if="tableauPlayer.tableau.length > 0" class="hand">
-        <div class="card" v-for="(card, index) in tableauPlayer.tableau" :key="index + card.name">
-          <img v-bind:src="card.image" />
-          <p class="name">{{ card.name }}</p>
-          <p class="hint">{{ card.hint }}</p>
-        </div>
-      </div>
+      <div>
 
-      <p v-if="tableauPlayer.dessert.length > 0">Desserts</p>
-      <div v-if="tableauPlayer.dessert.length > 0" class="hand">
-        <div class="card" v-for="(card, index) in tableauPlayer.dessert" :key="index + card.name">
-          <img v-bind:src="card.image" />
-          <p class="name">{{ card.name }}</p>
-          <p class="hint">{{ card.hint }}</p>
+        <div v-if="tableauPlayer.tableau.length > 0" class="collapsible">
+          <input id="collapsible1" type="checkbox" checked name="collapsible">
+          <label for="collapsible1">Tableau</label>
+          <div v-if="tableauPlayer.tableau.length > 0" class="hand collapsible-body">
+            <div class="card" v-for="(card, index) in tableauPlayer.tableau" :key="index + card.name">
+              <img v-bind:src="card.image" />
+              <p class="name">{{ card.name }}</p>
+              <p class="hint">{{ card.hint }}</p>
+            </div>
+          </div>
+        </div>
+
+        <div v-if="tableauPlayer.dessert.length > 0" class="collapsible">
+          <input id="collapsible2" type="checkbox" checked name="collapsible" />
+          <label for="collapsible2">Desserts</label>
+          <div v-if="tableauPlayer.dessert.length > 0" class="hand collapsible-body">
+            <div class="card" v-for="(card, index) in tableauPlayer.dessert" :key="index + card.name">
+              <img v-bind:src="card.image" />
+              <p class="name">{{ card.name }}</p>
+              <p class="hint">{{ card.hint }}</p>
+            </div>
+          </div>
         </div>
       </div>
       <br />

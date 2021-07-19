@@ -384,7 +384,6 @@ export default {
 }
 
 .card {
-  height: 40%;
   width: 110px;
   margin-top: 10px;
   margin-right: 10px;

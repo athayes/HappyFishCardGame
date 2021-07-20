@@ -375,12 +375,9 @@ export default {
   padding-bottom: 20px;
 }
 
-@media only screen and (width: 320px) and (orientation: portrait) {
+@media (orientation: portrait) {
   .hand {
-    display: flex;
-    flex-wrap: wrap;
     justify-content: center;
-    padding-bottom: 20px;
   }
 }
 

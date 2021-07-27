@@ -1,6 +1,7 @@
 import numpy as np
 
 from src.cards import dumpling
+from src.player import ReportEntry
 
 
 def score_dumplings(player):
@@ -10,7 +11,9 @@ def score_dumplings(player):
         if card == dumpling:
             count += 1
             indices.append(index)
-    player.score += get_score_for_dumpling_count(count)
+    score = get_score_for_dumpling_count(count)
+    player.score += score
+    player.score_report.report_entries.append(ReportEntry(f'Dumplings * {count}', score))
     player.tableau = list(np.delete(player.tableau, indices))
     return player
 

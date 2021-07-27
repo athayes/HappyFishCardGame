@@ -11,6 +11,7 @@ class Player:
         self.chosen = False
         self.is_ai = False
         self.is_new_round = False
+        self.score_report = ScoreReport()
 
     def to_json(self):
         return {
@@ -43,3 +44,34 @@ def mark_new_round(players: List[Player], is_new_round):
     for player in players:
         player.is_new_round = is_new_round
     return players
+
+
+class ScoreReport:
+    def __init__(self):
+        self.report_entries = []
+        self.cards = []
+        self.score_round_start = 0
+        self.score_round_end = 0
+
+    def to_json(self):
+        entries = []
+        for entry in self.reportEntries:
+            entries.append(entry.to_json())
+        return {
+            'reportEntries': entries,
+            'cards': self.cards,
+            'score_round_start': self.score_round_start,
+            'score_round_end': self.score_round_end,
+        }
+
+
+class ReportEntry:
+    def __init__(self, description, score):
+        self.description = description
+        self.score = score
+
+    def to_json(self):
+        return {
+            'description': self.description,
+            'score': self.score,
+        }

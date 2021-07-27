@@ -1,3 +1,4 @@
+from src.player import ScoreReport
 from src.scoring_functions.army_cards.maki import score_maki
 from src.scoring_functions.dessert.pudding import score_pudding
 from src.scoring_functions.dumplings import score_dumplings
@@ -30,10 +31,14 @@ def score_dessert(players):
     players = score_pudding(players)
     return players
 
+
 def score_player(player):
+    player.score_report = ScoreReport()
+    player.score_report.score_round_start = player.score
     player = score_dumplings(player)
     player = score_tempura(player)
     player = score_sashimi(player)
     player = score_wasabi_and_nigiri(player)
     player = remove_chopsticks(player)
+    player.score_report.score_round_end = player.score
     return player

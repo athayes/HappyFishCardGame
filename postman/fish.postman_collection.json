@@ -76,34 +76,6 @@
 			"response": []
 		},
 		{
-			"name": "CanPlayCard",
-			"request": {
-				"method": "POST",
-				"header": [
-					{
-						"key": "Content-Type",
-						"name": "Content-Type",
-						"value": "application/json",
-						"type": "text"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n    \"playerName\": \"Cool H\"\n}"
-				},
-				"url": {
-					"raw": "{{host}}/CanPlayCard",
-					"host": [
-						"{{host}}"
-					],
-					"path": [
-						"CanPlayCard"
-					]
-				}
-			},
-			"response": []
-		},
-		{
 			"name": "PickCard",
 			"request": {
 				"method": "POST",

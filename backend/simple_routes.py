@@ -95,6 +95,7 @@ def pick_card():
     Lobby.game.play_card(player, card_index)
     if Lobby.game.game_state == "COMPLETED":
         Lobby.last_finished_game = deepcopy(Lobby.game)
+        Lobby.game_starting = False
         Lobby.game = None
         Lobby.players = []
         push_game_end()
@@ -127,15 +128,6 @@ def set_up_test_game():
     Lobby.add_player("Cool H", False)
     Lobby.start_game()
     return json.dumps(dict(success=True)), 200, {'ContentType': 'application/json'}
-
-
-@app.route('/CanPlayCard', methods=['POST'])
-def can_play_card():
-    player = request.json["playerName"]
-    return {
-        "game_state": Lobby.game.game_state,
-        "can_play_card": not Lobby.game.is_player_chosen(player)
-    }
 
 
 def push_lobby_data():

@@ -22,7 +22,8 @@ class Player:
             'hand': self.hand,
             'is_ai': self.is_ai,
             'is_new_round': self.is_new_round,
-            'chosen': self.chosen
+            'chosen': self.chosen,
+            'score_report': self.score_report.to_json()
         }
 
 
@@ -55,10 +56,10 @@ class ScoreReport:
 
     def to_json(self):
         entries = []
-        for entry in self.reportEntries:
+        for entry in self.report_entries:
             entries.append(entry.to_json())
         return {
-            'reportEntries': entries,
+            'report_entries': entries,
             'cards': self.cards,
             'score_round_start': self.score_round_start,
             'score_round_end': self.score_round_end,

@@ -56,6 +56,10 @@
             <td style="text-align:left;">{{ player.score }}</td>
           </tr>
         </tbody>
+        <h4>Your score report</h4>
+        <div v-if="currentPlayer.scoreReport">
+          <p v-for="(entry, index) in currentPlayer.scoreReport.report_entries" :key="index">{{ entry.description }} : {{ entry.score }}</p>
+        </div>
       </table>
       <br />
       <button class="btn pink-button" @click="currentView = VIEWS.pickACard">Start next round</button>

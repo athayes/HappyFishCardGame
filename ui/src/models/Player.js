@@ -18,7 +18,8 @@ export function formatPlayers(players) {
       dessert: formatCards(player.dessert),
       hand: formatCards(player.hand),
       score: player.score,
-      chosen: player.chosen
+      chosen: player.chosen,
+      scoreReport: player.score_report
     };
   });
   return players;

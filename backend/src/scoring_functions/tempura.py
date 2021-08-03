@@ -1,6 +1,8 @@
 import numpy as np
 
 from src.cards import tempura
+from src.player import ReportEntry
+
 
 def score_tempura(player):
     count = 0
@@ -9,7 +11,10 @@ def score_tempura(player):
         if card == tempura:
             count += 1
             indices.append(index)
-    player.score += get_score_for_tempura_count(count)
+    score = get_score_for_tempura_count(count)
+    player.score += score
+    if score < 0:
+        player.score_report.report_entries.append(ReportEntry(f'Tempura * {count}', score))
     player.tableau = list(np.delete(player.tableau, indices))
     return player
 

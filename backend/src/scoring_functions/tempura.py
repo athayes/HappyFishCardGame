@@ -13,7 +13,7 @@ def score_tempura(player):
             indices.append(index)
     score = get_score_for_tempura_count(count)
     player.score += score
-    if score < 0:
+    if count > 0:
         player.score_report.report_entries.append(ReportEntry(f'Tempura * {count}', score))
     player.tableau = list(np.delete(player.tableau, indices))
     return player

@@ -13,7 +13,7 @@ def score_sashimi(player):
             indices.append(index)
     score = get_score_for_sashimi_count(count)
     player.score += score
-    if score < 0:
+    if count > 0:
         player.score_report.report_entries.append(ReportEntry(f'Sashimi * {count}', score))
     player.tableau = list(np.delete(player.tableau, indices))
     return player

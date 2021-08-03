@@ -50,7 +50,8 @@ def mark_new_round(players: List[Player], is_new_round):
 class ScoreReport:
     def __init__(self):
         self.report_entries = []
-        self.cards = []
+        self.tableau = []
+        self.dessert = []
         self.score_round_start = 0
         self.score_round_end = 0
 
@@ -60,7 +61,8 @@ class ScoreReport:
             entries.append(entry.to_json())
         return {
             'report_entries': entries,
-            'cards': self.cards,
+            'tableau': self.tableau,
+            'dessert': self.dessert,
             'score_round_start': self.score_round_start,
             'score_round_end': self.score_round_end,
         }

@@ -57,9 +57,12 @@
           </tr>
         </tbody>
         <h4>Your score report</h4>
+        <p>Mains: {{ currentPlayer.scoreReport.tableau.join(", ") }}</p>
+        <p v-if="currentPlayer.dessert.length > 0">Desserts: (scored at end of game) {{ currentPlayer.scoreReport.dessert.join(", ") }}</p>
         <div v-if="currentPlayer.scoreReport">
           <p v-for="(entry, index) in currentPlayer.scoreReport.report_entries" :key="index">{{ entry.description }} : {{ entry.score }}</p>
         </div>
+        <p>Round total: {{ currentPlayer.score - currentPlayer.scoreReport.score_round_start }}</p>
       </table>
       <br />
       <button class="btn pink-button" @click="currentView = VIEWS.pickACard">Start next round</button>

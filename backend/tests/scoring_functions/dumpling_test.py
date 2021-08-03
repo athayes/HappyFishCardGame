@@ -24,3 +24,9 @@ def test_score_dumpling_score_reports():
     assert player.score_report.report_entries[0].description == 'Dumplings * 6'
     assert player.score_report.report_entries[0].score == 15
 
+def test_score_dumpling_none():
+    player = Player("Jen")
+    player.tableau = []
+    player = score_dumplings(player)
+    assert len(player.score_report.report_entries) == 0
+    assert player.score == 0

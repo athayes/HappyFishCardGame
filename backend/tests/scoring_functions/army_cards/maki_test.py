@@ -3,6 +3,7 @@ from src.deck import make_deck
 from src.scoring_functions.army_cards.maki import score_maki, find_maki_totals
 from src.player import make_players
 
+
 def test_player_find_maki_totals():
     players = make_test_players()
     players = find_maki_totals(players)
@@ -17,7 +18,11 @@ def test_score_maki():
     players = make_test_players()
     players = score_maki(players)
     assert players[0].score == 6
+    assert players[0].score_report.report_entries[0].description == 'Maki: First place with 9'
+    assert players[0].score_report.report_entries[0].score == 6
     assert players[1].score == 3
+    assert players[1].score_report.report_entries[0].description == 'Maki: Second place with 6'
+    assert players[1].score_report.report_entries[0].score == 3
 
 
 def make_test_players():

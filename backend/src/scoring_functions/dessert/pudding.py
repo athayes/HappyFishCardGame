@@ -1,5 +1,6 @@
 import numpy as np
 from src.cards import pudding
+from src.player import ReportEntry
 
 
 def score_pudding(players):
@@ -18,9 +19,15 @@ def score_pudding(players):
     for player in players:
         if player.pudding_count == first_place:
             player.score += 6
+            player.score_report.report_entries.append(
+                ReportEntry(f'Pudding: First place with {player.pudding_count}', 6)
+            )
         if player.pudding_count == last_place:
             if len(players) != 2:
                 player.score -= 6
+                player.score_report.report_entries.append(
+                    ReportEntry(f'Pudding: Last place with {player.pudding_count}', -6)
+                )
         player.pudding_count = 0
     return players
 

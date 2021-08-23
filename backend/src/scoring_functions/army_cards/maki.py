@@ -1,6 +1,7 @@
 import numpy as np
 
 from src.cards import is_maki, get_maki_number
+from src.player import ReportEntry
 
 
 def score_maki(old_players):
@@ -17,8 +18,10 @@ def score_maki(old_players):
     for player in players:
         if player.maki_count == first_place and first_place != 0:
             player.score += 6
+            player.score_report.report_entries.append(ReportEntry(f'Maki: First place with {player.maki_count}', 6))
         if player.maki_count == second_place and second_place != 0:
             player.score += 3
+            player.score_report.report_entries.append(ReportEntry(f'Maki: Second place with {player.maki_count}', 3))
         # clean up
         player.maki_count = 0
 

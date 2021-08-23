@@ -32,7 +32,11 @@ def test_score_pudding_3_player():
     players[2].dessert = make_deck([(pudding, 1)])
     players = score_pudding(players)
     assert players[0].score == 6
+    assert players[0].score_report.report_entries[0].description == 'Pudding: First place with 3'
+    assert players[0].score_report.report_entries[0].score == 6
     assert players[1].score == -6
+    assert players[1].score_report.report_entries[0].description == 'Pudding: Last place with 0'
+    assert players[1].score_report.report_entries[0].score == -6
     assert players[2].score == 0
 
 def test_score_pudding_3_player_everyone_same():

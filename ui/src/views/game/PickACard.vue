@@ -51,20 +51,36 @@
       <h4>Round {{ round - 1 }} scores:</h4>
       <table style="padding:0px 25%;">
         <tbody>
+          <th style="text-align:left;">Player</th>
+          <th style="text-align:left;">Score</th>
           <tr v-for="player in players" :key="player.playerName">
-            <td style="text-align:left;font-style:italic;">{{ player.playerName }}</td>
-            <td style="text-align:left;">{{ player.score }}</td>
+            <td style="text-align:left;font-weight:bold;">{{ player.playerName }}</td>
+            <td style="text-align:left;font-weight:bold">{{ player.score }}</td>
           </tr>
         </tbody>
-        <h4>Your score report</h4>
-        <p>Mains: {{ currentPlayer.scoreReport.tableau.join(", ") }}</p>
-        <p v-if="currentPlayer.dessert.length > 0">Desserts: (scored at end of game) {{ currentPlayer.scoreReport.dessert.join(", ") }}</p>
-        <div v-if="currentPlayer.scoreReport">
-          <p v-for="(entry, index) in currentPlayer.scoreReport.report_entries" :key="index">{{ entry.description }} : {{ entry.score }}</p>
-        </div>
-        <p>Round total: {{ currentPlayer.score - currentPlayer.scoreReport.score_round_start }}</p>
       </table>
-      <br />
+      <button class="btn pink-button" @click="currentView = VIEWS.pickACard">Start next round</button>
+      <h4>Score Reports</h4>
+      <div v-for="player in players" :key="player.playerName">
+        <h4>{{ player.playerName }}</h4>
+        <p>Mains: {{ player.scoreReport.tableau.join(", ") }}</p>
+        <p v-if="player.dessert.length > 0">Desserts: (scored at end of game) {{ player.scoreReport.dessert.join(", ") }}</p>
+        <table>
+          <tbody v-if="player.scoreReport">
+            <th style="text-align:left;">Card</th>
+            <th style="text-align:left;">Score</th>
+            <tr v-for="(entry, index) in player.scoreReport.report_entries" :key="index">
+              <td style="text-align:left;">{{ entry.description }}</td>
+              <td style="text-align:left;">{{ entry.score }}</td>
+            </tr>
+            <tr>
+              <td style="text-align:left;font-weight:bold">Round total:</td>
+              <td style="text-align:left;font-weight:bold">{{ player.score - player.scoreReport.score_round_start }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <br/>
       <button class="btn pink-button" @click="currentView = VIEWS.pickACard">Start next round</button>
     </div>
 

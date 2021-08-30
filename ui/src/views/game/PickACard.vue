@@ -80,7 +80,7 @@
           </tbody>
         </table>
       </div>
-      <br/>
+      <br />
       <button class="btn pink-button" @click="currentView = VIEWS.pickACard">Start next round</button>
     </div>
 
@@ -95,6 +95,28 @@
           </tr>
         </tbody>
       </table>
+      <button class="btn green-button" @click="goHome">Exit Game</button>
+
+      <h4>Score Reports</h4>
+      <div v-for="player in players" :key="player.playerName">
+        <h4>{{ player.playerName }}</h4>
+        <p>Mains: {{ player.scoreReport.tableau.join(", ") }}</p>
+        <p v-if="player.scoreReport.dessert.length > 0">Desserts: (scored at end of game) {{ player.scoreReport.dessert.join(", ") }}</p>
+        <table>
+          <tbody v-if="player.scoreReport">
+            <th style="text-align:left;">Card</th>
+            <th style="text-align:left;">Score</th>
+            <tr v-for="(entry, index) in player.scoreReport.report_entries" :key="index">
+              <td style="text-align:left;">{{ entry.description }}</td>
+              <td style="text-align:left;">{{ entry.score }}</td>
+            </tr>
+            <tr>
+              <td style="text-align:left;font-weight:bold">Round total:</td>
+              <td style="text-align:left;font-weight:bold">{{ player.score - player.scoreReport.score_round_start }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
       <button class="btn green-button" @click="goHome">Exit Game</button>
     </div>
 

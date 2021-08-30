@@ -82,6 +82,7 @@
       </div>
       <br />
       <button class="btn pink-button" @click="currentView = VIEWS.pickACard">Start next round</button>
+      <br />
     </div>
 
     <div v-if="currentView === VIEWS.gameCompleted">
@@ -117,7 +118,9 @@
           </tbody>
         </table>
       </div>
+      <br />
       <button class="btn green-button" @click="goHome">Exit Game</button>
+      <br />
     </div>
 
     <div v-if="currentView === VIEWS.menu">

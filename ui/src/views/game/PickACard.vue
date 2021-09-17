@@ -81,7 +81,7 @@
         </table>
       </div>
       <br />
-      <button class="btn pink-button" @click="currentView = VIEWS.pickACard">Start next round</button>
+      <button class="btn pink-button btn-bottom" @click="currentView = VIEWS.pickACard">Start next round</button>
       <br />
     </div>
 
@@ -119,7 +119,7 @@
         </table>
       </div>
       <br />
-      <button class="btn green-button" @click="goHome">Exit Game</button>
+      <button class="btn green-button btn-bottom" @click="goHome">Exit Game</button>
       <br />
     </div>
 
@@ -497,5 +497,9 @@ button {
 
 .inactive {
   background-color: gray;
+}
+
+.btn-bottom {
+  margin-bottom: 10%;
 }
 </style>

@@ -4,7 +4,8 @@ export function cardFactory(name, numPlayers) {
       name: "Egg Nigiri",
       image: "/assets/egg.png",
       description: "Each egg nigiri is worth 1 point. An egg Nigiri on a Wasabi card is worth 3 points.",
-      hint: "1"
+      hint: "1",
+      backgroundColor: "#ffdfdf"
     };
   }
 
@@ -13,7 +14,8 @@ export function cardFactory(name, numPlayers) {
       name: "Salmon Nigiri",
       image: "/assets/salmon.png",
       description: "Each salmon nigiri is worth 2 points. A salmon Nigiri on a Wasabi card is worth 6 points.",
-      hint: "2"
+      hint: "2",
+      backgroundColor: "#ffdfdf"
     };
   }
 
@@ -22,7 +24,8 @@ export function cardFactory(name, numPlayers) {
       name: "Squid Nigiri",
       image: "/assets/squid.png",
       description: "Each squid nigiri is worth 3 points. A squid Nigiri on a Wasabi card is worth 9 points.",
-      hint: "3"
+      hint: "3",
+      backgroundColor: "#ffdfdf"
     };
   }
 
@@ -32,7 +35,8 @@ export function cardFactory(name, numPlayers) {
       image: "/assets/wasabi.png",
       description:
         "When you pick a wasabi card it has no effect. However, the next nigiri card you pick (in the same round) will be worth triple its usual points.",
-      hint: "Next Nigiri x3"
+      hint: "Next Nigiri x3",
+      backgroundColor: "#ffdfdf"
     };
   }
 
@@ -42,7 +46,8 @@ export function cardFactory(name, numPlayers) {
       image: "/assets/chopsticks.png",
       description:
         "Chopsticks let you take 2 cards on a future turn. Nothing happens on the turn when you initially play chopsticks. However, you may use it on a future turn to take a bonus action.",
-      hint: "Swap for 2"
+      hint: "Swap for 2",
+      backgroundColor: "#eeeeff"
     };
   }
 
@@ -56,13 +61,26 @@ export function cardFactory(name, numPlayers) {
     };
   }
 
+  if (name === "Tea") {
+    return {
+      name: "Tea",
+      image: "/assets/tea.png",
+      description:
+        "End of the round: Count the number of cards in your largest (or tied for largest) set of cards with the same background color. Tea is worth " +
+        "1 point per card in that set",
+      hint: "x4 = 12",
+      backgroundColor: "fff2d2",
+    };
+  }
+
   if (name === "Sashimi") {
     return {
       name: name,
       image: "/assets/sashimi.png",
       description:
         "A set of 3 sashimi cards scores 10 points. A single sashimi card or a set of only 2 is worth nothing. You may score multiple sets of sashimi in a round, although this is very hard to do!",
-      hint: "x3 = 10"
+      hint: "x3 = 10",
+      backgroundColor: "aliceblue"
     };
   }
 
@@ -81,7 +99,8 @@ export function cardFactory(name, numPlayers) {
       name: name,
       image: "/assets/maki.png",
       description: description,
-      hint: hint
+      hint: hint,
+      backgroundColor: "#f4d2f4"
     };
   }
 
@@ -110,7 +129,8 @@ export function cardFactory(name, numPlayers) {
       image: "/assets/tempura.png",
       description:
         "A set of 2 tempura cards scores 5 points. A single tempura card is worth nothing. You may score multiple sets of tempura in a round.",
-      hint: "x2 = 5"
+      hint: "x2 = 5",
+      backgroundColor: "#fffbdf"
     };
   }
 
@@ -119,7 +139,8 @@ export function cardFactory(name, numPlayers) {
       name: name,
       image: "/assets/dumpling.png",
       description: "The more dumpling cards you have, the more points you will score, as follows: 1,3,6,10,15",
-      hint: "1 3 6 10 15"
+      hint: "1 3 6 10 15",
+      backgroundColor: "#ffe6d0"
     };
   }
 
@@ -140,7 +161,8 @@ export function cardFactory(name, numPlayers) {
       name: name,
       image: "/assets/pudding.png",
       description: description,
-      hint: hint
+      hint: hint,
+      backgroundColor: "#f1feed"
     };
   }
 

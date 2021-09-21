@@ -6,7 +6,7 @@
       </div>
       <h3>Pick a card</h3>
       <div class="hand">
-        <div class="card" v-for="(card, index) in currentPlayer.hand" :key="index + card.name" @click.stop="chooseCard(card, index)">
+        <div class="card" v-bind:style="{ 'background-color': card.backgroundColor }" v-for="(card, index) in currentPlayer.hand" :key="index + card.name" @click.stop="chooseCard(card, index)">
           <img v-bind:src="card.image" />
           <div>
             <p class="name">{{ card.name }}</p>
@@ -22,7 +22,7 @@
       </div>
       <h3>{{ pickedCard.name }}</h3>
       <div class="you-want">
-        <div class="card">
+        <div class="card" v-bind:style="{ 'background-color': pickedCard.backgroundColor }">
           <img v-bind:src="pickedCard.image" />
           <p class="name">{{ pickedCard.name }}</p>
           <p class="hint">{{ pickedCard.hint }}</p>
@@ -445,6 +445,7 @@ export default {
   text-align: center;
   font-size: 30px;
   background-color: white;
+  border-color: silver;
 }
 
 .menu-buttons {

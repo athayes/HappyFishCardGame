@@ -7,7 +7,7 @@ def basic_deck():
     deck = make_deck(
         [
             (egg_nigiri, 4), (salmon_nigiri, 4), (squid_nigiri, 4), (maki_1, 4), (maki_2, 4), (maki_3, 4), (tempura, 8),
-            (sashimi, 8), (dumpling, 8), (wasabi, 3), (chopsticks, 3), (tea, 20)
+            (sashimi, 8), (dumpling, 8), (wasabi, 3), (chopsticks, 3), (tea, 3)
         ]
     )
     return deck

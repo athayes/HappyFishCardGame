@@ -1,13 +1,13 @@
 import random
 from src.cards import egg_nigiri, salmon_nigiri, squid_nigiri, dumpling, \
-    tempura, sashimi, pudding, wasabi, maki_1, maki_2, maki_3, chopsticks
+    tempura, sashimi, pudding, wasabi, maki_1, maki_2, maki_3, chopsticks, tea
 
 
 def basic_deck():
     deck = make_deck(
         [
             (egg_nigiri, 4), (salmon_nigiri, 4), (squid_nigiri, 4), (maki_1, 4), (maki_2, 4), (maki_3, 4), (tempura, 8),
-            (sashimi, 8), (dumpling, 8), (wasabi, 3), (chopsticks, 3)
+            (sashimi, 8), (dumpling, 8), (wasabi, 3), (chopsticks, 3), (tea, 20)
         ]
     )
     return deck

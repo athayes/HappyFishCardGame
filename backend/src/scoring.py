@@ -4,6 +4,7 @@ from src.scoring_functions.dessert.pudding import score_pudding
 from src.scoring_functions.dumplings import score_dumplings
 from src.scoring_functions.no_score_cards.chopsticks import remove_chopsticks
 from src.scoring_functions.sashimi import score_sashimi
+from src.scoring_functions.tea import score_tea
 from src.scoring_functions.tempura import score_tempura
 from src.scoring_functions.wasabi_and_nigiri import score_wasabi_and_nigiri
 
@@ -37,6 +38,7 @@ def score_player(player):
     player.score_report.score_round_start = player.score
     player.score_report.tableau = player.tableau
     player.score_report.dessert = player.dessert
+    player = score_tea(player)
     player = score_dumplings(player)
     player = score_tempura(player)
     player = score_sashimi(player)

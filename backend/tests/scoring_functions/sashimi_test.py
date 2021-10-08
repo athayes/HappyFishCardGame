@@ -2,7 +2,6 @@ from src.cards import sashimi
 from src.deck import make_deck
 from src.player import Player
 from src.scoring_functions.sashimi import score_sashimi
-from src.scoring_functions.tempura import score_tempura
 
 
 def test_score_sashimi():

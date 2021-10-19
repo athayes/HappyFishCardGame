@@ -1,6 +1,7 @@
-from src.cards import pudding
+from src.cards import pudding, ice_cream
 
-desserts = [pudding]
+desserts = [pudding, ice_cream]
+
 
 def is_dessert(card):
     return card in desserts

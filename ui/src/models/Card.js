@@ -51,12 +51,11 @@ export function cardFactory(name, numPlayers) {
     };
   }
 
-  if (name === "IceCream") {
+  if (name === "Ice Cream") {
     return {
-      name: "Green Tea Ice Cream",
+      name: "Ice Cream",
       image: "/assets/ice-cream.png",
-      description:
-        "A dessert: You keep this until the end of the game. If at the end of the game you have 4 Green Tea ice cream, you score 12 points.",
+      description: "Keep this until the end of the game. At the end of the game, if you have 4 Ice Cream, you score 12 points.",
       hint: "x4 = 12"
     };
   }

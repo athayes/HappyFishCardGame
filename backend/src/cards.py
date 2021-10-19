@@ -10,6 +10,7 @@ dumpling = "Dumpling"
 tempura = "Tempura"
 sashimi = "Sashimi"
 pudding = "Pudding"
+ice_cream = "Ice Cream"
 chopsticks = "Chopsticks"
 tea = "Tea"
 

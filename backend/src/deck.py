@@ -39,7 +39,7 @@ def add_desserts_into_deck(deck, desserts, num_players, round):
 def get_dessert_card_count(num_players, round):
     if num_players <= 5:
         if round == 1:
-            return 100
+            return 5
         if round == 2:
             return 3
         if round == 3:

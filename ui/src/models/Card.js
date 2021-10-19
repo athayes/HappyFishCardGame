@@ -56,7 +56,8 @@ export function cardFactory(name, numPlayers) {
       name: "Ice Cream",
       image: "/assets/ice-cream.png",
       description: "Keep this until the end of the game. At the end of the game, if you have 4 Ice Cream, you score 12 points.",
-      hint: "x4 = 12"
+      hint: "x4 = 12",
+      backgroundColor: "#f1feed"
     };
   }
 

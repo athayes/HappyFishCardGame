@@ -1,5 +1,5 @@
 from src.cards import sashimi, wasabi, egg_nigiri, salmon_nigiri, squid_nigiri, chopsticks, tea, maki_1, maki_2, maki_3, \
-    tempura, dumpling, pudding
+    tempura, dumpling
 from src.player import ReportEntry
 
 card_group_map = {
@@ -9,8 +9,7 @@ card_group_map = {
     3: [sashimi],
     4: [maki_1, maki_2, maki_3],
     5: [tempura],
-    6: [dumpling],
-    7: [pudding]
+    6: [dumpling]
 }
 
 
@@ -23,8 +22,7 @@ def score_tea(player):
         3: 0,
         4: 0,
         5: 0,
-        6: 0,
-        7: 0
+        6: 0
     }
     if tea in player.tableau:
         for index, card in enumerate(player.tableau):

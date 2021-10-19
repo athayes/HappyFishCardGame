@@ -1,6 +1,6 @@
 import random
 from src.cards import egg_nigiri, salmon_nigiri, squid_nigiri, dumpling, \
-    tempura, sashimi, pudding, wasabi, maki_1, maki_2, maki_3, chopsticks, tea
+    tempura, sashimi, pudding, wasabi, maki_1, maki_2, maki_3, chopsticks, tea, ice_cream
 
 
 def basic_deck():
@@ -14,7 +14,7 @@ def basic_deck():
 
 
 def basic_desserts():
-    return make_deck([(pudding, 8)])
+    return make_deck([(pudding, 8), (ice_cream, 8)])
 
 
 def shuffle_deck(deck):
@@ -39,7 +39,7 @@ def add_desserts_into_deck(deck, desserts, num_players, round):
 def get_dessert_card_count(num_players, round):
     if num_players <= 5:
         if round == 1:
-            return 5
+            return 100
         if round == 2:
             return 3
         if round == 3:

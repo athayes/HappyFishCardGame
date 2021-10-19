@@ -1,5 +1,6 @@
 from src.player import ScoreReport
 from src.scoring_functions.army_cards.maki import score_maki
+from src.scoring_functions.dessert.ice_cream import score_ice_cream
 from src.scoring_functions.dessert.pudding import score_pudding
 from src.scoring_functions.dumplings import score_dumplings
 from src.scoring_functions.no_score_cards.chopsticks import remove_chopsticks
@@ -30,6 +31,7 @@ def score_players(old_players):
 
 def score_dessert(players):
     players = score_pudding(players)
+    players = score_ice_cream(players)
     return players
 
 

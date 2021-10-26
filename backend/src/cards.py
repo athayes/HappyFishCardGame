@@ -13,6 +13,7 @@ pudding = "Pudding"
 ice_cream = "Ice Cream"
 chopsticks = "Chopsticks"
 tea = "Tea"
+temaki = "Temaki"
 
 
 def is_maki(card):

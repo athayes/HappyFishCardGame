@@ -19,6 +19,7 @@ def test_score_temaki():
     assert players[1].score == 0
     assert players[2].score == -4
 
+
 def test_score_temaki_2_player():
     players = make_test_players()
     players.pop()

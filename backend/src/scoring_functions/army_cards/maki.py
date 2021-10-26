@@ -4,26 +4,46 @@ from src.cards import is_maki, get_maki_number
 from src.player import ReportEntry
 
 
-def score_maki(old_players):
-    players = old_players
+def score_maki(players):
     players = find_maki_totals(players)
-    first_place = 0
-    second_place = 0
-    for player in players:
-        if player.maki_count > first_place:
-            first_place = player.maki_count
-        elif first_place > player.maki_count > second_place:
-            second_place = player.maki_count
+    maki_order = sorted(players, key=lambda x: x.maki_count, reverse=True)
+    first_place = maki_order[0].maki_count
+    second_place = maki_order[1].maki_count
 
-    for player in players:
-        if player.maki_count == first_place and first_place != 0:
-            player.score += 6
-            player.score_report.report_entries.append(ReportEntry(f'Maki: First place with {player.maki_count}', 6))
-        if player.maki_count == second_place and second_place != 0:
-            player.score += 3
-            player.score_report.report_entries.append(ReportEntry(f'Maki: Second place with {player.maki_count}', 3))
-        # clean up
-        player.maki_count = 0
+    if len(players) < 6:
+        for player in players:
+            if player.maki_count == first_place and first_place != 0:
+                player.score += 6
+                player.score_report.report_entries.append(
+                    ReportEntry(f'Maki: First place with {player.maki_count}', 6)
+                )
+            if player.maki_count == second_place and second_place != 0:
+                player.score += 3
+                player.score_report.report_entries.append(
+                    ReportEntry(f'Maki: Second place with {player.maki_count}', 3)
+                )
+            # clean up
+            player.maki_count = 0
+    else:
+        third_place = maki_order[2].maki_count
+        for player in players:
+            if player.maki_count == first_place and first_place != 0:
+                player.score += 6
+                player.score_report.report_entries.append(
+                    ReportEntry(f'Maki: First place with {player.maki_count}', 6)
+                )
+            if player.maki_count == second_place and second_place != 0:
+                player.score += 4
+                player.score_report.report_entries.append(
+                    ReportEntry(f'Maki: Second place with {player.maki_count}', 4)
+                )
+            if player.maki_count == third_place and third_place != 0:
+                player.score += 2
+                player.score_report.report_entries.append(
+                    ReportEntry(f'Maki: Third place with {player.maki_count}', 2)
+                )
+            # clean up
+            player.maki_count = 0
 
     return players
 

@@ -138,7 +138,7 @@
           <input id="collapsible1" type="checkbox" checked disabled name="collapsible" />
           <label for="collapsible1">Food</label>
           <div v-if="tableauPlayer.tableau.length > 0" class="hand collapsible-body">
-            <div class="card" v-for="(card, index) in tableauPlayer.tableau" :key="index + card.name">
+            <div class="card" v-bind:style="{ 'background-color': card.backgroundColor }" v-for="(card, index) in tableauPlayer.tableau" :key="index + card.name">
               <img v-bind:src="card.image" />
               <p class="name">{{ card.name }}</p>
               <p class="hint">{{ card.hint }}</p>
@@ -150,7 +150,7 @@
           <input id="collapsible2" type="checkbox" checked disabled name="collapsible" />
           <label for="collapsible2">Desserts</label>
           <div v-if="tableauPlayer.dessert.length > 0" class="hand collapsible-body">
-            <div class="card" v-for="(card, index) in tableauPlayer.dessert" :key="index + card.name">
+            <div class="card" v-bind:style="{ 'background-color': card.backgroundColor }" v-for="(card, index) in tableauPlayer.dessert" :key="index + card.name">
               <img v-bind:src="card.image" />
               <p class="name">{{ card.name }}</p>
               <p class="hint">{{ card.hint }}</p>
@@ -166,6 +166,7 @@
       <div class="hand">
         <div
           class="card"
+          v-bind:style="{ 'background-color': card.backgroundColor }"
           v-for="(card, index) in currentPlayer.hand"
           :key="index + card.name"
           :class="{ inactive: index === chopsticksCard1Index }"
@@ -183,7 +184,7 @@
     <div v-if="currentView === VIEWS.chopsticksConfirm">
       <h3>{{ pickedCard.name }}</h3>
       <div class="you-want">
-        <div class="card">
+        <div class="card" v-bind:style="{ 'background-color': pickedCard.backgroundColor }">
           <img v-bind:src="pickedCard.image" />
           <p class="name">{{ pickedCard.name }}</p>
           <p class="hint">{{ pickedCard.hint }}</p>

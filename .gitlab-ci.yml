@@ -2,7 +2,7 @@ stages:
   - build
   - test
 
-build-backend:
+build backend:
   stage: build
   image: alpine:3.15
   script:

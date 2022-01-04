@@ -69,7 +69,7 @@ export function cardFactory(name, numPlayers) {
         "End of the round: Count the number of cards in your largest (or tied for largest) set of cards with the same background color. Tea is worth " +
         "1 point per card in that set",
       hint: "same color cards",
-      backgroundColor: "fff2d2"
+      backgroundColor: "#fff2d2"
     };
   }
 

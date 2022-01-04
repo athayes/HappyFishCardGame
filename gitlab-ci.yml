@@ -1,0 +1,12 @@
+stages:
+  - build
+  - test
+
+backend:
+  stage: build
+  image: alpine:3.15
+  script:
+    - apk add ruby python3 pip3
+    - gem install dpl
+    - cd backend
+    - dpl --provider=heroku --app=happyfishcardgame --api-key=$HEROKU_KEY

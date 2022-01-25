@@ -1,6 +1,7 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 import Lobby from "../views/home/Lobby";
+import Deck from "../views/deck/Deck";
 import JoinLobby from "../views/home/JoinLobby";
 import PickACard from "../views/game/PickACard";
 import Home from "../views/home/Home";
@@ -23,6 +24,10 @@ const routes = [
   {
     path: "/PickACard",
     component: PickACard
+  },
+  {
+    path: "/Deck",
+    component: Deck
   }
 ];
 

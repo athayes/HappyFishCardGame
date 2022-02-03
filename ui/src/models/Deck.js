@@ -13,7 +13,7 @@ export const CARD_TYPES = {
   },
   Appetizer: {
     name: "Appetizer",
-    cards: ["Egg Nigiri", "Salmon Nigiri", "Squid Nigiri", "Sashimi", "Tempura", "Dumpling"]
+    cards: ["Sashimi", "Tempura", "Dumpling"]
   },
   Dessert: {
     name: "Dessert",

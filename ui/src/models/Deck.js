@@ -13,7 +13,7 @@ export const CARD_TYPES = {
   },
   Appetizer: {
     name: "Appetizer",
-    cards: ["Egg Nigiri", "Salmon Nigiri", "Squid Nigiri", "Sashimi", "Tempura", "Dumpling"]
+    cards: ["Sashimi", "Tempura", "Dumpling"]
   },
   Dessert: {
     name: "Dessert",
@@ -22,14 +22,14 @@ export const CARD_TYPES = {
 };
 
 export const EMPTY_DECK = [
-  { name: "", type: CARD_TYPES.Nigiri.name },
-  { name: "", type: CARD_TYPES.Rolls.name },
-  { name: "", type: CARD_TYPES.Special.name },
-  { name: "", type: CARD_TYPES.Special.name },
-  { name: "", type: CARD_TYPES.Appetizer.name },
-  { name: "", type: CARD_TYPES.Appetizer.name },
-  { name: "", type: CARD_TYPES.Appetizer.name },
-  { name: "", type: CARD_TYPES.Dessert.name }
+  { name: "Nigiri", type: CARD_TYPES.Nigiri.name },
+  { name: "Maki", type: CARD_TYPES.Rolls.name },
+  { name: "Chopsticks", type: CARD_TYPES.Special.name },
+  { name: "Wasabi", type: CARD_TYPES.Special.name },
+  { name: "Dumpling", type: CARD_TYPES.Appetizer.name },
+  { name: "Tempura", type: CARD_TYPES.Appetizer.name },
+  { name: "Sashimi", type: CARD_TYPES.Appetizer.name },
+  { name: "Pudding", type: CARD_TYPES.Dessert.name }
 ];
 
 export function isImmutable(type) {

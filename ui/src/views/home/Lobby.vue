@@ -11,6 +11,9 @@
     <button v-if="playerCount > 1" @click="resetGame" class="btn purple-button" style="margin-left:20px;">
       Reset Lobby and Game
     </button>
+    <button v-if="gameState === 'NOT_STARTED' && playerCount > 1" @click="customDeck" class="btn pink-button" style="margin-left:20px;">
+      Customize deck
+    </button>
     <button v-if="gameState === 'NOT_STARTED' && playerCount > 1" @click="StartGame" class="btn pink-button" style="margin-left:20px;">
       Start Game
     </button>
@@ -59,6 +62,9 @@ export default {
     },
     joinGame: async function() {
       await this.$router.push("PickACard");
+    },
+    async customDeck() {
+      await this.$router.push("Deck");
     },
     addAiPlayer: async function() {
       await axios.post(`${process.env.VUE_APP_BACKEND_URL}/JoinLobby`, {

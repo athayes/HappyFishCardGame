@@ -4,6 +4,7 @@ from flask_cors import CORS
 from flask_socketio import SocketIO
 from copy import deepcopy
 
+from src.deck import custom_deck
 from src.lobby import Lobby
 
 app = Flask(__name__)
@@ -151,3 +152,10 @@ def push_game_end():
         "game_state": Lobby.last_finished_game.game_state,
         "round": Lobby.last_finished_game.round
     })
+
+
+@app.route('/PickDeck', methods=['POST'])
+def pick_deck():
+    print(request.json["deck"])
+    Lobby.deck, Lobby.desserts = custom_deck(request.json["deck"])
+    return json.dumps(dict(success=True)), 200, {'ContentType': 'application/json'}

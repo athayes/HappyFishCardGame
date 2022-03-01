@@ -12,6 +12,8 @@ import copy
 
 class Game:
     def __init__(self, players, deck, desserts, hand_size):
+        self.START_DECK = deck  # don't modify
+        self.START_DESSERTS = desserts  # don't modify
         self.deck = deck
         self.desserts = desserts
         self.players = players
@@ -22,7 +24,8 @@ class Game:
 
     def start_round(self):
         self.round += 1
-        self.deck, self.desserts = add_desserts_into_deck(self.deck, self.desserts, len(self.players), self.round)
+        print(self.desserts)
+        self.deck, self.desserts = add_desserts_into_deck(self.START_DECK, self.START_DESSERTS, len(self.players), self.round)
         self.deck = shuffle_deck(self.deck)
         players, deck = deal_hands(self.players, self.deck, self.hand_size)
         self.players = players

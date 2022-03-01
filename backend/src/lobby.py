@@ -10,6 +10,8 @@ class Lobby:
     game = None
     last_finished_game = None
     players = []
+    deck = basic_deck()
+    desserts = []
 
     @staticmethod
     def add_player(player_name, is_ai):
@@ -27,9 +29,7 @@ class Lobby:
     def start_game():
         if not Lobby.game_starting:
             Lobby.game_starting = True
-            deck = basic_deck()
-            desserts = basic_desserts()
-            Lobby.game = game.Game(deepcopy(Lobby.players), deck, desserts, 10)
+            Lobby.game = game.Game(deepcopy(Lobby.players), Lobby.deck, Lobby.desserts, 10)
 
     @staticmethod
     def get_game_state():

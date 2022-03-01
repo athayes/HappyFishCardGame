@@ -7,14 +7,41 @@ def basic_deck():
     deck = make_deck(
         [
             (egg_nigiri, 4), (salmon_nigiri, 4), (squid_nigiri, 4), (maki_1, 4), (maki_2, 4), (maki_3, 4), (tempura, 8),
-            (sashimi, 8), (dumpling, 8), (wasabi, 3), (chopsticks, 3), (tea, 3)
+            (sashimi, 8), (dumpling, 8), (wasabi, 3), (chopsticks, 3)
         ]
     )
     return deck
 
 
+def custom_deck(cards):
+    deck = []
+    dessert = []
+    for card in cards:
+        ctype = card['type']
+        name = card['name']
+
+        if ctype == 'Nigiri':
+            deck.append((egg_nigiri, 4))
+            deck.append((salmon_nigiri, 4))
+            deck.append((squid_nigiri, 4))
+        if ctype == "Rolls":
+            if name == "Maki":
+                deck.append((maki_1, 4))
+                deck.append((maki_2, 4))
+                deck.append((maki_3, 4))
+            else:
+                deck.append((name, 12))
+        if ctype == "Special":
+            deck.append((name, 3))
+        if ctype == "Appetizer":
+            deck.append((name, 8))
+        if ctype == "Dessert":
+            deck.append((name, 8))
+    return make_deck(deck), make_deck(dessert)
+
+
 def basic_desserts():
-    return make_deck([(pudding, 8), (ice_cream, 8)])
+    return make_deck([(pudding, 8)])
 
 
 def shuffle_deck(deck):
@@ -31,7 +58,7 @@ def add_desserts_into_deck(deck, desserts, num_players, round):
         card_count = len(desserts)
 
     deck.extend(desserts[0:card_count])
-    desserts = desserts[card_count-1:-1]
+    desserts = desserts[card_count - 1:-1]
 
     return deck, desserts
 

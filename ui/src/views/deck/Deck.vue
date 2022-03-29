@@ -14,6 +14,7 @@
           <div>
             <p class="name">{{ card.type.toLowerCase() }}</p>
             <p class="name">{{ card.name.toLowerCase() }}</p>
+            <img v-bind:src="card.image" />
           </div>
         </div>
       </div>
@@ -31,7 +32,8 @@
           @click.stop="pickCard(card)"
         >
           <div>
-            <p class="name">{{ card }}</p>
+            <p class="name">{{ card.name }}</p>
+            <img v-bind:src="card.image" />
           </div>
         </div>
       </div>
@@ -42,6 +44,7 @@
 <script>
 import { EMPTY_DECK, CARD_TYPES, isImmutable } from "../../models/Deck";
 import axios from "axios";
+import { cardDetails } from "../../models/Card";
 
 const VIEWS = {
   DECK: "deck",
@@ -65,13 +68,21 @@ export default {
       if (isImmutable(type)) {
         alert(`${type} cannot be changed`);
       } else {
-        this.temp.cardOptions = CARD_TYPES[type].cards;
+        let cards = CARD_TYPES[type].cards;
+        cards = cards.map(card => {
+          return {
+            name: card,
+            image: cardDetails(card).image,
+          };
+        });
+        this.temp.cardOptions = cards;
         this.view = VIEWS.CARDS;
         this.temp.cardIndex = index;
       }
     },
     pickCard: function(card) {
-      this.deck[this.temp.cardIndex].name = card;
+      this.deck[this.temp.cardIndex].name = card.name;
+      this.deck[this.temp.cardIndex].image = cardDetails(card.name).image;
       this.view = VIEWS.DECK;
       this.temp.cardOptions = [];
     },

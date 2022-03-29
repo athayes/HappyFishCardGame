@@ -168,3 +168,9 @@ export function cardFactory(name, numPlayers) {
 
   throw "Invalid card type " + name;
 }
+
+export function cardDetails(card) {
+  card = card === "Maki" ? "Maki 1" : card;
+  card = card === "Nigiri" ? "Squid Nigiri" : card;
+  return cardFactory(card);
+}

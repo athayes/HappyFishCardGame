@@ -1,3 +1,5 @@
+import { cardFactory } from "./Card";
+
 export const CARD_TYPES = {
   Nigiri: {
     name: "Nigiri",
@@ -5,7 +7,11 @@ export const CARD_TYPES = {
   },
   Rolls: {
     name: "Rolls",
-    cards: ["Temaki", "Uramaki", "Maki"]
+    cards: [
+        "Temaki",
+      //"Uramaki",
+      "Maki"
+    ]
   },
   Special: {
     name: "Special",
@@ -22,14 +28,14 @@ export const CARD_TYPES = {
 };
 
 export const EMPTY_DECK = [
-  { name: "Nigiri", type: CARD_TYPES.Nigiri.name },
-  { name: "Maki", type: CARD_TYPES.Rolls.name },
-  { name: "Chopsticks", type: CARD_TYPES.Special.name },
-  { name: "Wasabi", type: CARD_TYPES.Special.name },
-  { name: "Dumpling", type: CARD_TYPES.Appetizer.name },
-  { name: "Tempura", type: CARD_TYPES.Appetizer.name },
-  { name: "Sashimi", type: CARD_TYPES.Appetizer.name },
-  { name: "Pudding", type: CARD_TYPES.Dessert.name }
+  { name: "Nigiri", image: cardFactory("Squid Nigiri").image, type: CARD_TYPES.Nigiri.name },
+  { name: "Maki", image: cardFactory("Maki 1").image, type: CARD_TYPES.Rolls.name },
+  { name: "Chopsticks", image: cardFactory("Chopsticks").image, type: CARD_TYPES.Special.name },
+  { name: "Wasabi", image: cardFactory("Wasabi").image, type: CARD_TYPES.Special.name },
+  { name: "Dumpling", image: cardFactory("Dumpling").image, type: CARD_TYPES.Appetizer.name },
+  { name: "Tempura", image: cardFactory("Tempura").image, type: CARD_TYPES.Appetizer.name },
+  { name: "Sashimi", image: cardFactory("Sashimi").image, type: CARD_TYPES.Appetizer.name },
+  { name: "Pudding", image: cardFactory("Pudding").image, type: CARD_TYPES.Dessert.name }
 ];
 
 export function isImmutable(type) {

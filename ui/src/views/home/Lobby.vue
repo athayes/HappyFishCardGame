@@ -1,17 +1,18 @@
 <template>
   <div class="Lobby">
     <h2>Game Lobby</h2>
-    <p style="font-weight: bold">Players: {{ playerNames }}</p>
-    <button class="btn" v-if="gameState === 'NOT_STARTED'" @click="addAiPlayer">
+    <p style="font-weight: bold">Players: {{ players.length }}</p>
+    <p style="font-weight: bold">{{ playerNames }}</p>
+    <button @click="resetGame" class="btn yellow-button" style="margin-left:20px;">
+      Reset Lobby
+    </button>
+    <button class="btn purple-button" v-if="gameState === 'NOT_STARTED'" @click="addAiPlayer">
       Add AI Player
     </button>
     <div v-if="gameState === 'ACTIVE'">
       <p>Game is in progress..</p>
     </div>
-    <button v-if="playerCount > 1" @click="resetGame" class="btn purple-button" style="margin-left:20px;">
-      Reset Lobby and Game
-    </button>
-    <button v-if="gameState === 'NOT_STARTED' && playerCount > 1" @click="customDeck" class="btn pink-button" style="margin-left:20px;">
+    <button v-if="gameState === 'NOT_STARTED'" @click="customDeck" class="btn blue-button" style="margin-left:20px;">
       Customize deck
     </button>
     <button v-if="gameState === 'NOT_STARTED' && playerCount > 1" @click="StartGame" class="btn pink-button" style="margin-left:20px;">

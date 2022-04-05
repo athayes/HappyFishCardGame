@@ -2,6 +2,7 @@ from copy import deepcopy
 
 from src import game
 from src.deck import basic_deck, basic_desserts
+from src.names import upstanding_name
 from src.player import Player
 
 
@@ -15,6 +16,8 @@ class Lobby:
 
     @staticmethod
     def add_player(player_name, is_ai):
+        if is_ai:
+            player_name = upstanding_name(Lobby.players)
         player = Player(player_name)
         player.is_ai = is_ai
         Lobby.players.append(player)

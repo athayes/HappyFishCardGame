@@ -30,8 +30,7 @@ export default {
         playerName: this.playerName,
         is_ai: false
       });
-      console.log(JSON.stringify(response.data));
-      if (response.data === "Name taken; pick a new name!") {
+      if (response.data === "Name taken; pick a new name!" || response.data === "Too many players") {
         alert(response.data);
       } else {
         Cookies.set("HappyFishCardGame", this.playerName);

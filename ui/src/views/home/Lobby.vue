@@ -68,10 +68,13 @@ export default {
       await this.$router.push("Deck");
     },
     addAiPlayer: async function() {
-      await axios.post(`${process.env.VUE_APP_BACKEND_URL}/JoinLobby`, {
+      const response = await axios.post(`${process.env.VUE_APP_BACKEND_URL}/JoinLobby`, {
         playerName: Math.random().toString(),
         is_ai: true
       });
+      if (response.data === "Name taken; pick a new name!" || response.data === "Too many players") {
+        alert(response.data);
+      }
     }
   },
   async created() {

@@ -49,7 +49,7 @@ export default {
       if (this.startable) {
         return "btn pink-button";
       } else {
-        return "btn disabled";
+        return "btn disabled noHoverStuff";
       }
     },
     playerCount: function() {
@@ -112,5 +112,9 @@ export default {
 .Lobby {
   text-align: center;
   color: #2c3e50;
+}
+
+.noHoverStuff {
+  pointer-events: none;
 }
 </style>

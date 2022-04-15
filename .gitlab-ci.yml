@@ -1,6 +1,14 @@
 stages:
-  - build
   - test
+  - build
+
+python-test:
+  stage: test
+  image: python:3.8.10
+  script:
+    - cd backend
+    - pip install -r requirements.txt
+    - python -m pytest
 
 backend:
   stage: build

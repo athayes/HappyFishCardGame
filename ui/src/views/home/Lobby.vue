@@ -15,7 +15,7 @@
     <button v-if="gameState === 'NOT_STARTED'" @click="customDeck" class="btn blue-button" style="margin-left:20px;">
       Customize deck
     </button>
-    <button v-if="gameState === 'NOT_STARTED' && playerCount > 1" @click="StartGame" class="btn pink-button" style="margin-left:20px;">
+    <button v-bind:class="startStyle" @click="StartGame" class="btn pink-button" style="margin-left:20px;">
       Start Game
     </button>
   </div>
@@ -42,6 +42,16 @@ export default {
       }
       return [];
     },
+    startable: function(){
+      return this.gameState === "NOT_STARTED" && this.playerCount > 1;
+    },
+    startStyle: function() {
+      if (this.startable) {
+        return "btn pink-button";
+      } else {
+        return "btn disabled";
+      }
+    },
     playerCount: function() {
       if (this.players) {
         return this.players.length;
@@ -51,8 +61,10 @@ export default {
   },
   methods: {
     StartGame: async function() {
-      await axios.post(`${process.env.VUE_APP_BACKEND_URL}/StartGame`);
-      await this.$router.push("PickACard");
+      if (this.startable) {
+        await axios.post(`${process.env.VUE_APP_BACKEND_URL}/StartGame`);
+        await this.$router.push("PickACard");
+      }
     },
     resetGame: async function() {
       await axios.post(`${process.env.VUE_APP_BACKEND_URL}/ResetLobbyAndGame`);

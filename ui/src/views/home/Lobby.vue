@@ -42,7 +42,7 @@ export default {
       }
       return [];
     },
-    startable: function(){
+    startable: function() {
       return this.gameState === "NOT_STARTED" && this.playerCount > 1;
     },
     startStyle: function() {

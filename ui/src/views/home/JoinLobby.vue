@@ -2,7 +2,7 @@
   <div class="joinRoom">
     <h2>Join Game</h2>
     <label for="playerName">Your name</label>
-    <input v-model="playerName" class="joinLobbyEnterName" type="text" id="playerName" />
+    <input v-on:keyup.enter="JoinLobby" v-model="playerName" class="joinLobbyEnterName" type="text" id="playerName" />
     <button class="btn pink-button" @click="JoinLobby" style="margin-top:20px;">
       Join Game
     </button>

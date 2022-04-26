@@ -8,7 +8,7 @@ export const CARD_TYPES = {
   Rolls: {
     name: "Rolls",
     cards: [
-        "Temaki",
+      "Temaki",
       //"Uramaki",
       "Maki"
     ]

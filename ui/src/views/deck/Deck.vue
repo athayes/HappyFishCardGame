@@ -1,7 +1,7 @@
 <template>
-  <div class="">
+  <div class="customise-deck">
     <div v-if="view === VIEWS.DECK">
-      <h2>Choose deck</h2>
+      <h2>Customise Deck</h2>
       <div class="hand">
         <div
           class="card"
@@ -68,11 +68,13 @@ export default {
       if (isImmutable(type)) {
         alert(`${type} cannot be changed`);
       } else {
-        let cards = CARD_TYPES[type].cards;
+        const cardNames = this.deck.map(card => card.name);
+        let cards = CARD_TYPES[type].cards.filter(card => !cardNames.includes(card));
+        cards.push(this.deck[index].name); // allow the currently selected card
         cards = cards.map(card => {
           return {
             name: card,
-            image: cardDetails(card).image,
+            image: cardDetails(card).image
           };
         });
         this.temp.cardOptions = cards;
@@ -94,3 +96,8 @@ export default {
   }
 };
 </script>
+<style>
+.customise-deck {
+  text-align: center;
+}
+</style>

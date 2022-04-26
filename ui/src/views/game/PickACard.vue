@@ -523,7 +523,8 @@ button {
 }
 
 .inactive {
-  background-color: gray;
+  opacity: 60%;
+  border-color: lightgray;
 }
 
 .btn-bottom {

@@ -298,6 +298,9 @@ export default {
         console.log(err);
         await this.goHome();
       }
+      if (!response.data.game_state) {
+        await this.goHome();
+      }
       this.gameState = response.data.game_state;
       this.round = response.data.round;
       if (this.gameState === "COMPLETED") {
@@ -419,7 +422,7 @@ export default {
     },
 
     goHome: async function() {
-      await this.$router.push("/");
+      await this.$router.push("/Lobby");
     },
 
     startWaitCountDown() {

@@ -6,7 +6,13 @@
       </div>
       <h3>Pick a card</h3>
       <div class="hand">
-        <div class="card" v-bind:style="{ 'background-color': card.backgroundColor }" v-for="(card, index) in currentPlayer.hand" :key="index + card.name" @click.stop="chooseCard(card, index)">
+        <div
+          class="card"
+          v-bind:style="{ 'background-color': card.backgroundColor }"
+          v-for="(card, index) in currentPlayer.hand"
+          :key="index + card.name"
+          @click.stop="chooseCard(card, index)"
+        >
           <img v-bind:src="card.image" />
           <div>
             <p class="name">{{ card.name }}</p>
@@ -138,7 +144,12 @@
           <input id="collapsible1" type="checkbox" checked disabled name="collapsible" />
           <label for="collapsible1">Food</label>
           <div v-if="tableauPlayer.tableau.length > 0" class="hand collapsible-body">
-            <div class="card" v-bind:style="{ 'background-color': card.backgroundColor }" v-for="(card, index) in tableauPlayer.tableau" :key="index + card.name">
+            <div
+              class="card"
+              v-bind:style="{ 'background-color': card.backgroundColor }"
+              v-for="(card, index) in tableauPlayer.tableau"
+              :key="index + card.name"
+            >
               <img v-bind:src="card.image" />
               <p class="name">{{ card.name }}</p>
               <p class="hint">{{ card.hint }}</p>
@@ -150,7 +161,12 @@
           <input id="collapsible2" type="checkbox" checked disabled name="collapsible" />
           <label for="collapsible2">Desserts</label>
           <div v-if="tableauPlayer.dessert.length > 0" class="hand collapsible-body">
-            <div class="card" v-bind:style="{ 'background-color': card.backgroundColor }" v-for="(card, index) in tableauPlayer.dessert" :key="index + card.name">
+            <div
+              class="card"
+              v-bind:style="{ 'background-color': card.backgroundColor }"
+              v-for="(card, index) in tableauPlayer.dessert"
+              :key="index + card.name"
+            >
               <img v-bind:src="card.image" />
               <p class="name">{{ card.name }}</p>
               <p class="hint">{{ card.hint }}</p>
@@ -275,7 +291,13 @@ export default {
   methods: {
     refreshData: async function() {
       let self = this;
-      let response = await axios.post(`${process.env.VUE_APP_BACKEND_URL}/GetGameObject?timestamp=${new Date().getTime()}`);
+      let response;
+      try {
+        response = await axios.post(`${process.env.VUE_APP_BACKEND_URL}/GetGameObject?timestamp=${new Date().getTime()}`);
+      } catch (err) {
+        console.log(err);
+        await this.goHome();
+      }
       this.gameState = response.data.game_state;
       this.round = response.data.round;
       if (this.gameState === "COMPLETED") {

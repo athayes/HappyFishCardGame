@@ -16,7 +16,7 @@
       Customize deck
     </button>
     <button v-bind:class="startStyle" @click="StartGame" class="btn pink-button" style="margin-left:20px;">
-      Start Game
+      Join Game
     </button>
   </div>
 </template>

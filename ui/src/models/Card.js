@@ -56,7 +56,7 @@ export function cardFactory(name, numPlayers) {
       name: "Ice Cream",
       image: "/assets/ice-cream.png",
       description: "Keep this until the end of the game. At the end of the game, if you have 4 Ice Cream, you score 12 points.",
-      hint: "x4 = 12",
+      hint: "x4: 12",
       backgroundColor: "#f1feed"
     };
   }
@@ -79,7 +79,7 @@ export function cardFactory(name, numPlayers) {
       image: "/assets/sashimi.png",
       description:
         "A set of 3 sashimi cards scores 10 points. A single sashimi card or a set of only 2 is worth nothing. You may score multiple sets of sashimi in a round, although this is very hard to do!",
-      hint: "x3 = 10",
+      hint: "x3: 10",
       backgroundColor: "aliceblue"
     };
   }
@@ -89,11 +89,11 @@ export function cardFactory(name, numPlayers) {
     if (numPlayers >= 6) {
       description =
         "6 or more player game: At the end of the round, whoever has the most Maki scores 6 points. Whoever has second most scores 4 and whoever has the third most scores 2. If multiple players tie, all players receive the full points.";
-      hint = "Most 6 / 4 / 2";
+      hint = "Most: 6, 2nd: 4, 3rd: 2";
     } else {
       description =
         "At the end of the round, whoever has the most Maki scores 6 points. Whoever has second most scores 3. If multiple players tie for most or second most, all players receive the full points.";
-      hint = "Most 6 / 3 ";
+      hint = "Most: 6, 2nd: 3";
     }
     return {
       name: name,
@@ -108,10 +108,10 @@ export function cardFactory(name, numPlayers) {
     let description, hint;
     if (numPlayers === 2) {
       description = "Two player game: The player with the most scores 4 points.";
-      hint = "Most = 4";
+      hint = "Most: 4";
     } else {
       description = "The player with the most scores 4 points. The player with the fewest (including 0) loses 4 points.";
-      hint = "Most = 4, Least = -4";
+      hint = "Most: 4, Least: -4";
     }
 
     return {
@@ -119,7 +119,7 @@ export function cardFactory(name, numPlayers) {
       image: "/assets/temaki.png",
       description: description,
       hint: hint,
-      played: false
+      backgroundColor: "#e0ffff"
     };
   }
 
@@ -129,7 +129,7 @@ export function cardFactory(name, numPlayers) {
       image: "/assets/tempura.png",
       description:
         "A set of 2 tempura cards scores 5 points. A single tempura card is worth nothing. You may score multiple sets of tempura in a round.",
-      hint: "x2 = 5",
+      hint: "x2: 5",
       backgroundColor: "#fffbdf"
     };
   }
@@ -154,7 +154,7 @@ export function cardFactory(name, numPlayers) {
     } else {
       description =
         "At the end of the game, players compare how many pudding cards they have. The player with the most scores 6 points. The player with the fewest (including 0) loses 6 points.";
-      hint = "Most: 6, Least -6";
+      hint = "Most: 6, Least: -6";
     }
 
     return {

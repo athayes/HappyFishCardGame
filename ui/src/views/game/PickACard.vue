@@ -422,7 +422,7 @@ export default {
     },
 
     goHome: async function() {
-      await this.$router.push("/Lobby");
+      await this.$router.push("/");
     },
 
     startWaitCountDown() {

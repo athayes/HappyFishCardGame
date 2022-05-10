@@ -9,6 +9,7 @@ from src.scoring_functions.tea import score_tea
 from src.scoring_functions.tempura import score_tempura
 from src.scoring_functions.wasabi_and_nigiri import score_wasabi_and_nigiri
 from src.scoring_functions.army_cards.temaki import score_temaki
+from src.scoring_functions.army_cards.edamame import score_edamame
 
 
 def score_all(players):
@@ -21,6 +22,7 @@ def score_army_cards(old_players):
     players = old_players
     players = score_maki(players)
     players = score_temaki(players)
+    players = score_edamame(players)
     return players
 
 

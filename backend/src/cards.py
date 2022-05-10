@@ -14,6 +14,7 @@ ice_cream = "Ice Cream"
 chopsticks = "Chopsticks"
 tea = "Tea"
 temaki = "Temaki"
+edamame = "Edamame"
 
 
 def is_maki(card):

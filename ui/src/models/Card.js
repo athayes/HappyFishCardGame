@@ -119,6 +119,20 @@ export function cardFactory(name, numPlayers) {
       image: "/assets/temaki.png",
       description: description,
       hint: hint,
+      backgroundColor: "#ccaa"
+    };
+  }
+
+  if (name === "Edamame") {
+    let description, hint;
+    description = "1 point per card for every opponent (up to 4) with edamame.";
+    hint = "1 * opponent";
+
+    return {
+      name: name,
+      image: "/assets/edamame.png",
+      description: description,
+      hint: hint,
       backgroundColor: "#e0ffff"
     };
   }

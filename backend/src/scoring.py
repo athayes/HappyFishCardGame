@@ -3,6 +3,7 @@ from src.scoring_functions.army_cards.maki import score_maki
 from src.scoring_functions.dessert.ice_cream import score_ice_cream
 from src.scoring_functions.dessert.pudding import score_pudding
 from src.scoring_functions.dumplings import score_dumplings
+from src.scoring_functions.eel import score_eel
 from src.scoring_functions.no_score_cards.chopsticks import remove_chopsticks
 from src.scoring_functions.sashimi import score_sashimi
 from src.scoring_functions.tea import score_tea
@@ -49,6 +50,7 @@ def score_player(player):
     player = score_tempura(player)
     player = score_sashimi(player)
     player = score_wasabi_and_nigiri(player)
+    player = score_eel(player)
     player = remove_chopsticks(player)
     player.score_report.score_round_end = player.score
     return player

@@ -144,10 +144,10 @@ export function cardFactory(name, numPlayers) {
 
     return {
       name: name,
-      image: "/assets/cat.jpg",
+      image: "/assets/eel.png",
       description: description,
       hint: hint,
-      backgroundColor: "#aaabcd"
+      backgroundColor: "#fef0c2"
     };
   }
 

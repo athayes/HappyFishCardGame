@@ -137,6 +137,20 @@ export function cardFactory(name, numPlayers) {
     };
   }
 
+  if (name === "Eel") {
+    let description, hint;
+    description = "If you have 1 eel, you lose 3 points. If you have 2 or more eel, you score 7 points.";
+    hint = "1: -3, 2+: 7";
+
+    return {
+      name: name,
+      image: "/assets/cat.jpg",
+      description: description,
+      hint: hint,
+      backgroundColor: "#aaabcd"
+    };
+  }
+
   if (name === "Tempura") {
     return {
       name: name,

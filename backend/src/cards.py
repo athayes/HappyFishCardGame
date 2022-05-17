@@ -15,6 +15,7 @@ chopsticks = "Chopsticks"
 tea = "Tea"
 temaki = "Temaki"
 edamame = "Edamame"
+eel = "Eel"
 
 
 def is_maki(card):

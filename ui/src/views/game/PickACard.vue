@@ -493,7 +493,7 @@ export default {
 }
 
 .hint {
-  font-size: 12px;
+  font-size: 14px;
   margin: 5px;
   font-family: "Patrick Hand SC", sans-serif;
 }

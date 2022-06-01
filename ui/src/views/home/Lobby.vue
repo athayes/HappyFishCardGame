@@ -68,10 +68,6 @@ export default {
     },
     resetGame: async function() {
       await axios.post(`${process.env.VUE_APP_BACKEND_URL}/ResetLobbyAndGame`);
-      await axios.post(`${process.env.VUE_APP_BACKEND_URL}/JoinLobby`, {
-        playerName: this.playerName,
-        is_ai: false
-      });
     },
     joinGame: async function() {
       await this.$router.push("PickACard");
@@ -97,6 +93,13 @@ export default {
 
   beforeCreate() {
     socket.on("lobbyUpdates", payload => {
+      const players = payload.players;
+      if (this.playerName && !players.includes(this.playerName)) {
+        axios.post(`${process.env.VUE_APP_BACKEND_URL}/JoinLobby`, {
+          playerName: this.playerName,
+          is_ai: false
+        });
+      }
       this.players = payload.players;
       this.gameState = payload.game_state;
     });

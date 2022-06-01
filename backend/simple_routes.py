@@ -34,6 +34,7 @@ def start_game():
 @app.route('/ResetLobbyAndGame', methods=['POST'])
 def reset_lobby_and_game():
     Lobby.reset_game()
+    push_lobby_data()
     return json.dumps(dict(success=True)), 200, {'ContentType': 'application/json'}
 
 

@@ -41,8 +41,8 @@
 
 <script>
 import axios from "axios";
-import Cookies from "js-cookie";
 import socket from "@/socket";
+import {getCookie} from "../../util/cookies";
 
 export default {
   data: function() {
@@ -50,8 +50,7 @@ export default {
       players: [],
       interval: null,
       gameState: "",
-      playerName: JSON.parse(Cookies.get("HappyFishCardGame")).name,
-      lobbyId: JSON.parse(Cookies.get("HappyFishCardGame")).lobbyId
+      playerName: getCookie().name,
     };
   },
   computed: {
@@ -86,7 +85,7 @@ export default {
       }
     },
     resetGame: async function() {
-      const lobbyId = this.lobbyId;
+      const lobbyId = getCookie().lobbyId;
       console.log(lobbyId);
       await axios.post(`${process.env.VUE_APP_BACKEND_URL}/ResetLobbyAndGame`, {
         lobbyId
@@ -102,6 +101,7 @@ export default {
       const response = await axios.post(
         `${process.env.VUE_APP_BACKEND_URL}/JoinLobby`,
         {
+          lobbyId: getCookie().lobbyId,
           playerName: Math.random().toString(),
           is_ai: true
         }
@@ -116,7 +116,8 @@ export default {
   },
   async created() {
     let response = await axios.post(
-      `${process.env.VUE_APP_BACKEND_URL}/GetLobby`
+      `${process.env.VUE_APP_BACKEND_URL}/GetLobby`,
+      { lobbyId: getCookie().lobbyId }
     );
     this.gameState = response.data.game_state;
     this.players = response.data.players;

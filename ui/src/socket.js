@@ -1,10 +1,8 @@
 import io from "socket.io-client";
-const socket = io(process.env.VUE_APP_BACKEND_URL);
+let socket;
 
 export function joinRoom(id) {
-  socket.on("connection", socket => {
-    socket.join(id);
-  });
+  socket = io(process.env.VUE_APP_BACKEND_URL);
 }
 
 export default socket;

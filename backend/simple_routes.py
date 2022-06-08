@@ -30,14 +30,17 @@ def root():
 
 @app.route('/StartGame', methods=['POST'])
 def start_game():
-    Lobby.start_game()
+    lobby_id = request.json['lobbyId']
+    lobby = Lobbies[lobby_id]
+    lobby.start_game()
     return json.dumps(dict(success=True)), 200, {'ContentType': 'application/json'}
 
 
 @app.route('/ResetLobbyAndGame', methods=['POST'])
 def reset_lobby_and_game():
     lobby_id = request.json['lobbyId']
-    Lobbies[lobby_id].reset_game()
+    lobby = Lobbies[lobby_id]
+    lobby.reset_game()
     push_lobby_data(lobby_id)
     return json.dumps(dict(success=True)), 200, {'ContentType': 'application/json'}
 
@@ -45,7 +48,7 @@ def reset_lobby_and_game():
 @app.route('/CreateLobby', methods=['POST'])
 def create_game():
     player_name = request.json['name']
-    lobby_id = uuid.uuid4()
+    lobby_id = str(uuid.uuid4())
     Lobbies[lobby_id] = Lobby()
     Lobbies[lobby_id].add_player(player_name, False)
     return {
@@ -73,9 +76,13 @@ def get_last_finished_game_object():
 
 @app.route('/GetLobby', methods=['POST'])
 def get_lobby():
+    lobby_id = request.json['lobbyId']
+    print(lobby_id)
+    print(Lobbies)
+    lobby = Lobbies[lobby_id]
     return {
-        'players': Lobby.player_json(),
-        'game_state': Lobby.get_game_state()
+        'players': lobby.player_json(),
+        'game_state': lobby.get_game_state()
     }
 
 
@@ -90,7 +97,7 @@ def join_lobby():
         if player_name == player.player_name:
             return 'Name taken; pick a new name!', 200
     Lobbies[lobby_id].add_player(player_name, is_ai)
-    push_lobby_data()
+    push_lobby_data(lobby_id)
     return json.dumps(dict(success=True)), 200, {'ContentType': 'application/json'}
 
 
@@ -136,45 +143,39 @@ def pick_card_chopsticks():
     return json.dumps(dict(success=True)), 200, {'ContentType': 'application/json'}
 
 
-@app.route('/SetUpTestGame', methods=['POST'])
-def set_up_test_game():
-    Lobby.reset_game()
-    Lobby.add_player("reb", False)
-    Lobby.add_player("Cool H", False)
-    Lobby.start_game()
-    return json.dumps(dict(success=True)), 200, {'ContentType': 'application/json'}
-
-
 def push_lobby_data(lobby_id):
+    lobby = Lobbies[lobby_id]
     socketio.emit(
         "lobbyUpdates",
         {
-            "players": Lobby.player_json(),
-            "game_state": Lobby.get_game_state()
+            "players": lobby.player_json(),
+            "game_state": lobby.get_game_state()
         },
         room=lobby_id,
     )
 
 
 def push_game_data(lobby_id):
+    lobby = Lobbies[lobby_id]
     socketio.emit(
         "gameUpdates",
         {
-            "players": Lobby.game.player_json(),
-            "game_state": Lobby.game.game_state,
-            "round": Lobby.game.round
+            "players": lobby.game.player_json(),
+            "game_state": lobby.game.game_state,
+            "round": lobby.game.round
         },
         room=lobby_id,
     )
 
 
 def push_game_end(lobby_id):
+    lobby = Lobbies[lobby_id]
     socketio.emit(
         "gameUpdates",
         {
-            "players": Lobby.last_finished_game.player_json(),
-            "game_state": Lobby.last_finished_game.game_state,
-            "round": Lobby.last_finished_game.round
+            "players": lobby.last_finished_game.player_json(),
+            "game_state": lobby.last_finished_game.game_state,
+            "round": lobby.last_finished_game.round
         },
         room=lobby_id,
     )

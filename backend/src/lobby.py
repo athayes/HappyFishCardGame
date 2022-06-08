@@ -1,7 +1,7 @@
 from copy import deepcopy
 
 from src import game
-from src.deck import basic_deck, basic_desserts
+from src.deck import basic_deck
 from src.names import upstanding_name
 from src.player import Player
 
@@ -13,45 +13,42 @@ class Lobby:
     players = []
     deck = basic_deck()
     desserts = []
+    
+    def __init__(self):
+        pass
 
-    @staticmethod
-    def add_player(player_name, is_ai):
+    def add_player(self, player_name, is_ai):
         if is_ai:
-            player_name = upstanding_name(Lobby.players)
+            player_name = upstanding_name(self.players)
         player = Player(player_name)
         player.is_ai = is_ai
-        Lobby.players.append(player)
+        self.players.append(player)
 
-    @staticmethod
-    def reset_game():
-        Lobby.game_starting = False
-        Lobby.game = None
-        Lobby.players = []
+    def reset_game(self):
+        self.game_starting = False
+        self.game = None
+        self.players = []
 
-    @staticmethod
-    def start_game():
-        if not Lobby.game_starting:
-            Lobby.game_starting = True
-            Lobby.game = game.Game(deepcopy(Lobby.players), Lobby.deck, Lobby.desserts, 10)
+    def start_game(self):
+        if not self.game_starting:
+            self.game_starting = True
+            self.game = game.Game(deepcopy(self.players), self.deck, self.desserts, 10)
 
-    @staticmethod
-    def get_game_state():
-        if Lobby.game:
-            return Lobby.game.game_state
+    def get_game_state(self):
+        if self.game:
+            return self.game.game_state
         return "NOT_STARTED"
 
-    @staticmethod
-    def player_json():
+    def player_json(self):
         data = []
-        for player in Lobby.players:
+        for player in self.players:
             data.append(player.to_json())
         return data
 
-    @staticmethod
-    def last_finished_game_to_json():
+    def last_finished_game_to_json(self):
         return {
-            'game_state': Lobby.last_finished_game.game_state,
-            'round': Lobby.last_finished_game.round,
-            'deck': Lobby.last_finished_game.deck,
-            "players": Lobby.last_finished_game.player_json()
+            'game_state': self.last_finished_game.game_state,
+            'round': self.last_finished_game.round,
+            'deck': self.last_finished_game.deck,
+            "players": self.last_finished_game.player_json()
         }

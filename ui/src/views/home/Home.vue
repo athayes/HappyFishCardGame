@@ -20,9 +20,9 @@
 </template>
 
 <script>
-import { sillyGameName } from "@/models/SillyWords";
+import { sillyGameName } from "../../models/SillyWords";
 import axios from "axios";
-import Cookies from "js-cookie";
+import { setCookie } from "../../util/cookies";
 import { joinRoom } from "../../socket";
 
 export default {
@@ -38,7 +38,6 @@ export default {
         alert("Enter your name");
         return;
       }
-
       const response = await axios.post(
         `${process.env.VUE_APP_BACKEND_URL}/CreateLobby`,
         { name: this.name }
@@ -50,14 +49,11 @@ export default {
         alert(response.data);
       } else {
         const { lobbyId } = response.data;
-        Cookies.set(
-          "HappyFishCardGame",
-          JSON.stringify({
-            name: this.name,
-            lobbyId: lobbyId
-          })
-        );
-        joinRoom(lobbyId);
+        setCookie({
+          name: this.name,
+          lobbyId: lobbyId
+        });
+        await joinRoom(lobbyId);
         await this.$router.push(`Lobby`);
       }
     }

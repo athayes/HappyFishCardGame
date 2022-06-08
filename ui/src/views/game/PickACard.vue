@@ -321,7 +321,7 @@ import {
   findPlayerUnderscore,
   formatPlayers
 } from "@/models/Player";
-import socket from "@/socket";
+import socket from "../../socket";
 
 export const VIEWS = {
   pickACard: 1,

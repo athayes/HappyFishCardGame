@@ -1,29 +1,69 @@
 <template>
   <div class="Home">
     <h2>{{ sillyName }}</h2>
-    <button class="btn pink-button" @click="JoinLobby">
-      Join Game
+    <label for="name">Your name</label>
+    <input
+      v-on:keyup.enter="JoinLobby"
+      v-model="name"
+      class="joinLobbyEnterName"
+      type="text"
+      id="name"
+    />
+    <button
+      class="btn pink-button"
+      @click="CreateRoom"
+      style="margin-top:20px;"
+    >
+      Create Private Room
     </button>
   </div>
 </template>
 
 <script>
-import { getRandomItem, sillyWords } from "@/models/SillyWords";
+import { sillyGameName } from "@/models/SillyWords";
+import axios from "axios";
+import Cookies from "js-cookie";
+import { joinRoom } from "../../socket";
 
 export default {
   data: function() {
     return {
-      sillyName: "Happy Fish Card Game"
+      sillyName: "Happy Fish Card Game",
+      name: ""
     };
   },
   methods: {
-    async JoinLobby() {
-      await this.$router.push("JoinLobby");
+    async CreateRoom() {
+      if (this.name === "") {
+        alert("Enter your name");
+        return;
+      }
+
+      const response = await axios.post(
+        `${process.env.VUE_APP_BACKEND_URL}/CreateLobby`,
+        { name: this.name }
+      );
+      if (
+        response.data === "Name taken; pick a new name!" ||
+        response.data === "Too many players"
+      ) {
+        alert(response.data);
+      } else {
+        const { lobbyId } = response.data;
+        Cookies.set(
+          "HappyFishCardGame",
+          JSON.stringify({
+            name: this.name,
+            lobbyId: lobbyId
+          })
+        );
+        joinRoom(lobbyId);
+        await this.$router.push(`Lobby`);
+      }
     }
   },
   mounted() {
-    // eslint-disable-next-line
-    this.sillyName = `${getRandomItem(sillyWords.adjectives)} ${getRandomItem(sillyWords.nouns)} ${getRandomItem(sillyWords.adjectives)} Game`;
+    this.sillyName = sillyGameName();
   }
 };
 </script>
@@ -33,5 +73,15 @@ export default {
   text-align: center;
   color: #2c3e50;
   padding: 20px;
+}
+
+label {
+  text-align: left;
+}
+
+.joinLobbyEnterName {
+  display: block;
+  margin-right: auto;
+  margin-left: auto;
 }
 </style>

@@ -6,10 +6,13 @@ from copy import deepcopy
 
 from src.deck import custom_deck
 from src.lobby import Lobby
+import uuid
 
 app = Flask(__name__)
 CORS(app)
 socketio = SocketIO(app, cors_allowed_origins="*", async_handlers=False)
+
+Lobbies = {}
 
 
 @app.after_request
@@ -33,17 +36,21 @@ def start_game():
 
 @app.route('/ResetLobbyAndGame', methods=['POST'])
 def reset_lobby_and_game():
-    Lobby.reset_game()
-    push_lobby_data()
+    lobby_id = request.json['lobbyId']
+    Lobbies[lobby_id].reset_game()
+    push_lobby_data(lobby_id)
     return json.dumps(dict(success=True)), 200, {'ContentType': 'application/json'}
 
 
 @app.route('/CreateLobby', methods=['POST'])
 def create_game():
-    player_name = request.json['hostName']
-    Lobby.reset_game()
-    Lobby.add_player(player_name, False)
-    return json.dumps(dict(success=True)), 200, {'ContentType': 'application/json'}
+    player_name = request.json['name']
+    lobby_id = uuid.uuid4()
+    Lobbies[lobby_id] = Lobby()
+    Lobbies[lobby_id].add_player(player_name, False)
+    return {
+        "lobbyId": lobby_id
+    }
 
 
 @app.route('/GetGameObject', methods=['POST'])
@@ -74,6 +81,7 @@ def get_lobby():
 
 @app.route('/JoinLobby', methods=['POST'])
 def join_lobby():
+    lobby_id = request.json['lobbyId']
     player_name = request.json['playerName']
     is_ai = request.json['is_ai']
     if len(Lobby.players) >= 8:
@@ -81,7 +89,7 @@ def join_lobby():
     for player in Lobby.players:
         if player_name == player.player_name:
             return 'Name taken; pick a new name!', 200
-    Lobby.add_player(player_name, is_ai)
+    Lobbies[lobby_id].add_player(player_name, is_ai)
     push_lobby_data()
     return json.dumps(dict(success=True)), 200, {'ContentType': 'application/json'}
 
@@ -93,6 +101,7 @@ def get_state():
 
 @app.route('/PickCard', methods=['POST'])
 def pick_card():
+    lobby_id = request.json["lobbyId"]
     player = request.json["playerName"]
     card_index = request.json["index"]
     Lobby.game.handle_ai()
@@ -103,14 +112,15 @@ def pick_card():
         Lobby.game_starting = False
         Lobby.game = None
         Lobby.players = []
-        push_game_end()
+        push_game_end(lobby_id)
     else:
-        push_game_data()
+        push_game_data(lobby_id)
     return json.dumps(dict(success=True)), 200, {'ContentType': 'application/json'}
 
 
 @app.route('/PickCardChopsticks', methods=['POST'])
 def pick_card_chopsticks():
+    lobby_id = request.json["lobbyId"]
     player = request.json["playerName"]
     card_1_index = request.json["index1"]
     card_2_index = request.json["index2"]
@@ -120,9 +130,9 @@ def pick_card_chopsticks():
         Lobby.last_finished_game = deepcopy(Lobby.game)
         Lobby.game = None
         Lobby.players = []
-        push_game_end()
+        push_game_end(lobby_id)
     else:
-        push_game_data()
+        push_game_data(lobby_id)
     return json.dumps(dict(success=True)), 200, {'ContentType': 'application/json'}
 
 
@@ -135,27 +145,39 @@ def set_up_test_game():
     return json.dumps(dict(success=True)), 200, {'ContentType': 'application/json'}
 
 
-def push_lobby_data():
-    socketio.emit("lobbyUpdates", {
-        "players": Lobby.player_json(),
-        "game_state": Lobby.get_game_state()
-    })
+def push_lobby_data(lobby_id):
+    socketio.emit(
+        "lobbyUpdates",
+        {
+            "players": Lobby.player_json(),
+            "game_state": Lobby.get_game_state()
+        },
+        room=lobby_id,
+    )
 
 
-def push_game_data():
-    socketio.emit("gameUpdates", {
-        "players": Lobby.game.player_json(),
-        "game_state": Lobby.game.game_state,
-        "round": Lobby.game.round
-    })
+def push_game_data(lobby_id):
+    socketio.emit(
+        "gameUpdates",
+        {
+            "players": Lobby.game.player_json(),
+            "game_state": Lobby.game.game_state,
+            "round": Lobby.game.round
+        },
+        room=lobby_id,
+    )
 
 
-def push_game_end():
-    socketio.emit("gameUpdates", {
-        "players": Lobby.last_finished_game.player_json(),
-        "game_state": Lobby.last_finished_game.game_state,
-        "round": Lobby.last_finished_game.round
-    })
+def push_game_end(lobby_id):
+    socketio.emit(
+        "gameUpdates",
+        {
+            "players": Lobby.last_finished_game.player_json(),
+            "game_state": Lobby.last_finished_game.game_state,
+            "round": Lobby.last_finished_game.round
+        },
+        room=lobby_id,
+    )
 
 
 @app.route('/PickDeck', methods=['POST'])

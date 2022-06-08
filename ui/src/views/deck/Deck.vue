@@ -69,7 +69,9 @@ export default {
         alert(`${type} cannot be changed`);
       } else {
         const cardNames = this.deck.map(card => card.name);
-        let cards = CARD_TYPES[type].cards.filter(card => !cardNames.includes(card));
+        let cards = CARD_TYPES[type].cards.filter(
+          card => !cardNames.includes(card)
+        );
         cards.push(this.deck[index].name); // allow the currently selected card
         cards = cards.map(card => {
           return {

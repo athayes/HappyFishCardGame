@@ -3,19 +3,37 @@
     <h2>Game Lobby</h2>
     <p style="font-weight: bold">Players: {{ players.length }}</p>
     <p style="font-weight: bold">{{ playerNames }}</p>
-    <button @click="resetGame" class="btn yellow-button" style="margin-left:20px;">
+    <button
+      @click="resetGame"
+      class="btn yellow-button"
+      style="margin-left:20px;"
+    >
       Reset Lobby
     </button>
-    <button class="btn purple-button" v-if="gameState === 'NOT_STARTED'" @click="addAiPlayer">
+    <button
+      class="btn purple-button"
+      v-if="gameState === 'NOT_STARTED'"
+      @click="addAiPlayer"
+    >
       Add AI Player
     </button>
     <div v-if="gameState === 'ACTIVE'">
       <p>Game is in progress..</p>
     </div>
-    <button v-if="gameState === 'NOT_STARTED'" @click="customDeck" class="btn blue-button" style="margin-left:20px;">
+    <button
+      v-if="gameState === 'NOT_STARTED'"
+      @click="customDeck"
+      class="btn blue-button"
+      style="margin-left:20px;"
+    >
       Customize deck
     </button>
-    <button v-bind:class="startStyle" @click="StartGame" class="btn pink-button" style="margin-left:20px;">
+    <button
+      v-bind:class="startStyle"
+      @click="StartGame"
+      class="btn pink-button"
+      style="margin-left:20px;"
+    >
       Join Game
     </button>
   </div>
@@ -32,7 +50,8 @@ export default {
       players: [],
       interval: null,
       gameState: "",
-      playerName: Cookies.get("HappyFishCardGame")
+      playerName: JSON.parse(Cookies.get("HappyFishCardGame")).name,
+      lobbyId: JSON.parse(Cookies.get("HappyFishCardGame")).lobbyId
     };
   },
   computed: {
@@ -67,7 +86,11 @@ export default {
       }
     },
     resetGame: async function() {
-      await axios.post(`${process.env.VUE_APP_BACKEND_URL}/ResetLobbyAndGame`);
+      const lobbyId = this.lobbyId;
+      console.log(lobbyId);
+      await axios.post(`${process.env.VUE_APP_BACKEND_URL}/ResetLobbyAndGame`, {
+        lobbyId
+      });
     },
     joinGame: async function() {
       await this.$router.push("PickACard");
@@ -76,17 +99,25 @@ export default {
       await this.$router.push("Deck");
     },
     addAiPlayer: async function() {
-      const response = await axios.post(`${process.env.VUE_APP_BACKEND_URL}/JoinLobby`, {
-        playerName: Math.random().toString(),
-        is_ai: true
-      });
-      if (response.data === "Name taken; pick a new name!" || response.data === "Too many players") {
+      const response = await axios.post(
+        `${process.env.VUE_APP_BACKEND_URL}/JoinLobby`,
+        {
+          playerName: Math.random().toString(),
+          is_ai: true
+        }
+      );
+      if (
+        response.data === "Name taken; pick a new name!" ||
+        response.data === "Too many players"
+      ) {
         alert(response.data);
       }
     }
   },
   async created() {
-    let response = await axios.post(`${process.env.VUE_APP_BACKEND_URL}/GetLobby`);
+    let response = await axios.post(
+      `${process.env.VUE_APP_BACKEND_URL}/GetLobby`
+    );
     this.gameState = response.data.game_state;
     this.players = response.data.players;
   },

@@ -6,3 +6,12 @@ export const sillyWords = {
 export function getRandomItem(array) {
   return array[Math.floor(Math.random() * array.length)];
 }
+
+export function sillyGameName() {
+  return (
+    `${getRandomItem(sillyWords.adjectives)}` +
+    ` ${getRandomItem(sillyWords.nouns)}` +
+    ` ${getRandomItem(sillyWords.adjectives)}` +
+    " Game"
+  );
+}

@@ -97,6 +97,7 @@ def pick_card():
     card_index = request.json["index"]
     Lobby.game.handle_ai()
     Lobby.game.play_card(player, card_index)
+    # Todo investigate possible race condition
     if Lobby.game.game_state == "COMPLETED":
         Lobby.last_finished_game = deepcopy(Lobby.game)
         Lobby.game_starting = False

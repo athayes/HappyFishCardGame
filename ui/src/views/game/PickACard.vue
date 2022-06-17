@@ -315,7 +315,6 @@
 
 <script>
 import axios from "axios";
-import Cookies from "js-cookie";
 import {
   findPlayer,
   findPlayerUnderscore,
@@ -342,7 +341,7 @@ export default {
     return {
       // Frontend state
       currentView: VIEWS.pickACard,
-      playerName: Cookies.get("HappyFishCardGame"),
+      playerName: getCookie("HappyFishCardGame").name,
       VIEWS: VIEWS,
       pickedCard: {},
       tableauIndex: 0,
@@ -366,6 +365,7 @@ export default {
       return this.players[this.tableauIndex];
     },
     currentPlayer: function() {
+      console.log(this.playerIndex);
       if (this.players.length === 0) {
         return {};
       }
@@ -393,9 +393,7 @@ export default {
       let response;
       try {
         response = await axios.post(
-          `${
-            process.env.VUE_APP_BACKEND_URL
-          }/GetGameObject?timestamp=${new Date().getTime()}`,
+          `${process.env.VUE_APP_BACKEND_URL}/GetGameObject`,
           {
             lobbyId: getCookie().lobbyId
           }

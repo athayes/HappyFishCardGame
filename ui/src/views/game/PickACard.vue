@@ -320,7 +320,8 @@ import {
   findPlayer,
   findPlayerUnderscore,
   formatPlayers
-} from "@/models/Player";
+} from "../../models/Player";
+import { getCookie } from "../../util/cookies";
 import socket from "../../socket";
 
 export const VIEWS = {
@@ -394,7 +395,10 @@ export default {
         response = await axios.post(
           `${
             process.env.VUE_APP_BACKEND_URL
-          }/GetGameObject?timestamp=${new Date().getTime()}`
+          }/GetGameObject?timestamp=${new Date().getTime()}`,
+          {
+            lobbyId: getCookie().lobbyId
+          }
         );
       } catch (err) {
         console.log(err);
@@ -419,7 +423,10 @@ export default {
 
     refreshDataGameEnd: async function() {
       let response = await axios.post(
-        `${process.env.VUE_APP_BACKEND_URL}/GetLastFinishedGameObject`
+        `${process.env.VUE_APP_BACKEND_URL}/GetLastFinishedGameObject`,
+        {
+          lobbyId: getCookie().lobbyId
+        }
       );
       this.players = formatPlayers(response.data.players);
     },
@@ -433,6 +440,7 @@ export default {
     confirmCard: function() {
       let self = this;
       axios.post(`${process.env.VUE_APP_BACKEND_URL}/PickCard`, {
+        lobbyId: getCookie().lobbyId,
         playerName: self.playerName,
         index: self.pickedCard.index
       });
@@ -482,6 +490,7 @@ export default {
     chopsticksConfirm: function() {
       let self = this;
       axios.post(`${process.env.VUE_APP_BACKEND_URL}/PickCardChopsticks`, {
+        lobbyId: getCookie().lobbyId,
         playerName: self.playerName,
         index1: self.chopsticksCard1Index,
         index2: this.pickedCard.index

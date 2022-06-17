@@ -41,8 +41,8 @@
 
 <script>
 import axios from "axios";
-import socket from "@/socket";
-import {getCookie} from "../../util/cookies";
+import socket from "../../socket";
+import { getCookie } from "../../util/cookies";
 
 export default {
   data: function() {
@@ -50,7 +50,7 @@ export default {
       players: [],
       interval: null,
       gameState: "",
-      playerName: getCookie().name,
+      playerName: getCookie().name
     };
   },
   computed: {
@@ -80,15 +80,15 @@ export default {
   methods: {
     StartGame: async function() {
       if (this.startable) {
-        await axios.post(`${process.env.VUE_APP_BACKEND_URL}/StartGame`);
+        await axios.post(`${process.env.VUE_APP_BACKEND_URL}/StartGame`, {
+          lobbyId: getCookie().lobbyId
+        });
         await this.$router.push("PickACard");
       }
     },
     resetGame: async function() {
-      const lobbyId = getCookie().lobbyId;
-      console.log(lobbyId);
       await axios.post(`${process.env.VUE_APP_BACKEND_URL}/ResetLobbyAndGame`, {
-        lobbyId
+        lobbyId: getCookie().lobbyId
       });
     },
     joinGame: async function() {
@@ -128,6 +128,7 @@ export default {
       const players = payload.players;
       if (this.playerName && !players.includes(this.playerName)) {
         axios.post(`${process.env.VUE_APP_BACKEND_URL}/JoinLobby`, {
+          lobbyId: getCookie().lobbyId,
           playerName: this.playerName,
           is_ai: false
         });

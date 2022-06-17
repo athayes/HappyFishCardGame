@@ -34,7 +34,8 @@ export default {
   },
   methods: {
     async CreateRoom() {
-      if (this.name === "") {
+      const name = this.name;
+      if (name === "") {
         alert("Enter your name");
         return;
       }
@@ -50,10 +51,10 @@ export default {
       } else {
         const { lobbyId } = response.data;
         setCookie({
-          name: this.name,
+          name,
           lobbyId: lobbyId
         });
-        await joinRoom(lobbyId);
+        await joinRoom({ name, id: lobbyId });
         await this.$router.push(`Lobby`);
       }
     }

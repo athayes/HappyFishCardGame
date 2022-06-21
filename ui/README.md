@@ -27,3 +27,11 @@ npm run lint
 
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
+
+
+Okay so what's going on?
+I think it's not getting the latest state.
+
+Todo: 
+1. determine if that's the case
+2. ?? use the store?

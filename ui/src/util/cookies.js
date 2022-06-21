@@ -1,9 +1,8 @@
 import Cookies from "js-cookie";
+import store from "../store/index";
 
 export function setCookie(data) {
   Cookies.set("HappyFishCardGame", JSON.stringify(data));
-}
-
-export function getCookie() {
-  return JSON.parse(Cookies.get("HappyFishCardGame"));
+  store.commit("setName", data.name);
+  store.commit("setLobbyId", data.lobbyId);
 }

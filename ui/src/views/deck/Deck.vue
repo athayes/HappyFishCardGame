@@ -45,6 +45,7 @@
 import { EMPTY_DECK, CARD_TYPES, isImmutable } from "../../models/Deck";
 import axios from "axios";
 import { cardDetails } from "../../models/Card";
+import { getCookie } from "../../util/cookies";
 
 const VIEWS = {
   DECK: "deck",
@@ -92,7 +93,10 @@ export default {
     },
     finish: async function() {
       const deck = this.deck;
-      await axios.post(`${process.env.VUE_APP_BACKEND_URL}/PickDeck`, { deck });
+      await axios.post(`${process.env.VUE_APP_BACKEND_URL}/PickDeck`, {
+        lobbyId: getCookie().lobbyId,
+        deck
+      });
       await this.$router.push("Lobby");
     }
   }

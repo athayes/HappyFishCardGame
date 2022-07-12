@@ -9,12 +9,8 @@
       type="text"
       id="name"
     />
-    <button
-      class="btn pink-button"
-      @click="CreateRoom"
-      style="margin-top:20px;"
-    >
-      Create Private Room
+    <button class="btn pink-button" @click="JoinLobby" style="margin-top:20px;">
+      Join Game
     </button>
   </div>
 </template>
@@ -33,15 +29,16 @@ export default {
     };
   },
   methods: {
-    async CreateRoom() {
+    async JoinLobby() {
       const name = this.name;
+      const lobbyId = this.$route.params.id;
       if (name === "") {
         alert("Enter your name");
         return;
       }
       const response = await axios.post(
-        `${process.env.VUE_APP_BACKEND_URL}/CreateLobby`,
-        { name: this.name }
+        `${process.env.VUE_APP_BACKEND_URL}/JoinLobby`,
+        { playerName: this.name, lobbyId, is_ai: false }
       );
       if (
         response.data === "Name taken; pick a new name!" ||
@@ -49,13 +46,9 @@ export default {
       ) {
         alert(response.data);
       } else {
-        const { lobbyId } = response.data;
-        setCookie({
-          name,
-          lobbyId: lobbyId
-        });
+        setCookie({ name, lobbyId });
         await joinRoom({ name, id: lobbyId });
-        await this.$router.push(`Lobby`);
+        await this.$router.push("/Lobby");
       }
     }
   },

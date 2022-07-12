@@ -3,7 +3,8 @@ export function cardFactory(name, numPlayers) {
     return {
       name: "Egg Nigiri",
       image: "/assets/egg.png",
-      description: "Each egg nigiri is worth 1 point. An egg Nigiri on a Wasabi card is worth 3 points.",
+      description:
+        "Each egg nigiri is worth 1 point. An egg Nigiri on a Wasabi card is worth 3 points.",
       hint: "1",
       backgroundColor: "#ffdfdf"
     };
@@ -13,7 +14,8 @@ export function cardFactory(name, numPlayers) {
     return {
       name: "Salmon Nigiri",
       image: "/assets/salmon.png",
-      description: "Each salmon nigiri is worth 2 points. A salmon Nigiri on a Wasabi card is worth 6 points.",
+      description:
+        "Each salmon nigiri is worth 2 points. A salmon Nigiri on a Wasabi card is worth 6 points.",
       hint: "2",
       backgroundColor: "#ffdfdf"
     };
@@ -23,7 +25,8 @@ export function cardFactory(name, numPlayers) {
     return {
       name: "Squid Nigiri",
       image: "/assets/squid.png",
-      description: "Each squid nigiri is worth 3 points. A squid Nigiri on a Wasabi card is worth 9 points.",
+      description:
+        "Each squid nigiri is worth 3 points. A squid Nigiri on a Wasabi card is worth 9 points.",
       hint: "3",
       backgroundColor: "#ffdfdf"
     };
@@ -55,7 +58,8 @@ export function cardFactory(name, numPlayers) {
     return {
       name: "Ice Cream",
       image: "/assets/ice-cream.png",
-      description: "Keep this until the end of the game. At the end of the game, if you have 4 Ice Cream, you score 12 points.",
+      description:
+        "Keep this until the end of the game. At the end of the game, if you have 4 Ice Cream, you score 12 points.",
       hint: "x4: 12",
       backgroundColor: "#f1feed"
     };
@@ -107,10 +111,12 @@ export function cardFactory(name, numPlayers) {
   if (name === "Temaki") {
     let description, hint;
     if (numPlayers === 2) {
-      description = "Two player game: The player with the most scores 4 points.";
+      description =
+        "Two player game: The player with the most scores 4 points.";
       hint = "Most: 4";
     } else {
-      description = "The player with the most scores 4 points. The player with the fewest (including 0) loses 4 points.";
+      description =
+        "The player with the most scores 4 points. The player with the fewest (including 0) loses 4 points.";
       hint = "Most: 4, Least: -4";
     }
 
@@ -139,7 +145,8 @@ export function cardFactory(name, numPlayers) {
 
   if (name === "Eel") {
     let description, hint;
-    description = "If you have 1 eel, you lose 3 points. If you have 2 or more eel, you score 7 points.";
+    description =
+      "If you have 1 eel, you lose 3 points. If you have 2 or more eel, you score 7 points.";
     hint = "1: -3, 2+: 7";
 
     return {
@@ -166,7 +173,8 @@ export function cardFactory(name, numPlayers) {
     return {
       name: name,
       image: "/assets/dumpling.png",
-      description: "The more dumpling cards you have, the more points you will score, as follows: 1,3,6,10,15",
+      description:
+        "The more dumpling cards you have, the more points you will score, as follows: 1,3,6,10,15",
       hint: "1 3 6 10 15",
       backgroundColor: "#ffe6d0"
     };

@@ -45,7 +45,7 @@
     "rules": {}
   },
   "prettier": {
-    "printWidth": 150
+    "printWidth": 80
   },
   "browserslist": [
     "> 1%",

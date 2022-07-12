@@ -3,19 +3,38 @@
     <h2>Game Lobby</h2>
     <p style="font-weight: bold">Players: {{ players.length }}</p>
     <p style="font-weight: bold">{{ playerNames }}</p>
-    <button @click="resetGame" class="btn yellow-button" style="margin-left:20px;">
+    <p>Link: {{ joinLink }}</p>
+    <button
+      @click="resetGame"
+      class="btn yellow-button"
+      style="margin-left:20px;"
+    >
       Reset Lobby
     </button>
-    <button class="btn purple-button" v-if="gameState === 'NOT_STARTED'" @click="addAiPlayer">
+    <button
+      class="btn purple-button"
+      v-if="gameState === 'NOT_STARTED'"
+      @click="addAiPlayer"
+    >
       Add AI Player
     </button>
     <div v-if="gameState === 'ACTIVE'">
       <p>Game is in progress..</p>
     </div>
-    <button v-if="gameState === 'NOT_STARTED'" @click="customDeck" class="btn blue-button" style="margin-left:20px;">
+    <button
+      v-if="gameState === 'NOT_STARTED'"
+      @click="customDeck"
+      class="btn blue-button"
+      style="margin-left:20px;"
+    >
       Customize deck
     </button>
-    <button v-bind:class="startStyle" @click="StartGame" class="btn pink-button" style="margin-left:20px;">
+    <button
+      v-bind:class="startStyle"
+      @click="StartGame"
+      class="btn pink-button"
+      style="margin-left:20px;"
+    >
       Join Game
     </button>
   </div>
@@ -23,8 +42,8 @@
 
 <script>
 import axios from "axios";
-import Cookies from "js-cookie";
-import socket from "@/socket";
+import socket from "../../socket";
+import { getCookie } from "../../util/cookies";
 
 export default {
   data: function() {
@@ -32,7 +51,7 @@ export default {
       players: [],
       interval: null,
       gameState: "",
-      playerName: Cookies.get("HappyFishCardGame")
+      playerName: getCookie().name
     };
   },
   computed: {
@@ -41,6 +60,9 @@ export default {
         return this.players.map(player => player.player_name).join(", ");
       }
       return [];
+    },
+    joinLink: () => {
+      return `${window.location.origin}/#/Join/${getCookie().lobbyId}`;
     },
     startable: function() {
       return this.gameState === "NOT_STARTED" && this.playerCount > 1;
@@ -62,12 +84,16 @@ export default {
   methods: {
     StartGame: async function() {
       if (this.startable) {
-        await axios.post(`${process.env.VUE_APP_BACKEND_URL}/StartGame`);
+        await axios.post(`${process.env.VUE_APP_BACKEND_URL}/StartGame`, {
+          lobbyId: getCookie().lobbyId
+        });
         await this.$router.push("PickACard");
       }
     },
     resetGame: async function() {
-      await axios.post(`${process.env.VUE_APP_BACKEND_URL}/ResetLobbyAndGame`);
+      await axios.post(`${process.env.VUE_APP_BACKEND_URL}/ResetLobbyAndGame`, {
+        lobbyId: getCookie().lobbyId
+      });
     },
     joinGame: async function() {
       await this.$router.push("PickACard");
@@ -76,17 +102,27 @@ export default {
       await this.$router.push("Deck");
     },
     addAiPlayer: async function() {
-      const response = await axios.post(`${process.env.VUE_APP_BACKEND_URL}/JoinLobby`, {
-        playerName: Math.random().toString(),
-        is_ai: true
-      });
-      if (response.data === "Name taken; pick a new name!" || response.data === "Too many players") {
+      const response = await axios.post(
+        `${process.env.VUE_APP_BACKEND_URL}/JoinLobby`,
+        {
+          lobbyId: getCookie().lobbyId,
+          playerName: Math.random().toString(),
+          is_ai: true
+        }
+      );
+      if (
+        response.data === "Name taken; pick a new name!" ||
+        response.data === "Too many players"
+      ) {
         alert(response.data);
       }
     }
   },
   async created() {
-    let response = await axios.post(`${process.env.VUE_APP_BACKEND_URL}/GetLobby`);
+    let response = await axios.post(
+      `${process.env.VUE_APP_BACKEND_URL}/GetLobby`,
+      { lobbyId: getCookie().lobbyId }
+    );
     this.gameState = response.data.game_state;
     this.players = response.data.players;
   },
@@ -96,6 +132,7 @@ export default {
       const players = payload.players;
       if (this.playerName && !players.includes(this.playerName)) {
         axios.post(`${process.env.VUE_APP_BACKEND_URL}/JoinLobby`, {
+          lobbyId: getCookie().lobbyId,
           playerName: this.playerName,
           is_ai: false
         });

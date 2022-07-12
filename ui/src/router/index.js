@@ -1,8 +1,8 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 import Lobby from "../views/home/Lobby";
+import Join from "../views/home/Join";
 import Deck from "../views/deck/Deck";
-import JoinLobby from "../views/home/JoinLobby";
 import PickACard from "../views/game/PickACard";
 import Home from "../views/home/Home";
 
@@ -14,12 +14,12 @@ const routes = [
     component: Home
   },
   {
-    path: "/JoinLobby",
-    component: JoinLobby
-  },
-  {
     path: "/Lobby",
     component: Lobby
+  },
+  {
+    path: "/Join/:id",
+    component: Join
   },
   {
     path: "/PickACard",

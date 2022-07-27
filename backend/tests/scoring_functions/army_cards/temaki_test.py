@@ -6,7 +6,7 @@ from src.scoring_functions.army_cards.temaki import find_temaki_totals, score_te
 
 def test_player_find_temaki_totals():
     players = make_test_players()
-    players = find_temaki_totals(players)
+    players, in_play = find_temaki_totals(players)
     assert players[0].temaki_count == 3
     assert players[1].temaki_count == 2
     assert players[2].temaki_count == 1

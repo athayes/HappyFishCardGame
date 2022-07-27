@@ -5,7 +5,10 @@ from src.player import ReportEntry
 
 
 def score_temaki(players):
-    players = find_temaki_totals(players)
+    players, in_play = find_temaki_totals(players)
+    if not in_play:
+        return players
+
     temaki_order = sorted(players, key=lambda x: x.temaki_count, reverse=True)
     first_place = temaki_order[0].temaki_count
     last_place = temaki_order[-1].temaki_count
@@ -27,14 +30,16 @@ def score_temaki(players):
 
 
 def find_temaki_totals(players):
+    in_play = False
     for player_ind, player in enumerate(players):
         temaki_count = 0
         card_indices = []
         for card_ind, card in enumerate(player.tableau):
             if card == temaki:
+                in_play = True
                 temaki_count += 1
                 card_indices.append(card_ind)
         player.temaki_count = temaki_count
         # remove the cards from the player's tableau
         player.tableau = list(np.delete(player.tableau, card_indices))
-    return players
+    return players, in_play

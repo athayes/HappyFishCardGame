@@ -28,6 +28,13 @@ def test_score_temaki_2_player():
     assert players[1].score == 0
 
 
+def test_score_temaki_no_temaki():
+    players = make_players(["P_Zero", "P_One", "P_Two"])
+    players = score_temaki(players)
+    assert players[0].score == 0
+    assert players[1].score == 0
+
+
 def make_test_players():
     players = make_players(["P_Zero", "P_One", "P_Two"])
     players[0].tableau = make_deck([(temaki, 3)])

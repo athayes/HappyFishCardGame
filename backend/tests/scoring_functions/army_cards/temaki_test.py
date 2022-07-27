@@ -6,7 +6,7 @@ from src.scoring_functions.army_cards.temaki import find_temaki_totals, score_te
 
 def test_player_find_temaki_totals():
     players = make_test_players()
-    players = find_temaki_totals(players)
+    players, in_play = find_temaki_totals(players)
     assert players[0].temaki_count == 3
     assert players[1].temaki_count == 2
     assert players[2].temaki_count == 1
@@ -25,6 +25,13 @@ def test_score_temaki_2_player():
     players.pop()
     players = score_temaki(players)
     assert players[0].score == 4
+    assert players[1].score == 0
+
+
+def test_score_temaki_no_temaki():
+    players = make_players(["P_Zero", "P_One", "P_Two"])
+    players = score_temaki(players)
+    assert players[0].score == 0
     assert players[1].score == 0
 
 

@@ -1,5 +1,5 @@
 from src.cards import dumpling
-from src.player import Player, ReportEntry
+from src.player import Player
 from src.scoring_functions.dumplings import score_dumplings
 
 

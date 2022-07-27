@@ -1,9 +1,13 @@
 import io from "socket.io-client";
-let socket = io(process.env.VUE_APP_BACKEND_URL);
-const JOIN_ROOM = "JOIN_ROOM";
+const socket = io(process.env.VUE_APP_BACKEND_URL);
 
-export function joinRoom({ name, id }) {
-  socket.emit(JOIN_ROOM, { name, id });
+export async function joinRoom({ name, id }) {
+  // leave rooms you're already connected to by disconnecting
+  if (socket) {
+    await socket.disconnect();
+    await socket.connect(process.env.VUE_APP_BACKEND_URL);
+  }
+  await socket.emit("JOIN_ROOM", { name, id });
 }
 
 export default socket;

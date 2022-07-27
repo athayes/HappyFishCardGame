@@ -143,13 +143,12 @@ def pick_card_chopsticks():
     return json.dumps(dict(success=True)), 200, {'ContentType': 'application/json'}
 
 
+
 @socketio.on('JOIN_ROOM')
 def join(data):
+    # clients can leave rooms by disconnecting
     username = data['name']
     room = data['id']
-    # TODO handle leaving rooms
-    # for room in rooms():
-    #     leave_room(room)
     join_room(room)
     send(username + ' has entered the room.', to=room)
 

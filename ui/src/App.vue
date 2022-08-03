@@ -52,6 +52,11 @@
   border-color: #f99;
 }
 
+.aqua-button {
+  background-color: #f1ffe5;
+  border-color: #6bdbb8;
+}
+
 /* Look into using default for focus*/
 /*input:focus, select:focus, textarea:focus {*/
 /*  border: 2px solid #0071de;*/

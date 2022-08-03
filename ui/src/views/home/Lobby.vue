@@ -3,7 +3,10 @@
     <h2>Game Lobby</h2>
     <p style="font-weight: bold">Players: {{ players.length }}</p>
     <p style="font-weight: bold">{{ playerNames }}</p>
-    <p>Link: {{ joinLink }}</p>
+    <button class="btn-small aqua-button" @click="copyLink">
+      {{ linkText }}
+    </button>
+    <br />
     <button
       @click="resetGame"
       class="btn yellow-button"
@@ -45,13 +48,16 @@ import axios from "axios";
 import socket from "../../socket";
 import { getCookie } from "../../util/cookies";
 
+const linkText = "Copy Join Link";
+
 export default {
   data: function() {
     return {
       players: [],
       interval: null,
       gameState: "",
-      playerName: getCookie().name
+      playerName: getCookie().name,
+      linkText
     };
   },
   computed: {
@@ -97,6 +103,14 @@ export default {
     },
     joinGame: async function() {
       await this.$router.push("PickACard");
+    },
+    copyLink: async function() {
+      navigator.clipboard.writeText(this.joinLink);
+      this.linkText = "Copied!";
+      const self = this;
+      setTimeout(function() {
+        self.linkText = linkText;
+      }, 2000);
     },
     async customDeck() {
       await this.$router.push("Deck");

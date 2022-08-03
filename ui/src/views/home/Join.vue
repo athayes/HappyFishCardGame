@@ -58,20 +58,3 @@ export default {
 };
 </script>
 
-<style>
-.Home {
-  text-align: center;
-  color: #2c3e50;
-  padding: 20px;
-}
-
-label {
-  text-align: left;
-}
-
-.joinLobbyEnterName {
-  display: block;
-  margin-right: auto;
-  margin-left: auto;
-}
-</style>

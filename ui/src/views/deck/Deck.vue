@@ -102,8 +102,4 @@ export default {
   }
 };
 </script>
-<style>
-.customise-deck {
-  text-align: center;
-}
-</style>
+

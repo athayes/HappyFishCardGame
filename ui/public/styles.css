@@ -1,0 +1,173 @@
+/*Lobby.vue*/
+.Lobby {
+  text-align: center;
+  color: #2c3e50;
+}
+
+.noHoverStuff {
+  pointer-events: none;
+}
+
+/*Join.vue*/
+.Home {
+  text-align: center;
+  color: #2c3e50;
+  padding: 20px;
+}
+
+label {
+  text-align: left;
+}
+
+.joinLobbyEnterName {
+  display: block;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+/*PickACard.vue*/
+.pickACard {
+  text-align: center;
+  color: #2c3e50;
+}
+
+.hand {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: left;
+  padding-bottom: 20px;
+}
+
+@media (orientation: portrait) {
+  .hand {
+    justify-content: center;
+  }
+}
+
+.you-want {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+}
+
+.card {
+  height: 140px;
+  width: 110px;
+  margin-top: 10px;
+  margin-right: 10px;
+  margin-left: 10px;
+  text-align: center;
+  font-size: 30px;
+  background-color: white;
+  border-color: silver;
+}
+
+.menu-buttons {
+  text-align: center;
+  display: flex;
+  justify-content: left;
+  padding-right: 30px;
+  padding-bottom: 10px;
+}
+
+.confirm-buttons {
+  display: block;
+}
+
+.name {
+  font-family: "Patrick Hand SC", sans-serif;
+  font-size: 20px;
+  margin: 0px;
+}
+
+.hint {
+  font-size: 14px;
+  margin: 5px;
+  font-family: "Patrick Hand SC", sans-serif;
+}
+
+.description {
+  padding-top: 20px;
+  padding-left: 40px;
+  padding-right: 40px;
+  text-align: left;
+}
+
+img {
+  height: 80px;
+  width: 100px;
+}
+
+.invisible {
+  visibility: hidden;
+}
+
+h3 {
+  margin: 0px;
+}
+
+button {
+  margin: 10px;
+}
+
+.inactive {
+  opacity: 60%;
+  border-color: lightgray;
+}
+
+.btn-bottom {
+  margin-bottom: 10%;
+}
+
+/*App.vue*/
+#wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#app {
+  width: 667px;
+  height: 375px;
+}
+
+.yellow-button {
+  border-color: #fc3;
+  background-color: #feb;
+}
+
+.green-button {
+  background-color: #de8;
+  border-color: #6c0;
+}
+
+.purple-button {
+  border-color: #eaf;
+  background-color: #ddf;
+}
+
+.blue-button {
+  background-color: #deefff;
+  border-color: #6ab;
+}
+
+.pink-button {
+  background-color: #fdd;
+  border-color: #f99;
+}
+
+.pinkish-button {
+  background-color: #edc;
+  border-color: #f99;
+}
+
+.aqua-button {
+  background-color: #f1ffe5;
+  border-color: #6bdbb8;
+}
+
+/*Deck.vue*/
+.customise-deck {
+  text-align: center;
+}

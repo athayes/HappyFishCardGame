@@ -12,8 +12,7 @@ class Lobby:
         self.game = None
         self.last_finished_game = None
         self.players = []
-        self.deck = basic_deck()
-        self.desserts = []
+        self.deck, self.dessert = basic_deck()
 
     def add_player(self, player_name, is_ai):
         if is_ai:

@@ -24,7 +24,6 @@ class Game:
 
     def start_round(self):
         self.round += 1
-        print(self.desserts)
         self.deck, self.desserts = add_desserts_into_deck(self.START_DECK, self.START_DESSERTS, len(self.players), self.round)
         self.deck = shuffle_deck(self.deck)
         players, deck = deal_hands(self.players, self.deck, self.hand_size)
@@ -101,7 +100,7 @@ class Game:
         if not self.all_hands_empty():
             return False
         self.score_round()
-        self.deck = basic_deck()  # todo support multiple deck types
+        self.deck = self.START_DECK
         if self.round < 3:
             self.start_round()
             return True

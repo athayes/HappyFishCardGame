@@ -1,16 +1,21 @@
 import random
 from src.cards import egg_nigiri, salmon_nigiri, squid_nigiri, dumpling, \
-    tempura, sashimi, pudding, wasabi, maki_1, maki_2, maki_3, chopsticks, tea, ice_cream
+    tempura, sashimi, pudding, wasabi, maki_1, maki_2, maki_3, chopsticks
 
 
 def basic_deck():
-    deck = make_deck(
-        [
-            (egg_nigiri, 4), (salmon_nigiri, 4), (squid_nigiri, 4), (maki_1, 4), (maki_2, 4), (maki_3, 4), (tempura, 8),
-            (sashimi, 8), (dumpling, 8), (wasabi, 3), (chopsticks, 3)
-        ]
-    )
-    return deck
+    cards = [
+        {'type': 'Nigiri', 'name': 'Nigiri'},
+        {'type': 'Rolls', 'name': 'Maki'},
+        {'type': 'Appetizer', 'name': tempura},
+        {'type': 'Appetizer', 'name': sashimi},
+        {'type': 'Appetizer', 'name': dumpling},
+        {'type': 'Special', 'name': chopsticks},
+        {'type': 'Special', 'name': wasabi},
+        {'type': 'Dessert', 'name': pudding},
+    ]
+    deck, desserts = custom_deck(cards)
+    return deck, desserts
 
 
 def custom_deck(cards):
@@ -36,12 +41,8 @@ def custom_deck(cards):
         if ctype == "Appetizer":
             deck.append((name, 8))
         if ctype == "Dessert":
-            deck.append((name, 8))
+            dessert.append((name, 8))
     return make_deck(deck), make_deck(dessert)
-
-
-def basic_desserts():
-    return make_deck([(pudding, 8)])
 
 
 def shuffle_deck(deck):

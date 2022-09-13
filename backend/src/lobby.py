@@ -29,7 +29,7 @@ class Lobby:
     def start_game(self):
         if not self.game_starting:
             self.game_starting = True
-            self.game = game.Game(deepcopy(self.players), self.deck, self.desserts, 10)
+            self.game = game.Game(deepcopy(self.players), self.deck, self.dessert, 10)
 
     def get_game_state(self):
         if self.game:

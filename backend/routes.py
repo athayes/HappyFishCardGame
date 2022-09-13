@@ -1,7 +1,7 @@
 from flask import Flask, json
 from flask import request
 from flask_cors import CORS
-from flask_socketio import SocketIO, join_room, send, leave_room, rooms
+from flask_socketio import SocketIO, join_room, send
 from copy import deepcopy
 
 from src.deck import custom_deck
@@ -141,7 +141,6 @@ def pick_card_chopsticks():
     else:
         push_game_data(lobby_id)
     return json.dumps(dict(success=True)), 200, {'ContentType': 'application/json'}
-
 
 
 @socketio.on('JOIN_ROOM')

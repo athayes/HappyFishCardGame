@@ -134,7 +134,7 @@ def pick_card_chopsticks():
     lobby.game.handle_ai()
     lobby.game.play_card_chopsticks(player, card_1_index, card_2_index)
     if lobby.game.game_state == "COMPLETED":
-        lobby.last_finished_game = deepcopy(Lobby.game)
+        lobby.last_finished_game = deepcopy(lobby.game)
         lobby.game = None
         lobby.players = []
         push_game_end(lobby_id)

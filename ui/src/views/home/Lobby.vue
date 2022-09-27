@@ -8,6 +8,7 @@
     </button>
     <br />
     <button
+      v-if="isHost"
       @click="resetGame"
       class="btn yellow-button"
       style="margin-left:20px;"
@@ -16,7 +17,7 @@
     </button>
     <button
       class="btn purple-button"
-      v-if="gameState === 'NOT_STARTED'"
+      v-if="gameState === 'NOT_STARTED' && isHost"
       @click="addAiPlayer"
     >
       Add AI Player
@@ -25,7 +26,7 @@
       <p>Game is in progress..</p>
     </div>
     <button
-      v-if="gameState === 'NOT_STARTED'"
+      v-if="gameState === 'NOT_STARTED' && isHost"
       @click="customDeck"
       class="btn blue-button"
       style="margin-left:20px;"
@@ -57,7 +58,8 @@ export default {
       interval: null,
       gameState: "",
       playerName: getCookie().name,
-      linkText
+      linkText,
+      isHost: false
     };
   },
   computed: {
@@ -139,6 +141,9 @@ export default {
     );
     this.gameState = response.data.game_state;
     this.players = response.data.players;
+    if (this.players && this.players[0]) {
+      this.isHost = this.playerName === this.players[0].player_name;
+    }
   },
 
   beforeCreate() {
@@ -153,6 +158,9 @@ export default {
       }
       this.players = payload.players;
       this.gameState = payload.game_state;
+      if (this.players && this.players[0]) {
+        this.isHost = this.playerName === this.players[0].player_name;
+      }
     });
   },
 

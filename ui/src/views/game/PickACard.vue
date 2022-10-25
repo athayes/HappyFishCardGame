@@ -104,11 +104,6 @@
       <h4>Score Reports</h4>
       <div v-for="player in players" :key="player.playerName">
         <h4>{{ player.playerName }}</h4>
-        <p>Mains: {{ player.scoreReport.tableau.join(", ") }}</p>
-        <p v-if="player.dessert.length > 0">
-          Desserts: (scored at end of game)
-          {{ player.scoreReport.dessert.join(", ") }}
-        </p>
         <table>
           <tbody v-if="player.scoreReport">
             <th style="text-align:left;">Card</th>

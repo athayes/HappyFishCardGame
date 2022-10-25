@@ -43,6 +43,7 @@ def start_game():
     lobby_id = request.json['lobbyId']
     lobby = Lobbies[lobby_id]
     lobby.start_game()
+    push_lobby_data(lobby_id)
     return json.dumps(dict(success=True)), 200, {'ContentType': 'application/json'}
 
 
@@ -158,7 +159,8 @@ def push_lobby_data(lobby_id):
         "lobbyUpdates",
         {
             "players": lobby.player_json(),
-            "game_state": lobby.get_game_state()
+            "game_state": lobby.get_game_state(),
+            "game_starting": lobby.game_starting,
         },
         room=lobby_id,
     )

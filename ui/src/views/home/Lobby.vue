@@ -34,6 +34,7 @@
       Customize deck
     </button>
     <button
+      v-if="isHost"
       v-bind:class="startStyle"
       @click="StartGame"
       class="btn pink-button"
@@ -160,6 +161,9 @@ export default {
       this.gameState = payload.game_state;
       if (this.players && this.players[0]) {
         this.isHost = this.playerName === this.players[0].player_name;
+      }
+      if (payload.game_starting) {
+        this.$router.push("PickACard");
       }
     });
   },

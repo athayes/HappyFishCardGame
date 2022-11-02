@@ -101,7 +101,6 @@
       <button class="btn pink-button" @click="currentView = VIEWS.pickACard">
         Start next round
       </button>
-      <h4>Score Reports</h4>
       <div v-for="player in players" :key="player.playerName">
         <h4>{{ player.playerName }}</h4>
         <table>
@@ -149,7 +148,6 @@
       </table>
       <button class="btn green-button" @click="goHome">Exit Game</button>
 
-      <h4>Score Reports</h4>
       <div v-for="player in players" :key="player.playerName">
         <h4>{{ player.playerName }}</h4>
         <p>Mains: {{ player.scoreReport.tableau.join(", ") }}</p>

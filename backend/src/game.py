@@ -9,6 +9,9 @@ from src.player import find_player, Player, mark_new_round
 from src.scoring_functions.dessert.is_dessert import is_dessert
 import copy
 
+from backend.src.ai import squiD
+from backend.src.cards import squid_nigiri
+
 
 class Game:
     def __init__(self, players, deck, desserts, hand_size):
@@ -139,7 +142,7 @@ class Game:
     def handle_ai(self):
         for player in self.players:
             if player.is_ai:
-                self.play_card(player.player_name, 0)
+                self.play_card(player.player_name, squiD(player.hand))
 
 
 # note this function is mutable

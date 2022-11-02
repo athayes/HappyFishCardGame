@@ -70,6 +70,11 @@ export default {
       }
       return [];
     },
+    isHost: () => {
+      if (this.players) {
+        return this.playerName === this.players[0].player_name;
+      }
+    },
     joinLink: () => {
       return `${window.location.origin}/#/Join/${getCookie().lobbyId}`;
     },

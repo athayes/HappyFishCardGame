@@ -360,7 +360,6 @@ export default {
       return this.players[this.tableauIndex];
     },
     currentPlayer: function() {
-      console.log(this.playerIndex);
       if (this.players.length === 0) {
         return {};
       }
@@ -373,12 +372,10 @@ export default {
   },
 
   async mounted() {
-    console.log("mounted");
     await this.refreshData();
   },
 
   async activated() {
-    console.log("activated");
     await this.refreshData();
   },
 
@@ -394,7 +391,6 @@ export default {
           }
         );
       } catch (err) {
-        console.log(err);
         await this.goHome();
       }
       if (!response.data.game_state) {
@@ -472,7 +468,6 @@ export default {
     },
 
     chopsticksChooseCard: function(card, index) {
-      console.log(this.chopsticksCard1Index);
       if (this.chopsticksCard1Index !== index) {
         this.pickedCard = card;
         this.pickedCard.index = index;

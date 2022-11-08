@@ -59,7 +59,8 @@ export default {
       interval: null,
       gameState: "",
       playerName: getCookie().name,
-      linkText
+      linkText,
+      isHost: undefined,
     };
   },
   computed: {
@@ -68,11 +69,6 @@ export default {
         return this.players.map(player => player.player_name).join(", ");
       }
       return [];
-    },
-    isHost: () => {
-      if (this.players) {
-        return this.playerName === this.players[0].player_name;
-      }
     },
     joinLink: () => {
       return `${window.location.origin}/#/Join/${getCookie().lobbyId}`;

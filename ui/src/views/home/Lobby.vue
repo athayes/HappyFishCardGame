@@ -59,8 +59,7 @@ export default {
       interval: null,
       gameState: "",
       playerName: getCookie().name,
-      linkText,
-      isHost: false
+      linkText
     };
   },
   computed: {

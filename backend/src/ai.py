@@ -1,4 +1,4 @@
-from backend.src.cards import squid_nigiri
+from src.cards import squid_nigiri
 
 
 def squiD(cards):

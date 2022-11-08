@@ -7,10 +7,8 @@ from src.deck import shuffle_deck, basic_deck, add_desserts_into_deck
 from src.scoring import score_all, score_dessert
 from src.player import find_player, Player, mark_new_round
 from src.scoring_functions.dessert.is_dessert import is_dessert
+from src.ai import squiD
 import copy
-
-from backend.src.ai import squiD
-from backend.src.cards import squid_nigiri
 
 
 class Game:

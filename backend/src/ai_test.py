@@ -1,5 +1,5 @@
-from backend.src.ai import squiD
-from backend.src.cards import dumpling, squid_nigiri, salmon_nigiri
+from src.ai import squiD
+from src.cards import dumpling, squid_nigiri, salmon_nigiri
 
 
 def test_squiD():

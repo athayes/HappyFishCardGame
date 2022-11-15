@@ -13,6 +13,7 @@ class Lobby:
         self.last_finished_game = None
         self.players = []
         self.deck, self.dessert = basic_deck()
+        self.player_card_counts = {2: 10, 3: 10, 4: 9, 5: 9, 6: 8, 7: 8, 8: 7}
 
     def add_player(self, player_name, is_ai):
         if is_ai:
@@ -29,7 +30,8 @@ class Lobby:
     def start_game(self):
         if not self.game_starting:
             self.game_starting = True
-            self.game = game.Game(deepcopy(self.players), self.deck, self.dessert, 10)
+            self.game = game.Game(deepcopy(self.players), self.deck, self.dessert,
+                                  self.player_card_counts[len(self.players)])
 
     def get_game_state(self):
         if self.game:

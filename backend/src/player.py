@@ -41,12 +41,6 @@ def find_player(player_name, players) -> (int, Player):
     raise ValueError("player not found in list")
 
 
-def mark_new_round(players: List[Player], is_new_round):
-    for player in players:
-        player.is_new_round = is_new_round
-    return players
-
-
 class ScoreReport:
     def __init__(self):
         self.report_entries = []

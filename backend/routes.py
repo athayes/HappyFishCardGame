@@ -173,7 +173,8 @@ def push_game_data(lobby_id):
         {
             "players": lobby.game.player_json(),
             "game_state": lobby.game.game_state,
-            "round": lobby.game.round
+            "round": lobby.game.round,
+            "hand_size": lobby.game.hand_size,
         },
         room=lobby_id,
     )

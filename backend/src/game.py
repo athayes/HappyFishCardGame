@@ -5,7 +5,7 @@ import numpy as np
 from src.cards import chopsticks
 from src.deck import shuffle_deck, basic_deck, add_desserts_into_deck
 from src.scoring import score_all, score_dessert
-from src.player import find_player, Player, mark_new_round
+from src.player import find_player, Player
 from src.scoring_functions.dessert.is_dessert import is_dessert
 from src.ai import squiD
 import copy
@@ -44,7 +44,6 @@ class Game:
 
         player.chosen = True
         self.players[index] = player
-        self.players = mark_new_round(self.players, False)
 
         if (not self.check_round_over()) and self.all_players_chosen():
             self.players = rotate_hands(self.players)
@@ -76,7 +75,6 @@ class Game:
 
         player.chosen = True
         self.players[index] = player
-        self.players = mark_new_round(self.players, False)
 
         if (not self.check_round_over()) and self.all_players_chosen():
             self.players = rotate_hands(self.players)
@@ -113,7 +111,6 @@ class Game:
 
     def score_round(self):
         self.players = score_all(self.players)
-        self.players = mark_new_round(self.players, True)
 
     def score_dessert(self):
         self.players = score_dessert(self.players)

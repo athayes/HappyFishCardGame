@@ -441,15 +441,17 @@ export default {
           this.playerName
         );
         const canPlay = !player.chosen;
-        const isNewRound = player.is_new_round;
         this.gameState = gameUpdates.game_state;
+        const handSize = gameUpdates.hand_size;
         this.round = gameUpdates.round;
         if (this.gameState === "COMPLETED") {
           await self.refreshDataGameEnd();
           this.currentView = VIEWS.gameCompleted;
         } else if (canPlay) {
           await self.refreshData();
-          if (isNewRound) {
+          // check if it's a new round
+          // won't be triggered at the start or end of the game due to things :P
+          if (this.currentPlayer.hand.length === handSize) {
             this.currentView = VIEWS.newRound;
             socket.removeAllListeners("gameUpdates");
           } else {
@@ -497,6 +499,8 @@ export default {
         if (this.gameState === "COMPLETED") {
           await self.refreshDataGameEnd();
           this.currentView = VIEWS.gameCompleted;
+          // think about this - do we need this
+          socket.removeAllListeners("gameUpdates");
         } else if (canPlay) {
           await self.refreshData();
           if (isNewRound) {

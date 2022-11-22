@@ -26,7 +26,7 @@ def score_wasabi(arg_tableau):
         if card == wasabi:
             # find next nigiri
             for other_index, other_card in enumerate(tableau):
-                if is_nigiri(other_card):
+                if other_index > index and is_nigiri(other_card):
                     if other_card == egg_nigiri:
                         wasabi_egg += 1
                     if other_card == salmon_nigiri:

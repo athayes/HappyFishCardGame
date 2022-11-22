@@ -86,3 +86,11 @@ def test_many_wasabi_combo():
     assert player.score_report.report_entries[0].description == f'Wasabi and Egg Nigiri x 2'
     assert player.score_report.report_entries[0].score == 6
     assert len(player.tableau) == 0
+
+
+def test_wasabi_order():
+    player = Player("test_player")
+    player.tableau = [egg_nigiri, wasabi, egg_nigiri, wasabi]
+    player = score_wasabi_and_nigiri(player)
+    assert player.score == 4
+    assert len(player.tableau) == 0

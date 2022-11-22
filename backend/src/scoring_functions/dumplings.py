@@ -14,7 +14,7 @@ def score_dumplings(player):
     score = get_score_for_dumpling_count(count)
     player.score += score
     if count > 0:
-        player.score_report.report_entries.append(ReportEntry(f'Dumplings * {count}', score))
+        player.score_report.report_entries.append(ReportEntry(f'Dumplings x {count}', score))
     player.tableau = list(np.delete(player.tableau, indices))
     return player
 

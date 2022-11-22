@@ -14,7 +14,7 @@ def score_ice_cream(players):
         if count >= 4:
             score = 12
             player.score += score
-            player.score_report.report_entries.append(ReportEntry(f'Ice Cream * {count}', score))
+            player.score_report.report_entries.append(ReportEntry(f'Ice Cream x {count}', score))
 
         player.dessert = list(np.delete(player.dessert, card_indices))
     return players

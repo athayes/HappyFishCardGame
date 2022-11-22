@@ -134,11 +134,11 @@
     </div>
 
     <div v-if="currentView === VIEWS.gameCompleted">
-      <h3>Game Completed!</h3>
+      <h3>{{ players.sort((a, b) => (a.score > b.score) ? 1 : -1)[0] }} wins!</h3>
       <p>Final Scores:</p>
       <table style="padding:0px 25%;">
         <tbody>
-          <tr v-for="player in players" :key="player.playerName">
+          <tr v-for="player in players.sort((a, b) => (a.score > b.score) ? 1 : -1)" :key="player.playerName">
             <td style="text-align:left;font-style:italic;">
               {{ player.playerName }}
             </td>

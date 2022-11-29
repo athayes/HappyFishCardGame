@@ -138,9 +138,9 @@
       <p>Final Scores:</p>
       <table style="padding:0px 25%;">
         <tbody>
-          <tr v-for="player in players" :key="player.playerName">
+          <tr v-for="player in playersByScore" :key="player.playerName">
             <td style="text-align:left;font-style:italic;">
-              {{ playersByScore.playerName }}
+              {{ player.playerName }}
             </td>
             <td style="text-align:left;">{{ player.score }}</td>
           </tr>

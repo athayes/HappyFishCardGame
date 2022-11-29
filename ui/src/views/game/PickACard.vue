@@ -90,7 +90,7 @@
         <tbody>
           <th style="text-align:left;">Player</th>
           <th style="text-align:left;">Score</th>
-          <tr v-for="player in players" :key="player.playerName">
+          <tr v-for="player in playersByScore" :key="player.playerName">
             <td style="text-align:left;font-weight:bold;">
               {{ player.playerName }}
             </td>

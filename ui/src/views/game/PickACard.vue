@@ -309,7 +309,7 @@ import {
   formatPlayers
 } from "../../models/Player";
 import { getCookie } from "../../util/cookies";
-import socket from "../../socket";
+import socket, {joinRoom} from "../../socket";
 
 export const VIEWS = {
   pickACard: 1,
@@ -373,6 +373,8 @@ export default {
   },
 
   async mounted() {
+    // join room again in case we disconnected e.g. browser refresh
+    await joinRoom({ name, id: getCookie().lobbyId });
     await this.refreshData();
   },
 

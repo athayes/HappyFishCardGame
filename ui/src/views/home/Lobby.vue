@@ -47,7 +47,7 @@
 
 <script>
 import axios from "axios";
-import socket from "../../socket";
+import socket, {joinRoom} from "../../socket";
 import { getCookie } from "../../util/cookies";
 
 const linkText = "Copy Join Link";
@@ -104,9 +104,6 @@ export default {
         lobbyId: getCookie().lobbyId
       });
     },
-    joinGame: async function() {
-      await this.$router.push("PickACard");
-    },
     copyLink: async function() {
       navigator.clipboard.writeText(this.joinLink);
       this.linkText = "Copied!";
@@ -134,6 +131,10 @@ export default {
         alert(response.data);
       }
     }
+  },
+  async mounted() {
+    // join room again in case we disconnected e.g. browser refresh
+    await joinRoom({ name, id: getCookie().lobbyId });
   },
   async created() {
     let response = await axios.post(

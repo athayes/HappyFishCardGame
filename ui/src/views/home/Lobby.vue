@@ -47,7 +47,7 @@
 
 <script>
 import axios from "axios";
-import socket, {joinRoom} from "../../socket";
+import socket, { joinRoom } from "../../socket";
 import { getCookie } from "../../util/cookies";
 
 const linkText = "Copy Join Link";
@@ -60,7 +60,7 @@ export default {
       gameState: "",
       playerName: getCookie().name,
       linkText,
-      isHost: undefined,
+      isHost: undefined
     };
   },
   computed: {
@@ -105,7 +105,7 @@ export default {
       });
     },
     copyLink: async function() {
-      navigator.clipboard.writeText(this.joinLink);
+      await navigator.clipboard.writeText(this.joinLink);
       this.linkText = "Copied!";
       const self = this;
       setTimeout(function() {

@@ -309,7 +309,7 @@ import {
   formatPlayers
 } from "../../models/Player";
 import { getCookie } from "../../util/cookies";
-import socket, {joinRoom} from "../../socket";
+import socket, { joinRoom } from "../../socket";
 
 export const VIEWS = {
   pickACard: 1,
@@ -360,15 +360,15 @@ export default {
     },
     containsChopsticks: function() {
       const cardNames = this.currentPlayer.tableau.map(card => card.name);
-      return !!cardNames.includes("Chopsticks");
+      return (
+        this.currentPlayer.hand.length > 1 && !!cardNames.includes("Chopsticks")
+      );
     },
     playersByScore: function() {
       if (this.players.length === 0) {
         return [{ score: 0 }];
       }
-      return this.players
-        .slice()
-        .sort((a, b) => (a.score < b.score ? 1 : -1));
+      return this.players.slice().sort((a, b) => (a.score < b.score ? 1 : -1));
     }
   },
 

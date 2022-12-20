@@ -41,11 +41,7 @@
     ],
     "parserOptions": {
       "parser": "babel-eslint"
-    },
-    "rules": {}
-  },
-  "prettier": {
-    "printWidth": 80
+    }
   },
   "browserslist": [
     "> 1%",

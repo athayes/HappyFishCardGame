@@ -1,5 +1,4 @@
-import Vue from "vue";
-import VueRouter from "vue-router";
+import { createRouter, createWebHashHistory } from "vue-router";
 import Lobby from "../views/home/Lobby";
 import Join from "../views/home/Join";
 import Deck from "../views/deck/Deck";
@@ -29,7 +28,8 @@ const routes = [
   }
 ];
 
-const router = new VueRouter({
+const router = createRouter({
+  history: createWebHashHistory(),
   routes
 });
 

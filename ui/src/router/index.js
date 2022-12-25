@@ -6,8 +6,6 @@ import Deck from "../views/deck/Deck";
 import PickACard from "../views/game/PickACard";
 import Home from "../views/home/Home";
 
-Vue.use(VueRouter);
-
 const routes = [
   {
     path: "/",

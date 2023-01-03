@@ -49,6 +49,7 @@
 import axios from "axios";
 import socket, { joinRoom } from "../../socket";
 import { getCookie } from "../../util/cookies";
+import io from "socket.io-client";
 
 const linkText = "Copy Join Link";
 
@@ -149,6 +150,12 @@ export default {
   },
 
   beforeCreate() {
+    const socket = io(process.env.VUE_APP_BACKEND_URL);
+
+    socket.on("connect_error", (err) => {
+      console.log(`connect_error due to ${err}`);
+    });
+    console.log(socket);
     socket.on("lobbyUpdates", payload => {
       const players = payload.players;
       if (this.playerName && !players.includes(this.playerName)) {
@@ -169,7 +176,7 @@ export default {
     });
   },
 
-  beforeDestroy() {
+  beforeUnmount() {
     socket.removeAllListeners("lobbyUpdates");
   }
 };

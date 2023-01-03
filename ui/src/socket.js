@@ -5,7 +5,7 @@ export async function joinRoom({ name, id }) {
   // leave rooms you're already connected to by disconnecting
   if (socket) {
     await socket.disconnect();
-    await socket.connect(process.env.VUE_APP_BACKEND_URL);
+    await socket.connect();
   }
   await socket.emit("JOIN_ROOM", { name, id });
 }

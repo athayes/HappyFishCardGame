@@ -127,11 +127,6 @@ button {
   align-items: center;
 }
 
-#app {
-  width: 667px;
-  height: 375px;
-}
-
 .yellow-button {
   border-color: #fc3;
   background-color: #feb;

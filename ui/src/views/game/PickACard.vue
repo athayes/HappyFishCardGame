@@ -86,9 +86,9 @@
 
     <div v-if="currentView === VIEWS.newRound">
       <h4>Round {{ round - 1 }} scores:</h4>
-      <table style="padding:0px 25%;">
+      <table>
         <tbody>
-          <th style="text-align:left;">Player</th>
+          <th style="text-align:left;width:80%;">Player</th>
           <th style="text-align:left;">Score</th>
           <tr v-for="player in playersByScore" :key="player.playerName">
             <td style="text-align:left;font-weight:bold;">
@@ -105,7 +105,7 @@
         <h4>{{ player.playerName }}</h4>
         <table>
           <tbody v-if="player.scoreReport">
-            <th style="text-align:left;">Card</th>
+            <th style="text-align:left;width:80%;">Card</th>
             <th style="text-align:left;">Score</th>
             <tr
               v-for="(entry, index) in player.scoreReport.report_entries"
@@ -136,10 +136,10 @@
     <div v-if="currentView === VIEWS.gameCompleted">
       <h3>{{ playersByScore[0].playerName }} wins!</h3>
       <p>Final Scores:</p>
-      <table style="padding:0px 25%;">
+      <table>
         <tbody>
           <tr v-for="player in playersByScore" :key="player.playerName">
-            <td style="text-align:left;font-style:italic;">
+            <td style="text-align:left;font-style:italic;width:80%;">
               {{ player.playerName }}
             </td>
             <td style="text-align:left;">{{ player.score }}</td>
@@ -152,7 +152,7 @@
         <h4>{{ player.playerName }}</h4>
         <table>
           <tbody v-if="player.scoreReport">
-            <th style="text-align:left;">Card</th>
+            <th style="text-align:left;width:80%;">Card</th>
             <th style="text-align:left;">Score</th>
             <tr
               v-for="(entry, index) in player.scoreReport.report_entries"

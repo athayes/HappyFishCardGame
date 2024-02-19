@@ -13,13 +13,7 @@ function createRoomRouter({ db }: { db: Database }): Router {
 
 async function handleGetRoom(req: Request, res: Response, next: NextFunction, db: Database) {
     try {
-        const id = Number(req.params.id);
-        if (isNaN(id)) {
-            res.status(400).json({ error: "Invalid ID" });
-            return;
-        }
         const room = await getRoom({ db, req, res });
-        res.status(200).json(room);
     } catch (err) {
         next(err);
     }
@@ -28,7 +22,6 @@ async function handleGetRoom(req: Request, res: Response, next: NextFunction, db
 async function handleCreateRoom(req: Request, res: Response, next: NextFunction, db: Database) {
     try {
         const roomId = await createRoom({ db, req, res });
-        res.status(201).json({ roomId });
     } catch (error) {
         next(error);
     }

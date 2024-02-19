@@ -2,19 +2,18 @@ import type { Database } from "sqlite";
 
 export const CREATE_ROOMS_TABLE = `
 CREATE TABLE IF NOT EXISTS room (
-  id INTEGER PRIMARY KEY
+  id TEXT PRIMARY KEY
 );`;
 
 export const CREATE_GAMES_TABLE = `
 CREATE TABLE IF NOT EXISTS game (
-  id INTEGER PRIMARY KEY,
+  id TEXT PRIMARY KEY,
   room_id INTEGER,
   data TEXT NOT NULL,
   FOREIGN KEY(room_id) REFERENCES room(id)
 );`;
 
-export const SETUP_SCHEMA = 
-`
+export const SETUP_SCHEMA = `
 ${CREATE_ROOMS_TABLE}
 ${CREATE_GAMES_TABLE}
 `;

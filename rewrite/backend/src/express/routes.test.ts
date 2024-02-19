@@ -15,7 +15,7 @@ describe("setupRoutes", () => {
     let db: any;
 
     beforeEach(() => {
-        app = { use: jest.fn()};
+        app = { use: jest.fn() };
         db = {};
     });
 
@@ -30,6 +30,6 @@ describe("setupRoutes", () => {
         const roomRouter = createRoomRouter({ db });
         setupRoutes({ app, db });
         // Assert that the room router is added to the app
-        expect(app.use).toHaveBeenCalledWith("/room", roomRouter);
+        expect(app.use).toHaveBeenCalledWith("/rooms", roomRouter);
     });
 });

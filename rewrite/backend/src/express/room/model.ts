@@ -1,7 +1,7 @@
 import { open, Database } from "sqlite";
 import { Room } from "../../types";
 
-export async function getRoom({ db, id }: { db: Database; id: number }): Promise<Room> {
+export async function getRoom({ db, id }: { db: Database; id: string }): Promise<Room> {
     try {
         const row = await db.get("SELECT * FROM room WHERE id = ?", id);
         return row;
@@ -10,13 +10,11 @@ export async function getRoom({ db, id }: { db: Database; id: number }): Promise
     }
 }
 
-export async function createRoom({ db }: { db: Database }): Promise<string> {
+export async function createRoom({ db }: { db: Database }) {
     try {
-        const id = Math.floor(Math.random() * Math.pow(16, 4))
-            .toString(16)
-            .padStart(4, "0");
-        const info = await db.run("INSERT INTO game (id, room) VALUES (?, ?)", id, JSON.stringify({}));
-        return id;
+        const id = await generateUniqueId({ db, table: "room" });
+        const info = await db.run("INSERT INTO room (id) VALUES (?)", id);
+        return { id };
     } catch (err) {
         throw err;
     }
@@ -29,7 +27,7 @@ export async function createRoom({ db }: { db: Database }): Promise<string> {
  * if it already exists in the database. If the ID already exists, a new one
  * is generated. This continues until a unique ID is found.
  */
-async function generateUniqueId(db: Database): Promise<string> {
+async function generateUniqueId({ db, table }: { db: Database; table: string }): Promise<string> {
     let id;
     let existingId;
 
@@ -37,8 +35,9 @@ async function generateUniqueId(db: Database): Promise<string> {
         id = Math.floor(Math.random() * Math.pow(16, 4))
             .toString(16)
             .padStart(4, "0");
-        existingId = await db.get("SELECT id FROM game WHERE id = ?", id);
-    } while (existingId);
+            // SQL injection possible here
+            existingId = await db.get(`SELECT id FROM ${table} WHERE id = ?`, id);
+        } while (existingId);
 
     return id;
 }

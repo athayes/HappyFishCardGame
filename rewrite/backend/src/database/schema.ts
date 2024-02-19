@@ -8,9 +8,9 @@ CREATE TABLE IF NOT EXISTS room (
 export const CREATE_GAMES_TABLE = `
 CREATE TABLE IF NOT EXISTS game (
   id INTEGER PRIMARY KEY,
-  roomId INTEGER,
+  room_id INTEGER,
   data TEXT NOT NULL,
-  FOREIGN KEY(roomId) REFERENCES room(id)
+  FOREIGN KEY(room_id) REFERENCES room(id)
 );`;
 
 export const SETUP_SCHEMA = 

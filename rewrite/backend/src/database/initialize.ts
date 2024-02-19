@@ -17,9 +17,8 @@ export async function initializeDatabase() {
         });
 
         console.log("Connected to the SQLite database.");
-
-        // Set up the database schema
         await setupSchema(db);
+        console.log("Database schema has been set up.");
 
         return db;
     } catch (err) {

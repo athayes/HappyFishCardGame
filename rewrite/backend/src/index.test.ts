@@ -9,7 +9,7 @@ jest.mock("./express/app", () => ({
 
 describe("main", () => {
     it("should call createApp", async () => {
-        await import("./main");
+        await import(".");
         expect(createApp).toHaveBeenCalled();
     });
 });

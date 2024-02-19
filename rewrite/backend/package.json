@@ -4,9 +4,9 @@
   "description": "Backend for HappyFishCardGame",
   "main": "dist/index.js",
   "scripts": {
-    "start": "nodemon --exec ts-node src/main.ts",
+    "start": "nodemon --exec ts-node src/index.ts",
     "build": "tsc",
-    "serve": "node dist/main.js",
+    "serve": "node dist/index.js",
     "test:unit": "jest src --testPathIgnorePatterns=/src/test/api/",
     "test:api": "jest src/test/api/",
     "fmt": "biome format . --write"

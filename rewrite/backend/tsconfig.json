@@ -9,5 +9,8 @@
     "moduleResolution": "node",
     "module": "commonjs"
   },
+  "ts-node": {
+    "swc": true,
+  }
 }
     

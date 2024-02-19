@@ -4,6 +4,8 @@
     "outDir": "./dist",
     "rootDir": "./src",
     "esModuleInterop": true,
+    "moduleResolution": "node",
+    "module": "commonjs"
   },
 }
     

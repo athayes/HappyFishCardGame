@@ -14,6 +14,6 @@ CREATE TABLE IF NOT EXISTS Games (
 );`;
 
 export function setupSchema(db: Database) {
-  db.run(CREATE_ROOMS_TABLE);
-  db.run(CREATE_GAMES_TABLE);
+    db.run(CREATE_ROOMS_TABLE);
+    db.run(CREATE_GAMES_TABLE);
 }

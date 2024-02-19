@@ -13,6 +13,5 @@ describe("setupSchema", () => {
 
         expect(dbMock.run).toHaveBeenCalledWith(CREATE_ROOMS_TABLE), expect.any(Function);
         expect(dbMock.run).toHaveBeenCalledWith(CREATE_GAMES_TABLE), expect.any(Function);
-
     });
 });

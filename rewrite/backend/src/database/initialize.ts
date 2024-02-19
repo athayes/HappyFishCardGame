@@ -1,4 +1,4 @@
-import { open, Database } from 'sqlite';
+import { open, Database } from "sqlite";
 import { config } from "./config";
 import { setupSchema } from "./schema";
 
@@ -12,7 +12,7 @@ export async function initializeDatabase() {
     try {
         db = await open({
             filename: config.database.mode,
-            driver: Database
+            driver: Database,
         });
 
         console.log("Connected to the SQLite database.");

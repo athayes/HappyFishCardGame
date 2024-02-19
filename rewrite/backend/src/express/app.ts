@@ -1,22 +1,19 @@
 import express, { Application } from "express";
-
-import { createRoomRouter } from './routes/room';
-import { createHelloRouter } from './routes/hello';
-import { Database } from "sqlite";
 import { initializeDatabase } from "../database/initialize";
+import { setupRoutes } from "./routes";
 
 export async function createApp(): Promise<Application> {
     // Initialize database first
     const db = await initializeDatabase();
-    
+
     // Initialize express app
     const app = express();
 
-    // Setup routes
     app.use(express.json());
-    app.use('/hello', createHelloRouter());
-    app.use('/rooms', createRoomRouter({ db }));
-    
+
+    // Setup routes
+    setupRoutes({ app, db });
+
     // Determine port
     const port = process.env.PORT || 3000;
 

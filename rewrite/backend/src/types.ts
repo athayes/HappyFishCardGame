@@ -15,5 +15,5 @@ export type Round = {};
 export type Game = {
     users: User[];
     rounds: Round[];
-    currentRound : number;
+    currentRound: number;
 };

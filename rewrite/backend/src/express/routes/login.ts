@@ -15,10 +15,10 @@ router.post("/", (req, res) => {
         rooms[room].users.push({ name, token });
     } else {
         const newRoom = uuidv4();
-        rooms[newRoom] = { users: [{ name, token }] };
+        rooms[newRoom] = { users: [{ name, token }], games: [] };
     }
 
     res.json({ token });
 });
 
-export default router;
+export { router };

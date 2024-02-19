@@ -1,22 +1,17 @@
-export interface User {
+interface User {
     name: string;
     token: string;
 }
 
 export interface Room {
     users: User[];
+    games: Game[];
 }
-
-let rooms: Record<string, Room> = {};
-
-export type GameState = {
-    currentRound: number;
-};
 
 export type Round = {};
 
 export type Game = {
     users: User[];
     rounds: Round[];
-    state: GameState;
+    currentRound : number;
 };

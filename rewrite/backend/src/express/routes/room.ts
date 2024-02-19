@@ -16,4 +16,4 @@ router.get('/:roomId', (req, res) => {
     res.json(room);
 });
 
-export default router;
+export { router };

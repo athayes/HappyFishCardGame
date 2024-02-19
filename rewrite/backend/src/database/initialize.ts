@@ -1,7 +1,6 @@
 import { Database, verbose } from "sqlite3";
 import { config } from "./config";
 import { setupSchema } from "./schema";
-import { z } from "zod";
 
 let db: Database | null = null;
 

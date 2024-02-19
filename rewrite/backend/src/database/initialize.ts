@@ -1,6 +1,6 @@
 import { Database, verbose } from "sqlite3";
 import { config } from "./config";
-import { setupSchema } from "./schema"; 
+import { setupSchema } from "./schema";
 import { z } from "zod";
 
 let db: Database | null = null;
@@ -30,18 +30,17 @@ export function initializeDatabase(): Database {
     return db;
 }
 
-
 /**
  * A simple function to test the db
  */
 export function testLog({ db }: { db: Database }) {
     db.serialize(() => {
         db.each("SELECT name FROM sqlite_master WHERE type='table'", (err: any, row: any) => {
-          if (err) {
-            console.error(err.message);
-          } else {
-            console.log(row.name);
-        }
-        }) 
+            if (err) {
+                console.error(err.message);
+            } else {
+                console.log(row.name);
+            }
+        });
     });
 }

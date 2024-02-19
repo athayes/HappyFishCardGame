@@ -1,3 +1,14 @@
+export interface User {
+    name: string;
+    token: string;
+}
+
+export interface Room {
+    users: User[];
+}
+
+let rooms: Record<string, Room> = {};
+
 export type GameState = {
     currentRound: number;
 };
@@ -5,7 +16,7 @@ export type GameState = {
 export type Round = {};
 
 export type Game = {
-    players: string[];
+    users: User[];
     rounds: Round[];
     state: GameState;
 };

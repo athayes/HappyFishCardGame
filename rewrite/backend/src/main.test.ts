@@ -1,18 +1,12 @@
-jest.mock("./express/app", () => {
-    return {
-        app: {
-            listen: jest.fn(),
-            get: jest.fn(),
-        },
-        port: 3000,
-    };
-});
+import { createApp } from "./express/app";
+
+jest.mock("./express/app", () => ({
+    createApp: jest.fn(),
+}));
 
 describe("main", () => {
-    it("calls serverApp.listen with correct arguments", async () => {
-        const { app } = await import("./express/app");
+    it("should call createApp", async () => {
         await import("./main");
-
-        expect(app.listen).toHaveBeenCalledWith(3000, expect.any(Function));
+        expect(createApp).toHaveBeenCalled();
     });
 });

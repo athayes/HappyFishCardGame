@@ -1,8 +1,9 @@
-import { open, Database } from "sqlite";
-import { config } from "./config";
+import { open } from "sqlite";
+import { Database } from "sqlite3";
+import { Database as DatabaseType } from "sqlite";
 import { setupSchema } from "./schema";
 
-let db: Database | null = null;
+let db: DatabaseType | null = null;
 
 export async function initializeDatabase() {
     if (db !== null) {
@@ -11,7 +12,7 @@ export async function initializeDatabase() {
 
     try {
         db = await open({
-            filename: config.database.mode,
+            filename: ":memory:",
             driver: Database,
         });
 

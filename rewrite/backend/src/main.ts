@@ -1,3 +1,5 @@
 import { createApp } from "./express/app";
 
-createApp();
+createApp().then(({ start }) => {
+    start();
+});

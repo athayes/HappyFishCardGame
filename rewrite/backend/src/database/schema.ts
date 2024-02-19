@@ -1,19 +1,25 @@
 import type { Database } from "sqlite";
 
 export const CREATE_ROOMS_TABLE = `
-CREATE TABLE IF NOT EXISTS Rooms (
-  ID INTEGER PRIMARY KEY AUTOINCREMENT
+CREATE TABLE IF NOT EXISTS room (
+  id INTEGER PRIMARY KEY
 );`;
 
 export const CREATE_GAMES_TABLE = `
-CREATE TABLE IF NOT EXISTS Games (
-  ID INTEGER PRIMARY KEY AUTOINCREMENT,
-  RoomID INTEGER,
-  Data TEXT NOT NULL,
-  FOREIGN KEY(RoomID) REFERENCES Rooms(ID)
+CREATE TABLE IF NOT EXISTS game (
+  id INTEGER PRIMARY KEY,
+  roomId INTEGER,
+  data TEXT NOT NULL,
+  FOREIGN KEY(roomId) REFERENCES room(id)
 );`;
 
-export function setupSchema(db: Database) {
-    db.run(CREATE_ROOMS_TABLE);
-    db.run(CREATE_GAMES_TABLE);
+export const SETUP_SCHEMA = 
+`
+${CREATE_ROOMS_TABLE}
+${CREATE_GAMES_TABLE}
+`;
+
+export async function setupSchema(db: Database) {
+    await db.run("PRAGMA foreign_keys = ON;");
+    await db.run(SETUP_SCHEMA);
 }

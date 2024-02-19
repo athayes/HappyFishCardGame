@@ -1,9 +1,9 @@
 import { open, Database } from "sqlite";
-import { Room } from "../types";
+import { Room } from "../../types";
 
-export async function getRoom({ db, roomId }: { db: Database; roomId: number }): Promise<Room> {
+export async function getRoom({ db, id }: { db: Database; id: number }): Promise<Room> {
     try {
-        const row = await db.get("SELECT * FROM room WHERE ID = ?", roomId);
+        const row = await db.get("SELECT * FROM room WHERE id = ?", id);
         return row;
     } catch (err) {
         throw err;

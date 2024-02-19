@@ -7,7 +7,7 @@
     "start": "nodemon --exec ts-node src/main.ts",
     "build": "tsc",
     "serve": "node dist/main.js",
-    "test:unit": "jest --testPathIgnorePatterns=/src/test/api/",
+    "test:unit": "jest src --testPathIgnorePatterns=/src/test/api/",
     "test:api": "jest src/test/api/",
     "fmt": "biome format . --write"
   },

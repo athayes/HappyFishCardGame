@@ -1,7 +1,10 @@
 import { createApp } from "./express/app";
 
 jest.mock("./express/app", () => ({
-    createApp: jest.fn(),
+    createApp: jest.fn().mockResolvedValue({
+        start: jest.fn(),
+        app: {},
+    }),
 }));
 
 describe("main", () => {

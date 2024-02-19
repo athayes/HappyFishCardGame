@@ -4,6 +4,8 @@
     "outDir": "./dist",
     "rootDir": "./src",
     "esModuleInterop": true,
+
+    // until ts-jest supports ESM, just use commonjs
     "moduleResolution": "node",
     "module": "commonjs"
   },

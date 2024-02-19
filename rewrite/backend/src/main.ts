@@ -1,8 +1,8 @@
-import { app } from './app';
+import { app, port } from "./express/app";
+import { initializeDatabase } from "./database";
 
-const port = 3000;
+initializeDatabase();
 
 app.listen(port, () => {
     console.log(`Server running at http://localhost:${port}`);
 });
-  

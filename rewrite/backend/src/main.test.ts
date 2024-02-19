@@ -1,9 +1,10 @@
-jest.mock("./app", () => {
+jest.mock("./express/app", () => {
     return {
         app: {
             listen: jest.fn(),
             get: jest.fn(),
         },
+        port: 3000,
     };
 });
 

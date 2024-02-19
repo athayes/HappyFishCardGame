@@ -1,18 +1,30 @@
-import express from "express";
+import express, { Application } from "express";
 
-import { router as loginRouter } from './routes/login';
-import { router as roomRouter } from './routes/room';
+import { createRoomRouter } from './routes/room';
+import { createHelloRouter } from './routes/hello';
+import { Database } from "sqlite";
+import { initializeDatabase } from "../database/initialize";
 
-const port = 3000;
+export async function createApp(): Promise<Application> {
+    // Initialize database first
+    const db = await initializeDatabase();
+    
+    // Initialize express app
+    const app = express();
 
-const app = express();
+    // Setup routes
+    app.use(express.json());
+    app.use('/hello', createHelloRouter());
+    app.use('/rooms', createRoomRouter({ db }));
+    
+    // Determine port
+    const port = process.env.PORT || 3000;
 
-app.use(express.json());
-app.use('/login', loginRouter);
-app.use('/rooms', roomRouter);
+    // Start server
+    app.listen(port, () => {
+        console.log(`Server running at http://localhost:${port}`);
+    });
 
-app.get("/", (req, res) => {
-    res.send("Hello World!");
-});
-
-export { app, port };
+    // return app for ease of testing
+    return app;
+}

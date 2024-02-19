@@ -1,26 +1,27 @@
-import request from "supertest";
-import { Server } from "http";
+import express from "express";
+import { createApp } from "./app";
+import exp from "constants";
 
-import { app, port } from "./app";
-
-let server: Server;
-
-beforeAll(() => {
-    server = app.listen(port);
-});
-
-afterAll((done) => {
-    server.close(done);
-});
-
-describe("server", () => {
-    it("should return status code 200", async () => {
-        const response = await request(app).get("/");
-        expect(response.status).toBe(200);
+describe("createApp", () => {
+    it("should return an instance of express.Application", async () => {
+        const app = await createApp();
+        expect(app).toBeInstanceOf(express);
     });
 
-    it('should return "Hello, World!"', async () => {
-        const response = await request(app).get("/");
-        expect(response.text).toBe("Hello World!");
+    it("should initialize the database", async () => {
+        const mockInitializeDatabase = jest.spyOn(initializeDatabase, "initialize");
+        await createApp();
+        expect(mockInitializeDatabase).toHaveBeenCalled();
+    });
+
+    it("should register the room router", async () => {
+        const app = await createApp();
+        expect(app._router.stack.some((layer) => layer.route.path === "/room")).toBe(true);
+    });
+
+    it("should register the hello router", async () => {
+        const app = await createApp();
+        expect(app._router.stack.some((layer) => layer.route.path === "/hello")).toBe(true);
     });
 });
+

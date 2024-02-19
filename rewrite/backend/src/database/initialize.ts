@@ -1,45 +1,28 @@
-import { Database, verbose } from "sqlite3";
+import { open, Database } from 'sqlite';
 import { config } from "./config";
 import { setupSchema } from "./schema";
 
 let db: Database | null = null;
 
-export function initializeDatabase(): Database {
+export async function initializeDatabase() {
     if (db !== null) {
         return db;
     }
 
-    verbose();
+    try {
+        db = await open({
+            filename: config.database.mode,
+            driver: Database
+        });
 
-    db = new Database(config.database.mode, (err) => {
-        if (err) {
-            console.error(err.message);
-            process.exit(1);
-        }
         console.log("Connected to the SQLite database.");
 
-        if (db === null) {
-            throw new Error("Failed to initialize the database.");
-        }
-
         // Set up the database schema
-        setupSchema(db);
-    });
+        await setupSchema(db);
 
-    return db;
-}
-
-/**
- * A simple function to test the db
- */
-export function testLog({ db }: { db: Database }) {
-    db.serialize(() => {
-        db.each("SELECT name FROM sqlite_master WHERE type='table'", (err: any, row: any) => {
-            if (err) {
-                console.error(err.message);
-            } else {
-                console.log(row.name);
-            }
-        });
-    });
+        return db;
+    } catch (err) {
+        console.error((err as Error).message);
+        process.exit(1);
+    }
 }

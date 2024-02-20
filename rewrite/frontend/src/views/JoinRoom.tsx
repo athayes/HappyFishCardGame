@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCat } from '@fortawesome/free-solid-svg-icons';
 import IconSelector from '../components/IconSelector';
 
@@ -15,7 +14,7 @@ function JoinRoom() {
       navigate(`/room/${roomId}`, { state: { name, icon } });
     }
   };
-  
+
   const handleNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setName(event.target.value);
   };

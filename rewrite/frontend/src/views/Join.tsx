@@ -23,8 +23,8 @@ function Join() {
         placeholder="Enter room ID"
       />
       <button onClick={handleJoinRoom}>Join Room</button>
-      <p>If you don't have a room ID, please navigate directly to the URL provided by the host.</p>
-    </div>
+      <p>Don't have a room ID? That's okay! The host might have sent you a link - follow it to join the game!</p>  
+      </div>
   );
 }
 

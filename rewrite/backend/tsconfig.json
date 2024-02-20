@@ -1,0 +1,17 @@
+{
+  "extends": "@tsconfig/node20/tsconfig.json",
+  "include": ["src/**/*.ts"],
+  "compilerOptions": {
+    "outDir": "./dist",
+    "rootDir": "./src",
+    "esModuleInterop": true,
+
+    // until ts-jest supports ESM, just use commonjs
+    "moduleResolution": "node",
+    "module": "commonjs"
+  },
+  "ts-node": {
+    "swc": true,
+  }
+}
+    

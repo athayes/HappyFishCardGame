@@ -1,0 +1,7 @@
+/**
+  Papercss is a minimal css framework that provides a set of styles for a fast and clean starting point.
+  It's a great choice for a simple and clean design.
+  https://www.getpapercss.com/
+*/
+ @import 'papercss/dist/paper.css';
+/* other styles */

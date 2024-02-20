@@ -73,8 +73,8 @@ const PrevArrow: React.FC<ArrowProps> = (props) => (
     speed: 500,
     slidesToShow: 1,
     slidesToScroll: 1,
-    nextArrow: <NextArrow />,
-    prevArrow: <PrevArrow />,
+    // nextArrow: <NextArrow />,
+    // prevArrow: <PrevArrow />,
     afterChange: (current) => onIconChange(icons[current])
   };
 

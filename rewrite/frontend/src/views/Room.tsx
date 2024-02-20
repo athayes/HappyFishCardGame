@@ -1,9 +1,13 @@
+import { useParams } from 'react-router-dom';
+
 function Room() {
-    return (
-        <div>
-            <h1>Welcome to the room roomid!</h1>
-        </div>
-    );
+  const { roomId } = useParams<{ roomId: string }>();
+
+  return (
+    <div>
+      <h2>Welcome to the room {roomId}!</h2>
+    </div>
+  );
 }
 
 export default Room;

@@ -12,11 +12,11 @@ function App() {
     <Router>
       <Routes>
         <Route path="/" element={<Home />} /> // Add the 'Home' component
-        <Route path="/room" element={<Room />} />
+        <Route path="/room/:roomId" element={<Room />} />
         <Route path="/game" element={<Game />} />
         <Route path="/create" element={<Create />} />
         <Route path="/join" element={<Join />} />
-        <Route path="/join/:roomId" Component={JoinRoom} />
+        <Route path="/join/:roomId" element={<JoinRoom />}/>
       </Routes>
     </Router>
   );
